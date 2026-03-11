@@ -1,0 +1,128 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body{
+    min-height: 100vh;
+    background-image: url(../images/background-sobrenos.png);
+    background-size: 100vw;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    font-family: Open Sans, apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;
+    
+}
+
+p{
+    color: #004f83;    
+}
+
+
+
+header{   
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+a{
+    text-decoration: none;
+    color: #004f83;
+}
+
+
+h1{
+    font-size: 50px;
+    color: #004f83;
+    text-decoration: none;   
+    width: 10vw;
+}
+
+
+.logo-sobrenos{
+    width: 10vw;
+}
+
+
+main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vw;
+}
+
+.parte-sobrenos{                   /*section do primeiro texto (sobre nós)*/
+    width: 100vw;
+    height: 10vw;
+    margin: 1vw;
+    margin-left: 15vw;
+}
+
+.sobrenos{
+    font-size: 40px;
+    color: #004f83;
+}
+
+.texto-sobrenos{
+    font-size: 20px;
+}
+
+.parte-missao{                      /*section do segundo texto (nossa missão)*/
+    display: flex;
+    width: 100vw;
+    height: auto;
+    margin: 1vw;
+    margin-left: 10vw;
+}
+
+.nossa-missao{              
+    font-size: 35px;
+    color: #004f83;
+}
+
+.conteiner-missao{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.texto-missao{
+    font-size: 20px;
+    color: #004f83;
+}
+
+.imagem-missao{
+    width: 15vw;
+    height: 10vw;
+}
+
+.parte-equipe{                      /*section do terceiro texto (nossa equipe)*/
+    display: flex;
+    width: 100vw;
+    height: 10vw;
+    margin: 1vw;
+    margin-left: 10vw;
+}
+
+.nossa-equipe{
+    font-size: 35px;
+    color: #004f83;
+}
+
+.conteiner-equipe{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.texto-equipe{
+    font-size: 20px;
+    color: #004f83;
+}
+
+.imagem-equipe{
+    width: 15vw;
+    height: 10vw;
+}

@@ -1,0 +1,394 @@
+
+.pisicologo-enter{
+    text-decoration: none;
+    align-items: center;
+    justify-content: center;
+    margin: -3%;
+    display: flex;
+    padding: 17px 40px;
+    cursor: pointer;
+    border: 0;
+    background-color: #576afa;
+    box-shadow: #5568fc (132, 0, 255) 0 0 8px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-size: 25px;
+    transition: all 0.5 ease;
+    color: #ffffff;
+    border-radius: 5px;
+    margin-top: -10%;
+    font-family: Open Sans, apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;
+    
+}
+
+
+.area-quadrado{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.quadrados{
+    display: flex;
+    gap: 60px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.quadrado{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.img1, .img2{
+    width: 15vw;
+    min-width: 350px;
+    height: auto;
+}
+
+.pisicologo-enter:hover{
+       letter-spacing: 3px;
+    background-color: rgb(127, 140, 255);
+    color: rgb(255, 255, 255);
+    box-shadow: rgb(93, 94, 220) 0px 7px 29px 0px;
+}
+
+.pisicologo-enter:active{
+     letter-spacing: 3px;
+    background-color: #2b4391 (111, 0, 255);
+    color: wheat(0, 0%, 100%);
+    box-shadow: rgb(83, 24, 220) 0px 0px 0px;
+    transform: translatey(10px);
+    transition: 100ms;
+}
+
+
+.botao-inicio {
+    position: absolute;
+    top: 80px;  /* Distância do topo */
+    left: 1250px; /* Distância da esquerda */
+    z-index: 100; /* Garante que fique acima de outros elementos */
+    color: #ffffff;
+    font-size: 18px;
+    text-decoration: none;
+    font-family: Open Sans, apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;
+    
+}
+
+
+.botao-sobrenos {
+    position: absolute;
+    top: 80px;  
+    left: 1340px; 
+    z-index: 100;
+    color: #ffffff;
+    font-size: 18px;
+    text-decoration: none;
+    font-family: Open Sans, apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;
+}
+
+.botao-contato {
+    position: absolute;
+    top: 80px;  
+    left: 1460px; 
+    z-index: 100; 
+    color: #ffffff;
+    font-size: 18px;
+    text-decoration: none;
+    font-family: Open Sans, apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;
+}
+
+/* botao de entrar*/
+
+.button{ 
+    position: absolute;
+    top: 68px;  
+    left: 1580px; 
+    z-index: 100; 
+    background-color: #ffffff; /* Azul */
+    padding: 17px 40px;
+    border-radius: 50px;
+    cursor: pointer;
+    border: 0;
+    background-color: white;
+    box-shadow: rgb(132, 0, 255) 0 0 8px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-size: 15px;
+    transition: all 0.5 ease;
+    text-decoration: none;
+    color: #5568fc;
+    font-family: Open Sans, apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;
+  
+}
+/* botao de entrar*/
+
+.button:hover{
+       letter-spacing: 3px;
+    background-color: rgb(127, 140, 255);
+    color: rgb(0, 0, 0);
+    box-shadow: rgb(93, 94, 220) 0px 7px 29px 0px;
+}
+/* botao de entrar*/
+
+.button:active{
+    letter-spacing: 3px;
+    background-color: rgb(111, 0, 255);
+    color: wheat(0, 0%, 100%);
+    box-shadow: rgb(83, 24, 220) 0px 0px 0px;
+    transform: translatey(10px);
+    transition: 100ms;
+}
+
+
+h2{
+    color: #004f83;
+    display: flex;
+  justify-content: center; /* Centraliza horizontalmente */
+  align-items: center;     /* Centraliza verticalmente */
+  height: 15vh;           /* Define altura total da tela, p.ex. */
+  font-family: Open Sans, apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;
+  
+
+}
+
+.subtitulo {
+    color: #004f83;
+    display: flex;
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center;     /* Centraliza verticalmente */
+    height: 15vh;           /* Define altura total da tela, p.ex. */
+    margin-top: -6%;
+    font-family: Open Sans, apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;
+ 
+}
+
+
+
+
+
+.text1 {
+    color: rgb(0, 39, 148);
+    text-align: center;
+}
+
+.text2  {
+    color: rgb(0, 39, 148);
+    text-align: center;
+}
+
+
+
+.logo-container{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 2;
+    position: relative;
+    background-color: #2b4391;
+    flex: 1 1 300px;
+    flex-wrap: wrap;
+    
+}
+
+.logo-container img{
+    width: 10vw;
+    
+}
+
+.logo-container h1{
+    margin: 0;
+}
+
+.ondaazul{
+    position: absolute;
+    right: 100;
+    top: -12%;
+    transform: translateY(-10%);
+    width: 100%; /* aumenta para ela ir mais para a esquerda */
+    z-index: 1;
+    display: block;
+    height: 900px;
+    margin: 0;
+   
+
+    
+}
+
+h3{
+    z-index: 2;
+    position: relative;
+    top: 50px;
+    font-size: 22px;
+    color: #5568fc;
+}
+
+h2{
+    font-size: 60px;
+    height: 1vh;
+    
+    
+
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-image: url(../images/1.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
+    overflow: hidden;
+    
+}
+
+
+
+
+.pisicologinha {
+    background-color: #004f83;
+    
+
+}
+
+h1{
+    color: #004f83;
+}
+
+
+.paciente{
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 50px;
+    text-decoration: none;
+    align-items: center;
+    justify-content: center;
+    margin: -3%;
+    display: flex;
+    background-color:#576afa;  
+    font-family: Open Sans, apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;
+    padding: 17px 40px;
+    cursor: pointer;
+    border: 0;
+    box-shadow: #5568fc (132, 0, 255) 0 0 8px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-size: 25px;
+    transition: all 0.5 ease;
+    color: #ffffff;
+    border-radius: 5px;
+    margin-top: -9.5%;
+}
+
+.paciente:hover{
+    letter-spacing: 3px;
+    background-color: rgb(127, 140, 255);
+    color: rgb(255, 255, 255);
+    box-shadow: rgb(93, 94, 220) 0px 7px 29px 0px;
+}
+
+.paciente:active{
+     letter-spacing: 3px;
+    background-color: #2b4391 (111, 0, 255);
+    color: wheat(0, 0%, 100%);
+    box-shadow: rgb(83, 24, 220) 0px 0px 0px;
+    transform: translatey(10px);
+    transition: 100ms;
+}
+
+
+
+
+
+.psicocenter {
+    font-size: 50px;
+    color: rgb(255, 255, 255);
+    font-family: Open Sans, apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;
+    width: 10vw;
+    max-width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    
+    
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+button {
+    padding: 17px 40px;
+    border-radius: 50px;
+    cursor: pointer;
+    border: 0;
+    background-color: white;
+    box-shadow: rgb(0 0 0/ 5%) 0 0 8px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-size: 15px;
+    transition: all 0.5 ease;
+    font-family: Open Sans, apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;
+
+}
+
+button:hover{
+    letter-spacing: 3px;
+    background-color: aquamarine;
+    color: blue;
+    box-shadow: rgb(red, green, blue) 0px 7px 29px 0px;
+}
+
+button:active{
+    letter-spacing: 3px;
+    background-color: rgb(255, 255, 255);
+    color: wheat(0, 0%, 100%);
+    box-shadow: rgb(93, 24, 220) 0px 0px 0px;
+    transform: translatey(10px);
+    transition: 100ms;
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
