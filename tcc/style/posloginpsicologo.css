@@ -1,0 +1,34 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    font-family: Open Sans, apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;  
+}
+
+.container{
+    display: flex;
+}
+
+.dashboard{
+    width: 15vw;
+    height: 50vw;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+.box{
+    width: 50%;
+    height: 10vw;
+    padding: 2vw;
+}
+
+a{
+    text-decoration: none;
+    color: black;
+}
+
+.voltar{
+    height: 100%;
+}

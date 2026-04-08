@@ -45,9 +45,10 @@
 }
 
 .img1, .img2{
-    width: 15vw;
-    min-width: 350px;
+    width: 10rem;
+    min-width: 20rem;
     height: auto;
+    
 }
 
 .pisicologo-enter:hover{
@@ -148,9 +149,8 @@
 h2{
     color: #004f83;
     display: flex;
-  justify-content: center; /* Centraliza horizontalmente */
-  align-items: center;     /* Centraliza verticalmente */
-  height: 15vh;           /* Define altura total da tela, p.ex. */
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center;     /* Centraliza verticalmente */  
   font-family: Open Sans, apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;
   
 
