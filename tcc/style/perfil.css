@@ -1,0 +1,374 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Open Sans, apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;
+}
+
+
+body {
+    background-color: #f4f6f9;
+    display: flex;
+    min-height: 100vh;
+}
+
+
+
+/* MENU LATERAL */
+
+.sidebar {
+
+    width: 260px;
+    height: 100vh;
+    background-color: #4b6cb7;
+    color: white;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding: 25px 20px;
+
+    position: fixed;
+    left: 0;
+    top: 0;
+
+}
+
+
+
+.logo {
+
+    font-size: 28px;
+    font-weight: bold;
+
+    margin-bottom: 35px;
+
+}
+
+
+
+/* USUÁRIO DO MENU */
+
+.usuario {
+
+    text-align: center;
+    margin-bottom: 35px;
+
+}
+
+
+.usuario img {
+
+    width: 90px;
+    height: 90px;
+
+    border-radius: 50%;
+    object-fit: cover;
+
+    margin-bottom: 10px;
+
+}
+
+
+.usuario h3 {
+
+    font-size: 18px;
+    margin-bottom: 5px;
+
+}
+
+
+.usuario p {
+
+    font-size: 14px;
+    opacity: 0.8;
+
+}
+
+
+
+/* LINKS */
+
+nav {
+
+    width: 100%;
+
+}
+
+
+nav a {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    text-decoration: none;
+
+    color: white;
+
+    padding: 15px;
+
+    margin-bottom: 10px;
+
+    border-radius: 10px;
+
+    transition: 0.3s;
+
+}
+
+
+nav a:hover {
+
+    background-color: rgba(255,255,255,0.2);
+
+}
+
+
+
+/* BOTÃO VOLTAR */
+
+.voltar {
+
+    margin-top: auto;
+
+    width: 100%;
+
+    padding: 12px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background-color: white;
+
+    color: #4b6cb7;
+
+    font-size: 16px;
+
+    cursor: pointer;
+
+}
+
+
+.voltar:hover {
+
+    background-color: #eeeeee;
+
+}
+
+
+
+
+
+/* CONTEÚDO PRINCIPAL */
+
+.conteudo {
+
+    margin-left: 260px;
+
+    width: calc(100% - 260px);
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    min-height: 100vh;
+
+}
+
+
+
+
+/* PERFIL */
+
+.perfil {
+
+    width: 450px;
+
+}
+
+
+
+.perfil h1 {
+
+    text-align: center;
+
+    margin-bottom: 25px;
+
+    color: #333;
+
+}
+
+
+
+
+
+/* CARD */
+
+.card {
+
+    background-color: white;
+
+    padding: 35px;
+
+    border-radius: 20px;
+
+    text-align: center;
+
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+
+}
+
+
+
+
+.foto-perfil {
+
+    width: 130px;
+
+    height: 130px;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+
+    margin-bottom: 20px;
+
+}
+
+
+
+
+.card h2 {
+
+    color: #333;
+
+    margin-bottom: 8px;
+
+}
+
+
+
+.card p {
+
+    color: #666;
+
+}
+
+
+
+.card hr {
+
+    margin: 25px 0;
+
+    border: none;
+
+    height: 1px;
+
+    background-color: #ddd;
+
+}
+
+
+
+
+
+/* INFORMAÇÕES */
+
+.informacoes {
+
+    text-align: left;
+
+    line-height: 2;
+
+}
+
+
+
+
+
+/* BOTÃO EDITAR */
+
+.editar {
+
+    margin-top: 25px;
+
+    width: 100%;
+
+    padding: 13px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background-color: #4b6cb7;
+
+    color: white;
+
+    font-size: 16px;
+
+    cursor: pointer;
+
+}
+
+
+
+.editar:hover {
+
+    background-color: #395591;
+
+}
+
+
+
+
+
+/* RESPONSIVIDADE */
+
+@media(max-width: 800px) {
+
+
+    .sidebar {
+
+        width: 80px;
+
+    }
+
+
+    .logo {
+
+        font-size: 16px;
+
+    }
+
+
+    .usuario h3,
+    .usuario p,
+    nav a {
+
+        display: none;
+
+    }
+
+
+    .conteudo {
+
+        margin-left: 80px;
+
+        width: calc(100% - 80px);
+
+    }
+
+
+    .perfil {
+
+        width: 90%;
+
+    }
+
+}
