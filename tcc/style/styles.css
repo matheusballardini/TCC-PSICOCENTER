@@ -5,14 +5,15 @@
 }
 
 body{
-    font-family: Open Sans, apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;  
+    font-family: Open Sans, apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     background:url("../images/1.png") no-repeat center center fixed;
     background-size:cover;
     color:#004f83;
 }
 
-/* HEADER */
-.logo-container{
+/* CABEÇALHO */
+
+.cabecalho{
     background:#2b4391;
     display:flex;
     align-items:center;
@@ -21,15 +22,15 @@ body{
     flex-wrap:wrap;
 }
 
-.logo-container img{
+.cabecalho img{
     width:80px;
 }
 
-.psicocenter{
+.titulo-logo{
     color:#fff;
     font-size:48px;
-    margin-right:auto;
     margin-left:20px;
+    margin-right:auto;
 }
 
 .menu{
@@ -39,8 +40,8 @@ body{
 }
 
 .menu a{
-    color:#fff;
     text-decoration:none;
+    color:#fff;
     transition:.3s;
 }
 
@@ -48,123 +49,176 @@ body{
     color:#d9deff;
 }
 
-.button{
+.botao-entrar{
     background:#fff;
     color:#5568fc !important;
     padding:15px 35px;
     border-radius:40px;
-    text-transform:uppercase;
     font-weight:bold;
+    text-transform:uppercase;
     box-shadow:0 0 8px rgba(132,0,255,.25);
 }
 
-.button:hover{
+.botao-entrar:hover{
     background:#7282ff;
     color:#fff !important;
 }
 
-/* TITULOS */
+/* APRESENTAÇÃO */
 
-h2{
+.apresentacao{
     text-align:center;
+    padding:70px 20px 40px;
+}
+
+.apresentacao h2{
     font-size:60px;
-    margin-top:40px;
+    margin-bottom:20px;
 }
 
 .subtitulo{
-    text-align:center;
-    margin:20px 0 50px;
     font-size:28px;
+    font-weight:400;
 }
 
-/* ÁREA DOS BOTÕES */
+/* FUNCIONAMENTO */
 
-.area-quadrado{
-    display:flex;
-    justify-content:center;
-    width:100%;
+.funcionamento{
+    max-width:1200px;
+    margin:auto;
+    padding:40px 30px 80px;
 }
 
-.quadrados{
+.funcionamento h2{
+    text-align:center;
+    font-size:42px;
+    margin-bottom:35px;
+}
+
+.funcionamento p{
+    font-size:20px;
+    line-height:1.8;
+    text-align:center;
+    margin-bottom:20px;
+}
+
+/* CARTÕES */
+
+.cartoes{
     display:flex;
     justify-content:center;
-    gap:80px;
+    gap:70px;
+    margin-top:60px;
     flex-wrap:wrap;
 }
 
-.quadrado{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    gap:25px;
-}
-
-.opcao{
-    width:320px;
+.cartao{
+    width:360px;
+    background:rgba(255,255,255,.85);
+    padding:30px;
+    border-radius:20px;
     text-align:center;
-    padding:18px;
-    background:#576afa;
-    color:#fff;
-    text-decoration:none;
-    text-transform:uppercase;
-    font-size:25px;
-    border-radius:6px;
+    box-shadow:0 10px 20px rgba(0,0,0,.15);
     transition:.3s;
 }
 
-.opcao:hover{
-    background:#7282ff;
-    transform:translateY(-3px);
+.cartao:hover{
+    transform:translateY(-8px);
 }
 
-.opcao:active{
-    transform:translateY(2px);
+.cartao img{
+    width:220px;
+    margin-bottom:20px;
 }
 
-.img1,.img2{
-    width:300px;
-    height:auto;
-    display:block;
+.cartao h3{
+    font-size:28px;
+    margin-bottom:15px;
 }
 
-/* RESPONSIVO */
-
-@media(max-width:900px){
-
-.logo-container{
-    justify-content:center;
+.cartao p{
+    font-size:18px;
     text-align:center;
 }
 
-.psicocenter{
-    margin:15px 0;
-    font-size:38px;
+/* RODAPÉ */
+
+.rodape{
+    background:#2b4391;
+    color:#fff;
+    text-align:center;
+    padding:45px 20px;
 }
 
-.menu{
-    width:100%;
-    justify-content:center;
-    flex-wrap:wrap;
+.rodape h3{
+    font-size:30px;
+    margin-bottom:15px;
 }
 
-h2{
-    font-size:40px;
+.rodape p{
+    font-size:18px;
+    line-height:1.8;
 }
 
-.subtitulo{
-    font-size:22px;
+.rodape hr{
+    width:70%;
+    margin:25px auto;
+    border:none;
+    border-top:1px solid rgba(255,255,255,.3);
 }
 
-.opcao{
-    width:280px;
-    font-size:22px;
-}
+/* RESPONSIVIDADE */
 
-.img1,.img2{
-    width:280px;
-}
+@media(max-width:900px){
 
-.quadrados{
-    gap:40px;
-}
+    .cabecalho{
+        justify-content:center;
+        text-align:center;
+    }
+
+    .titulo-logo{
+        margin:15px 0;
+        font-size:38px;
+    }
+
+    .menu{
+        width:100%;
+        justify-content:center;
+        flex-wrap:wrap;
+        margin-top:20px;
+    }
+
+    .apresentacao h2{
+        font-size:42px;
+    }
+
+    .subtitulo{
+        font-size:22px;
+    }
+
+    .funcionamento h2{
+        font-size:34px;
+    }
+
+    .funcionamento p{
+        font-size:18px;
+    }
+
+    .cartao{
+        width:90%;
+        max-width:360px;
+    }
+
+    .cartao img{
+        width:180px;
+    }
+
+    .rodape h3{
+        font-size:26px;
+    }
+
+    .rodape p{
+        font-size:16px;
+    }
+
 }
