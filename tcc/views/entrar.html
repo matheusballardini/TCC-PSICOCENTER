@@ -1,66 +1,76 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/style/entrar.css">
-    <link href="https://cdn.boxicons.com/3.0.8/fonts/basic/boxicons.min.css" rel="stylesheet">
+    <title>Entrar - Psicocenter</title>
 
-    <title>Document</title>
+    <link rel="stylesheet" href="../style/entrar.css">
 </head>
-     <a href="index.html">
-            <h1 class="voltar">Psicocenter</h1>
-        </a>
-
 
 <body>
-    
-    
 
-    <div class="wrapper">
-        <form action="">
-            <h1>login</h1>
-            <div class="input-box">
-                <input type="text" placeholder="username"
-                required>
-                <i class="bx bx-user"></i>
+    <!-- Cabeçalho -->
+    <header class="cabecalho">
+
+        <a href="index.html">
+            <img src="../images/logo-psico-center.png" alt="Logo Psicocenter">
+        </a>
+
+        <h1 class="titulo-logo">Psicocenter</h1>
+
+        <nav class="menu">
+            <a href="index.html">Início</a>
+            <a href="sobrenos.html">Sobre nós</a>
+            <a href="contato.html">Contato</a>
+        </nav>
+
+    </header>
+
+    <!-- Conteúdo -->
+    <main class="conteudo">
+
+        <h2>Escolha como deseja acessar a plataforma</h2>
+
+        <p class="texto">
+            Selecione a opção que corresponde ao seu perfil para continuar.
+        </p>
+
+        <section class="area-opcoes">
+
+            <div class="opcoes">
+
+                <div class="opcao">
+
+                    <a href="../views/loginpsicologo.html" class="botao-opcao">
+                        Sou Psicólogo(a)
+                    </a>
+
+                    <img src="../images/psico-azul.png"
+                        alt="Psicólogo"
+                        class="imagem-opcao">
+
+                </div>
+
+                <div class="opcao">
+
+                    <a href="../views/loginpaciente.html" class="botao-opcao">
+                        Sou Paciente
+                    </a>
+
+                    <img src="../images/paciente-bluedark.png"
+                        alt="Paciente"
+                        class="imagem-opcao">
+
+                </div>
+
             </div>
-             <div class="input-box">
-                <input type="password" placeholder="password"
-                required>
-                <i class="bx bx-lock"></i>
-            </div>
-            <div class="remember-forgot">
-                <label><input type="checkbox">Remember me
-                </label>
-                <a href="#">Forgot password?</a>
 
-            </div>
+        </section>
 
-            <button type="submit" class="btn">Login</button>
+    </main>
 
-            <div class="register-link">
-                <p>Dont have an account? <a href="#">
-                    Register</a></p>
-            </div>
-
-
-
-        </form>
-    </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-   
 </body>
+
 </html>
