@@ -1,0 +1,496 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Open Sans, apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;
+}
+
+
+body {
+    background-color: #f4f6f9;
+    display: flex;
+    min-height: 100vh;
+}
+
+
+
+/* MENU LATERAL */
+
+.sidebar {
+
+    width: 260px;
+    height: 100vh;
+    background-color: #4b6cb7;
+    color: white;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding: 25px 20px;
+
+    position: fixed;
+    left: 0;
+    top: 0;
+
+}
+
+
+
+.logo {
+
+    font-size: 28px;
+    font-weight: bold;
+
+    margin-bottom: 35px;
+
+}
+
+
+
+/* USUÁRIO DO MENU */
+
+.usuario {
+
+    text-align: center;
+    margin-bottom: 35px;
+
+}
+
+
+.usuario img {
+
+    width: 90px;
+    height: 90px;
+
+    border-radius: 50%;
+    object-fit: cover;
+
+    margin-bottom: 10px;
+
+}
+
+
+.usuario h3 {
+
+    font-size: 18px;
+    margin-bottom: 5px;
+
+}
+
+
+.usuario p {
+
+    font-size: 14px;
+    opacity: 0.8;
+
+}
+
+
+
+/* LINKS */
+
+nav {
+
+    width: 100%;
+
+}
+
+
+nav a {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    text-decoration: none;
+
+    color: white;
+
+    padding: 15px;
+
+    margin-bottom: 10px;
+
+    border-radius: 10px;
+
+    transition: 0.3s;
+
+}
+
+
+nav a:hover {
+
+    background-color: rgba(255,255,255,0.2);
+
+}
+
+
+
+/* BOTÃO VOLTAR */
+
+.voltar {
+
+    margin-top: auto;
+
+    width: 100%;
+
+    padding: 12px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background-color: white;
+
+    color: #4b6cb7;
+
+    font-size: 16px;
+
+    cursor: pointer;
+
+}
+
+
+.voltar:hover {
+
+    background-color: #eeeeee;
+
+}
+
+
+
+
+
+/* CONTEÚDO PRINCIPAL */
+
+.conteudo {
+
+    position: relative;
+
+    margin-left: 260px;
+
+    width: calc(100% - 260px);
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    min-height: 100vh;
+
+}
+
+
+
+/* BOTÃO EDITAR (canto superior direito) */
+
+.btn-edit-top {
+
+    position: absolute;
+
+    top: 25px;
+
+    right: 30px;
+
+    padding: 10px 20px;
+
+    background-color: #4b6cb7;
+
+    color: white;
+
+    text-decoration: none;
+
+    border-radius: 10px;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    transition: 0.3s;
+
+}
+
+.btn-edit-top:hover {
+
+    background-color: #395591;
+
+}
+
+
+
+/* AÇÕES DE CONTA (sair / excluir) */
+
+.conta-actions {
+
+    display: flex;
+
+    gap: 12px;
+
+    margin-top: 20px;
+
+}
+
+.btn-sair,
+.btn-excluir {
+
+    flex: 1;
+
+    padding: 12px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    font-size: 15px;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+
+}
+
+.btn-sair {
+
+    background-color: white;
+
+    color: #4b6cb7;
+
+    border: 1px solid #4b6cb7;
+
+}
+
+.btn-sair:hover {
+
+    background-color: #eef1fa;
+
+}
+
+.btn-excluir {
+
+    background-color: #fdecea;
+
+    color: #c0392b;
+
+    border: 1px solid #f5c6c0;
+
+}
+
+.btn-excluir:hover {
+
+    background-color: #f8d7d3;
+
+}
+
+
+
+
+/* PERFIL */
+
+.perfil {
+
+    width: 450px;
+
+}
+
+
+
+.perfil h1 {
+
+    text-align: center;
+
+    margin-bottom: 25px;
+
+    color: #333;
+
+}
+
+
+
+
+
+/* CARD */
+
+.card {
+
+    background-color: white;
+
+    padding: 35px;
+
+    border-radius: 20px;
+
+    text-align: center;
+
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+
+}
+
+
+
+
+.foto-perfil {
+
+    width: 130px;
+
+    height: 130px;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+
+    margin-bottom: 20px;
+
+}
+
+
+
+
+.card h2 {
+
+    color: #333;
+
+    margin-bottom: 8px;
+
+}
+
+
+
+.card p {
+
+    color: #666;
+
+}
+
+
+
+.card hr {
+
+    margin: 25px 0;
+
+    border: none;
+
+    height: 1px;
+
+    background-color: #ddd;
+
+}
+
+
+
+
+
+/* INFORMAÇÕES */
+
+.informacoes {
+
+    text-align: left;
+
+    line-height: 2;
+
+}
+
+
+/* EDIT FORM */
+.edit-form { 
+    margin-top: 15px;
+    text-align: left;
+}
+.edit-form .row{ display:flex; gap:20px; }
+.edit-form .col-left{ width:140px; }
+.edit-form .col-right{ flex:1; }
+.edit-form label{ display:block; margin-top:10px; font-size:14px; color:#444; }
+.edit-form input, .edit-form textarea{ width:100%; padding:8px; margin-top:6px; border:1px solid #ddd; border-radius:6px; font-size:14px; }
+.edit-form textarea{ min-height:80px; resize:vertical }
+.photo-preview-wrap{ width:120px; height:120px; border-radius:50%; overflow:hidden; background:#f0f0f0; display:flex; align-items:center; justify-content:center; margin-bottom:8px }
+.photo-preview-wrap img{ width:100%; height:100%; object-fit:cover }
+.edit-form .actions{ margin-top:12px; display:flex; gap:10px; justify-content:center }
+.btn-save{ background:#4b6cb7; color:#fff; border:none; padding:10px 18px; border-radius:8px; cursor:pointer }
+.btn-cancel{ background:#eee; color:#444; border:none; padding:10px 18px; border-radius:8px; cursor:pointer }
+
+
+
+
+
+
+/* BOTÃO EDITAR */
+
+.editar {
+
+    margin-top: 25px;
+
+    width: 100%;
+
+    padding: 13px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background-color: #4b6cb7;
+
+    color: white;
+
+    font-size: 16px;
+
+    cursor: pointer;
+
+}
+
+
+
+.editar:hover {
+
+    background-color: #395591;
+
+}
+
+
+
+
+
+/* RESPONSIVIDADE */
+
+@media(max-width: 800px) {
+
+
+    .sidebar {
+
+        width: 80px;
+
+    }
+
+
+    .logo {
+
+        font-size: 16px;
+
+    }
+
+
+    .usuario h3,
+    .usuario p,
+    nav a {
+
+        display: none;
+
+    }
+
+
+    .conteudo {
+
+        margin-left: 80px;
+
+        width: calc(100% - 80px);
+
+    }
+
+
+    .perfil {
+
+        width: 90%;
+
+    }
+
+}

@@ -1,0 +1,80 @@
+.edit-card {
+    text-align: left;
+}
+
+.edit-card .photo-preview-wrap {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto 12px;
+    background: #f0f0f0;
+}
+
+.edit-card .photo-preview-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.file-label {
+    display: block;
+    width: fit-content;
+    margin: 0 auto 25px;
+    padding: 8px 16px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    color: #4b6cb7;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.file-label:hover {
+    background-color: #f4f6f9;
+}
+
+.edit-card .input-box {
+    margin-bottom: 16px;
+}
+
+.edit-card label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 14px;
+    color: #444;
+    font-weight: 600;
+}
+
+.edit-card input,
+.edit-card textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: inherit;
+}
+
+.edit-card textarea {
+    resize: vertical;
+}
+
+.edit-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.edit-actions .editar {
+    margin-top: 0;
+}
+
+.editar.cancelar {
+    background-color: #eee;
+    color: #444;
+}
+
+.editar.cancelar:hover {
+    background-color: #ddd;
+}

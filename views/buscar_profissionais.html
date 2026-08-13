@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Buscar Profissionais</title>
+
+    <link rel="stylesheet" href="../style/buscarprofi.css">
+
+    <link
+        href="https://cdn.boxicons.com/3.0.8/fonts/basic/boxicons.min.css"
+        rel="stylesheet"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         CABEÇALHO
+    ========================== -->
+
+    <section class="cabecalho">
+
+        <header>
+
+            <div class="logo-container">
+
+                <img
+                    src="../images/logo-psico-center.png"
+                    alt="Logo Psicocenter"
+                >
+
+                <a
+                    class="psico"
+                    href="../views/index.html"
+                >
+                    Psicocenter
+                </a>
+
+            </div>
+
+
+            <a
+                class="buscar"
+                href="/views/index.html"
+            >
+
+                <i class="bx bx-message-circle"></i>
+
+                Mensagens
+
+            </a>
+
+        </header>
+
+    </section>
+
+
+
+    <!-- =========================
+         CONTEÚDO
+    ========================== -->
+
+    <main class="conteudo">
+
+
+        <h1 class="titulo">
+            Buscar Profissionais
+        </h1>
+
+
+        <p class="subtitulo">
+            Encontre o psicólogo ideal para suas necessidades -
+            4 profissionais disponíveis
+        </p>
+
+
+
+        <!-- =========================
+             BUSCA
+        ========================== -->
+
+        <div class="search-container">
+
+            <div class="search-box">
+
+                <span class="icon">
+                    🔍
+                </span>
+
+                <input
+                    type="text"
+                    placeholder="Buscar por nome, especialidade ou localização..."
+                >
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =========================
+             FILTROS
+        ========================== -->
+
+        <div class="filtros">
+
+
+            <div class="filtro-linha">
+
+                <span class="filtro-titulo">
+                    Especialidade:
+                </span>
+
+
+                <button class="filtro ativo">
+                    Todos
+                </button>
+
+                <button class="filtro">
+                    Ansiedade
+                </button>
+
+                <button class="filtro">
+                    Depressão
+                </button>
+
+                <button class="filtro">
+                    Relacionamentos
+                </button>
+
+                <button class="filtro">
+                    Autoestima
+                </button>
+
+                <button class="filtro">
+                    Luto
+                </button>
+
+                <button class="filtro">
+                    Terapia de Casal
+                </button>
+
+                <button class="filtro">
+                    Terapia Infantil
+                </button>
+
+                <button class="filtro">
+                    Burnout
+                </button>
+
+                <button class="filtro">
+                    Trauma
+                </button>
+
+            </div>
+
+
+
+            <div class="filtro-linha">
+
+                <span class="filtro-titulo">
+                    Modalidade:
+                </span>
+
+
+                <button class="filtro ativo">
+                    Todos
+                </button>
+
+                <button class="filtro">
+                    Presencial
+                </button>
+
+                <button class="filtro">
+                    Online
+                </button>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =========================
+             PROFISSIONAIS
+        ========================== -->
+
+        <section class="profissionais">
+            <!-- Cards serão carregados dinamicamente pelo JavaScript -->
+        </section>
+
+
+       </main>
+
+    <script src="../js/buscarprofi.js"></script>
+
+</body>
+
+</html>

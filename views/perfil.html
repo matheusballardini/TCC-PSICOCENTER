@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil - Psicocenter</title>
+    <link rel="stylesheet" href="../style/perfil.css">
+</head>
+
+<body>
+
+
+    <!-- MENU LATERAL -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            Psicocenter
+        </div>
+
+
+        <div class="usuario">
+
+            <img id="sidebarPhoto" src="../images/psicologo.webp" alt="Foto">
+
+            <h3 id="sidebarName">Dr. João Silva</h3>
+
+            <p id="sidebarRole">Psicólogo</p>
+
+        </div>
+
+
+        <nav>
+
+            <a href="perfil.html">
+                Perfil
+            </a>
+
+
+            <a href="pacientes.html">
+                Pacientes
+            </a>
+
+
+            <a href="agendamentos.html">
+                Agendamentos
+            </a>
+
+
+        </nav>
+
+
+
+
+    </aside>
+
+
+
+
+    <!-- CONTEÚDO -->
+
+    <main class="conteudo">
+
+        <a href="editar_perfil.html" id="editBtn" class="btn-edit-top">Editar Perfil</a>
+
+        <section class="perfil">
+
+
+            <h1>Meu Perfil</h1>
+            <p id="loadingIndicator" style="display:none; opacity:0.7; margin-top:-8px;">Carregando dados...</p>
+
+
+            <div class="card">
+
+
+
+                <img id="profilePhoto" class="foto-perfil" src="../images/psicologo.webp" alt="Foto do Psicólogo">
+
+
+                <h2 id="fullName">
+                    Dr. João Silva
+                </h2>
+
+
+                <p id="role">
+                    Psicólogo Clínico
+                </p>
+
+
+                <hr>
+
+
+                <div class="informacoes">
+
+                    <p>
+                        <strong>Email:</strong>
+                        <span id="emailVal">joao@email.com</span>
+                    </p>
+
+
+                    <p>
+                        <strong>Telefone:</strong>
+                        <span id="phoneVal">(11) 99999-9999</span>
+                    </p>
+
+
+                    <p>
+                        <strong>CRP:</strong>
+                        <span id="crpVal">06/123456</span>
+                    </p>
+
+                    <p>
+                        <strong>Biografia:</strong>
+                        <span id="bioVal"></span>
+                    </p>
+
+
+                </div>
+
+
+                <button id="scheduleBtn" class="editar" style="display:none; margin-top: 12px;">
+                    Agendar consulta
+                </button>
+
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+
+</body>
+
+    <script src="../js/perfil.js"></script>
+
+</html>

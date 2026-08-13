@@ -1,0 +1,555 @@
+/* =========================
+   CONFIGURAÇÕES GERAIS
+========================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    min-height: 100%;
+}
+
+body {
+    font-family: Open Sans, apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: url("../images/azulgradiente.png") no-repeat center center fixed;
+    background-size: cover;
+
+    color: #111827;
+}
+
+
+/* =========================
+   CABEÇALHO
+========================= */
+
+.cabecalho {
+    width: 100%;
+    min-height: 95px;
+
+    
+
+    border-bottom: 2px solid #2b4391;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 50px;
+
+    position: relative;
+}
+
+header {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+/* Logo */
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.logo-container img {
+    width: 70px;
+    height: 70px;
+
+    object-fit: contain;
+}
+
+.psico {
+    text-decoration: none;
+
+    color: #2b4391;
+
+    font-size: 32px;
+    font-weight: 600;
+}
+
+
+/* Mensagens */
+
+.buscar {
+    position: absolute;
+
+    left: 50%;
+    transform: translateX(-50%);
+
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    text-decoration: none;
+
+    color: #2b4391;
+
+    font-size: 28px;
+    font-weight: 500;
+}
+
+.buscar i {
+    font-size: 32px;
+}
+
+
+/* =========================
+   CONTEÚDO PRINCIPAL
+========================= */
+
+.conteudo {
+    width: 100%;
+    max-width: 1100px;
+
+    margin: 65px auto 50px;
+
+    padding: 0 20px;
+}
+
+
+/* Título */
+
+.titulo {
+    margin: 0 0 5px;
+
+    color: #2b4391;
+
+    font-size: 32px;
+    font-weight: 700;
+}
+
+.subtitulo {
+    margin: 0 0 30px;
+
+    color: #24406e;
+
+    font-size: 15px;
+}
+
+
+/* =========================
+   CAIXA DE BUSCA
+========================= */
+
+.search-container {
+    width: 100%;
+
+    background: rgba(255, 255, 255, 0.92);
+
+    border: 1px solid #d8dce5;
+
+    border-radius: 14px;
+
+    padding: 20px;
+
+    margin-bottom: 18px;
+}
+
+.search-box {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+
+    background: #f3f3f6;
+
+    border-radius: 8px;
+
+    padding: 13px 15px;
+}
+
+.icon {
+    font-size: 20px;
+
+    margin-right: 10px;
+
+    color: #2b4391;
+}
+
+.search-box input {
+    width: 100%;
+
+    border: none;
+    outline: none;
+
+    background: transparent;
+
+    font-size: 14px;
+
+    color: #333;
+}
+
+.search-box input::placeholder {
+    color: #7f8797;
+}
+
+
+/* =========================
+   FILTROS
+========================= */
+
+.filtros {
+    margin-bottom: 25px;
+}
+
+.filtro-linha {
+    display: flex;
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+    margin-bottom: 12px;
+}
+
+.filtro-titulo {
+    color: #24406e;
+
+    font-size: 14px;
+
+    margin-right: 2px;
+}
+
+.filtro {
+    background: rgba(255, 255, 255, 0.9);
+
+    border: 1px solid #d8dce5;
+
+    border-radius: 18px;
+
+    padding: 7px 13px;
+
+    font-size: 13px;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.filtro:hover,
+.filtro.ativo {
+    background: #2b4391;
+
+    color: white;
+
+    border-color: #2b4391;
+}
+
+
+/* =========================
+   CARDS DOS PROFISSIONAIS
+========================= */
+
+.profissionais {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 20px;
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.96);
+
+    border: 1px solid #d8dce5;
+
+    border-radius: 14px;
+
+    padding: 22px;
+
+    min-height: 325px;
+
+    display: flex;
+    flex-direction: column;
+
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+}
+
+
+/* Cabeçalho do card */
+
+.profissional-topo {
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+}
+
+.avatar {
+    width: 58px;
+    height: 58px;
+
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    background: #dbe7f7;
+
+    color: #2b4391;
+
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.nome {
+    margin: 0 0 4px;
+
+    font-size: 17px;
+
+    color: #111827;
+}
+
+.crp {
+    margin: 0;
+
+    font-size: 11px;
+
+    color: #65738b;
+}
+
+.avaliacao {
+    margin-top: 7px;
+
+    font-size: 13px;
+
+    color: #40506b;
+}
+
+.estrela {
+    color: #ffb000;
+
+    font-size: 17px;
+}
+
+
+/* Especialidades */
+
+.especialidades {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 6px;
+
+    margin-top: 32px;
+}
+
+.tag {
+    background: #edf0f5;
+
+    color: #17233a;
+
+    border-radius: 6px;
+
+    padding: 5px 8px;
+
+    font-size: 11px;
+}
+
+
+/* Localização */
+
+.localizacao {
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    margin-top: 12px;
+
+    font-size: 13px;
+
+    color: #45546b;
+}
+
+.localizacao i {
+    color: #2b4391;
+
+    font-size: 17px;
+}
+
+
+/* Modalidades */
+
+.modalidades {
+    display: flex;
+
+    gap: 8px;
+
+    margin-top: 10px;
+}
+
+.modalidade {
+    border: 1px solid #d8dce5;
+
+    border-radius: 7px;
+
+    padding: 4px 8px;
+
+    font-size: 10px;
+
+    background: white;
+
+    color: #202a3a;
+}
+
+
+/* Linha */
+
+.linha {
+    border: none;
+
+    border-top: 1px solid #e1e3e8;
+
+    width: 100%;
+
+    margin: 12px 0;
+}
+
+
+/* Preço */
+
+.preco {
+    margin: 0;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    color: #111827;
+}
+
+.por-sessao {
+    margin: 2px 0 0;
+
+    font-size: 10px;
+
+    color: #667085;
+}
+
+
+/* Botões de ação */
+
+.acoes-profissional {
+    display: flex;
+    align-items: stretch;
+    gap: 8px;
+    margin-top: 14px;
+}
+
+.btn-perfil,
+.btn-agendar {
+    flex: 1;
+    min-height: 40px;
+    padding: 10px 12px;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: 0.2s;
+    text-align: center;
+}
+
+.btn-perfil {
+    background: #4b30ff;
+}
+
+.btn-agendar {
+    background: #2b4391;
+}
+
+.btn-perfil:hover {
+    background: #2b4391;
+}
+
+.btn-agendar:hover {
+    background: #1d2d6c;
+}
+
+.btn-perfil i,
+.btn-agendar i {
+    font-size: 15px;
+}
+
+
+/* =========================
+   RESPONSIVIDADE
+========================= */
+
+@media (max-width: 900px) {
+
+    .profissionais {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .buscar {
+        position: static;
+
+        transform: none;
+
+        margin-left: auto;
+        margin-right: 30px;
+    }
+
+}
+
+
+@media (max-width: 650px) {
+
+    .cabecalho {
+        padding: 10px 20px;
+    }
+
+    .psico {
+        font-size: 24px;
+    }
+
+    .logo-container img {
+        width: 55px;
+        height: 55px;
+    }
+
+    .buscar {
+        font-size: 0;
+        margin-right: 0;
+    }
+
+    .buscar i {
+        font-size: 28px;
+    }
+
+    .conteudo {
+        margin-top: 35px;
+    }
+
+    .titulo {
+        font-size: 27px;
+    }
+
+    .profissionais {
+        grid-template-columns: 1fr;
+    }
+
+}

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro Psicólogo - Psicocenter</title>
+    <link rel="stylesheet" href="../style/loginpaciente.css">
+    <link rel="stylesheet" href="../style/register.css">
+    <link href="https://cdn.boxicons.com/3.0.8/fonts/basic/boxicons.min.css" rel="stylesheet">
+    <script defer src="../js/register.js"></script>
+    <style>
+        .section-title{font-weight:700;margin-top:12px;margin-bottom:6px}
+        .checkbox-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:6px}
+        .small-input{width:48%;display:inline-block}
+        .day-row{display:flex;gap:8px;align-items:center;margin:6px 0}
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <form id="cadastroPsicologoForm" onsubmit="register(event, 'psicologo')">
+            <h1>Cadastro Psicólogo</h1>
+
+            <p class="section-title">1. Dados pessoais</p>
+            <div class="input-box">
+                <input id="full_name" type="text" placeholder="Nome completo" required>
+                <i class="bx bx-user"></i>
+            </div>
+            <div class="input-box">
+                <input id="photo" type="file" accept="image/*">
+            </div>
+            <div class="input-box">
+                <input id="cpf" type="text" placeholder="CPF" >
+            </div>
+            <div class="input-box">
+                <input id="birth_date" type="date" placeholder="Data de nascimento" >
+            </div>
+            <div class="input-box">
+                <input id="phone" type="tel" placeholder="Telefone" >
+            </div>
+            <div class="input-box">
+                <input id="email" type="email" placeholder="E-mail" required>
+            </div>
+
+            <p class="section-title">2. Dados profissionais</p>
+            <div class="input-box">
+                <input id="crp" type="text" placeholder="CRP" >
+            </div>
+            <div class="input-box">
+                <input id="crp_state" type="text" placeholder="Estado do CRP" >
+            </div>
+            <div class="input-box">
+                <input id="education" type="text" placeholder="Formação (ex: Psicologia Clínica)" >
+            </div>
+            <div class="input-box">
+                <input id="institution" type="text" placeholder="Instituição onde se formou" >
+            </div>
+            <div class="input-box">
+                <input id="years_experience" type="number" min="0" placeholder="Anos de experiência" >
+            </div>
+            <div class="input-box">
+                <textarea id="bio" rows="4" placeholder="Breve descrição/sobre o profissional"></textarea>
+            </div>
+
+            <p class="section-title">3. Especialidades (marque uma ou mais)</p>
+            <div class="checkbox-grid">
+                <label><input type="checkbox" name="specialty" value="Ansiedade"> Ansiedade</label>
+                <label><input type="checkbox" name="specialty" value="Depressão"> Depressão</label>
+                <label><input type="checkbox" name="specialty" value="Relacionamentos"> Relacionamentos</label>
+                <label><input type="checkbox" name="specialty" value="Autoestima"> Autoestima</label>
+                <label><input type="checkbox" name="specialty" value="Luto"> Luto</label>
+                <label><input type="checkbox" name="specialty" value="Terapia de Casal"> Terapia de Casal</label>
+                <label><input type="checkbox" name="specialty" value="Terapia Infantil"> Terapia Infantil</label>
+                <label><input type="checkbox" name="specialty" value="Burnout"> Burnout</label>
+                <label><input type="checkbox" name="specialty" value="Trauma"> Trauma</label>
+                <label><input type="checkbox" name="specialty" value="Família"> Família</label>
+                <label><input type="checkbox" name="specialty" value="Desenvolvimento"> Desenvolvimento</label>
+                <label><input type="checkbox" name="specialty" value="Outros"> Outros</label>
+            </div>
+
+            <p class="section-title">4. Modalidade de atendimento</p>
+            <label><input type="checkbox" id="mod_online"> Online</label>
+            <label style="margin-left:12px"><input type="checkbox" id="mod_presencial"> Presencial</label>
+
+            <div id="presencialFields" style="display:none;margin-top:8px">
+                <div class="input-box">
+                    <input id="city" type="text" placeholder="Cidade" >
+                </div>
+                <div class="input-box">
+                    <input id="state" type="text" placeholder="Estado" >
+                </div>
+                <div class="input-box">
+                    <input id="address" type="text" placeholder="Endereço do consultório" >
+                </div>
+            </div>
+
+            <p class="section-title">5. Valores por sessão (R$)</p>
+            <div style="display:flex;gap:8px">
+                <input id="price_min" type="number" min="0" placeholder="Valor mínimo" class="small-input">
+                <input id="price_max" type="number" min="0" placeholder="Valor máximo" class="small-input">
+            </div>
+
+            <p class="section-title">6. Disponibilidade</p>
+            <div>
+                <div class="day-row">
+                    <label><input type="checkbox" id="day_mon"> Segunda</label>
+                    <input id="mon_start" type="time"> - <input id="mon_end" type="time">
+                </div>
+                <div class="day-row">
+                    <label><input type="checkbox" id="day_tue"> Terça</label>
+                    <input id="tue_start" type="time"> - <input id="tue_end" type="time">
+                </div>
+                <div class="day-row">
+                    <label><input type="checkbox" id="day_wed"> Quarta</label>
+                    <input id="wed_start" type="time"> - <input id="wed_end" type="time">
+                </div>
+                <div class="day-row">
+                    <label><input type="checkbox" id="day_thu"> Quinta</label>
+                    <input id="thu_start" type="time"> - <input id="thu_end" type="time">
+                </div>
+                <div class="day-row">
+                    <label><input type="checkbox" id="day_fri"> Sexta</label>
+                    <input id="fri_start" type="time"> - <input id="fri_end" type="time">
+                </div>
+                <div class="day-row">
+                    <label><input type="checkbox" id="day_sat"> Sábado</label>
+                    <input id="sat_start" type="time"> - <input id="sat_end" type="time">
+                </div>
+                <div class="day-row">
+                    <label><input type="checkbox" id="day_sun"> Domingo</label>
+                    <input id="sun_start" type="time"> - <input id="sun_end" type="time">
+                </div>
+            </div>
+
+            <div class="input-box" style="margin-top:12px">
+                <input id="password" type="password" placeholder="Senha" required>
+                <i class="bx bx-lock"></i>
+            </div>
+
+            <button type="submit" class="btn">Cadastrar</button>
+            <p id="registerMessage" class="register-link"></p>
+            <div class="register-link">
+                <p>Já tem conta? <a href="loginpsicologo.html" class="entrar">Entrar</a></p>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // Limpa o formulário quando a página carrega para criar um NOVO psicólogo
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('cadastroPsicologoForm');
+            if (form) {
+                form.reset();
+                // Desmarcar todas as especialidades
+                document.querySelectorAll('input[name="specialty"]').forEach(el => el.checked = false);
+                // Desmarcar modalidades
+                document.getElementById('mod_online').checked = false;
+                document.getElementById('mod_presencial').checked = false;
+                // Desmarcar dias
+                ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'].forEach(day => {
+                    const checkbox = document.getElementById(`day_${day}`);
+                    if (checkbox) checkbox.checked = false;
+                });
+                // Limpar campos de horário
+                ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'].forEach(day => {
+                    const startInput = document.getElementById(`${day}_start`);
+                    const endInput = document.getElementById(`${day}_end`);
+                    if (startInput) startInput.value = '';
+                    if (endInput) endInput.value = '';
+                });
+            }
+        });
+
+        const presCheckbox = document.getElementById('mod_presencial');
+        const presFields = document.getElementById('presencialFields');
+        presCheckbox.addEventListener('change', () => {
+            presFields.style.display = presCheckbox.checked ? 'block' : 'none';
+        });
+    </script>
+</body>
+</html>

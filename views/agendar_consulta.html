@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Agendar Consulta</title>
+  <link rel="stylesheet" href="../style/agendamentos.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="topbar">
+      <div class="logo">Psicocenter</div>
+      <nav class="nav-links">
+        <a href="paginaposlogin.html">Início</a>
+        <a href="buscar_profissionais.html">Buscar profissionais</a>
+        <a href="agendamentos_paciente.html">Meus agendamentos</a>
+      </nav>
+    </div>
+
+    <h1 class="page-title">Agendar consulta</h1>
+    <p class="subtitle">Escolha o profissional, a data e o horário para solicitar seu atendimento.</p>
+
+    <section class="card">
+      <form id="scheduleForm">
+        <div class="form-grid">
+          <div class="field">
+            <label for="psychologistSelect">Psicólogo</label>
+            <select id="psychologistSelect" required>
+              <option value="">Carregando profissionais...</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="appointmentDate">Data</label>
+            <input id="appointmentDate" type="date" required />
+          </div>
+
+          <div class="field">
+            <label for="appointmentTime">Horário</label>
+            <input id="appointmentTime" type="time" required />
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn">Solicitar consulta</button>
+          <a class="btn-secondary" href="buscar_profissionais.html">Voltar</a>
+        </div>
+      </form>
+    </section>
+  </div>
+
+  <script src="../js/agendar_consulta.js"></script>
+</body>
+</html>

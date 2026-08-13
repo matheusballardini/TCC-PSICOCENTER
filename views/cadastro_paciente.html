@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro Paciente - Psicocenter</title>
+    <link rel="stylesheet" href="../style/loginpaciente.css">
+    <link rel="stylesheet" href="../style/register.css">
+    <link href="https://cdn.boxicons.com/3.0.8/fonts/basic/boxicons.min.css" rel="stylesheet">
+    <script defer src="../js/register.js"></script>
+</head>
+<body>
+    <div class="wrapper">
+        <form id="cadastroPacienteForm" onsubmit="register(event, 'paciente')">
+            <h1>Cadastro Paciente</h1>
+            <div class="input-box">
+                <input id="full_name" type="text" placeholder="Nome completo" required>
+                <i class="bx bx-user"></i>
+            </div>
+            <div class="input-box">
+                <input id="email" type="email" placeholder="Email" required>
+                <i class="bx bx-envelope"></i>
+            </div>
+            <div class="input-box">
+                <input id="password" type="password" placeholder="Senha" required>
+                <i class="bx bx-lock"></i>
+            </div>
+            <button type="submit" class="btn">Cadastrar</button>
+            <p id="registerMessage" class="register-link"></p>
+            <div class="register-link">
+                <p>Já tem conta? <a href="loginpaciente.html" class="">Entrar</a></p>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

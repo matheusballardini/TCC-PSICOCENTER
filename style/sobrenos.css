@@ -1,0 +1,252 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    min-height: 100vh;
+    background-color: #fffed9;
+    background-image: url(../images/background-sobrenos.png);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow-x: hidden;
+    font-family: Open Sans, apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;  
+}
+
+/* =========================
+   CABEÇALHO
+========================= */
+
+.div-titulo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    padding: 20px;
+    position: relative;
+}
+
+.logo-sobrenos{
+    width: 130px;
+    height: auto;
+}
+
+.titulo,
+h1{
+    font-size: 48px;
+    color: #004f83;
+}
+
+a{
+    text-decoration: none;
+    color: #004f83;
+}
+
+.botao-contato{
+    position: absolute;
+    top: 35px;
+    right: 40px;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+/* =========================
+   SOBRE NÓS
+========================= */
+
+.sobrenos{
+    margin: 40px 10%;
+    color: #004f83;
+    font-size: 48px;
+}
+
+.texto-sobrenos{
+    margin: 20px 10%;
+    width: 80%;
+    max-width: 750px;
+    color: #004f83;
+    font-size: 20px;
+    line-height: 1.7;
+}
+
+/* =========================
+   MISSÃO
+========================= */
+
+.nossa-missao{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin: 70px 10% 20px;
+    color: #004f83;
+    font-size: 35px;
+}
+
+.imagem-missao{
+    width: 90px;
+    height: auto;
+}
+
+.texto-missao{
+    margin: 0 10%;
+    width: 80%;
+    max-width: 750px;
+    color: #004f83;
+    font-size: 20px;
+    line-height: 1.7;
+}
+
+/* =========================
+   EQUIPE
+========================= */
+
+.nossa-equipe{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin: 70px 10% 20px;
+    color: #004f83;
+    font-size: 35px;
+}
+
+.imagem-equipe{
+    width: 90px;
+    height: auto;
+}
+
+.texto-equipe{
+    margin: 0 10% 50px;
+    width: 80%;
+    max-width: 750px;
+    color: #004f83;
+    font-size: 20px;
+    line-height: 1.7;
+}
+
+/* =========================
+   TABLETS
+========================= */
+
+@media (max-width: 1024px){
+
+    .titulo,
+    h1{
+        font-size: 40px;
+    }
+
+    .sobrenos{
+        font-size: 40px;
+    }
+
+    .nossa-missao,
+    .nossa-equipe{
+        font-size: 30px;
+    }
+
+    .texto-sobrenos,
+    .texto-missao,
+    .texto-equipe{
+        font-size: 18px;
+    }
+
+    .imagem-missao,
+    .imagem-equipe{
+        width: 75px;
+    }
+}
+
+/* =========================
+   CELULARES
+========================= */
+
+@media (max-width:768px){
+
+    .div-titulo{
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .logo-sobrenos{
+        width: 100px;
+    }
+
+    .titulo,
+    h1{
+        font-size: 32px;
+    }
+
+    .botao-contato{
+        position: static;
+        display: block;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .sobrenos{
+        margin: 30px 20px;
+        font-size: 32px;
+    }
+
+    .texto-sobrenos,
+    .texto-missao,
+    .texto-equipe{
+        width: calc(100% - 40px);
+        margin: 15px 20px;
+        font-size: 17px;
+    }
+
+    .nossa-missao,
+    .nossa-equipe{
+        flex-direction: column;
+        text-align: center;
+        margin: 50px 20px 20px;
+        font-size: 28px;
+    }
+
+    .imagem-missao,
+    .imagem-equipe{
+        width: 120px;
+    }
+}
+
+/* =========================
+   CELULARES PEQUENOS
+========================= */
+
+@media (max-width:480px){
+
+    .titulo,
+    h1{
+        font-size: 26px;
+    }
+
+    .sobrenos{
+        font-size: 28px;
+    }
+
+    .nossa-missao,
+    .nossa-equipe{
+        font-size: 24px;
+    }
+
+    .texto-sobrenos,
+    .texto-missao,
+    .texto-equipe{
+        font-size: 16px;
+    }
+
+    .logo-sobrenos{
+        width: 80px;
+    }
+
+    .imagem-missao,
+    .imagem-equipe{
+        width: 90px;
+    }
+
+    .botao-contato{
+        font-size: 18px;
+    }
+}

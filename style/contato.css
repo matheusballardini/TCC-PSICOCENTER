@@ -1,0 +1,60 @@
+body{
+    background-image: url(../images/a2B4391.png);
+}
+
+.voltar{
+    color: white;
+    text-decoration: none;
+    font-family: Open Sans, apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;
+    margin-left: 0%;
+}
+
+
+.logoimg {
+    max-width: 100%;
+    height: 10px ;
+}
+
+
+.logo-container{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 2;
+    position: relative;
+    
+    
+    
+}
+
+.logo-container img{
+    width: 170px;
+    
+}
+
+.logo-container h1{
+    margin: 0;
+    color: white;
+    font-family: Open Sans, apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif; 
+}
+
+.psicocenter {
+    color: white;
+    text-decoration: none;
+}
+
+h2{
+    margin-left: 750px;
+    font-size: 100px;
+    color: #22385E;
+    font-family: Open Sans, apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif; 
+}
+
+p{
+    margin-left: 830px;
+    font-size: 30px;
+    color: #22385E;
+    align-items: center;
+    font-family: Open Sans, apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif; 
+    
+}

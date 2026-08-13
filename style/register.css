@@ -1,0 +1,132 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap');
+:root{
+  --primary:#004F83; /* deep brand blue */
+  --accent:#5568FC; /* used across site */
+  --card:#ffffff;
+  --muted:#6b7280;
+  --radius:14px;
+}
+*{box-sizing:border-box}
+.register-full-bg, body{
+  font-family: "Open Sans", Arial, sans-serif;
+  color:var(--primary);
+  padding:12px; /* reduce outer padding so content can expand */
+  min-height:100vh;
+}
+
+/* Ensure the gradient image fills the viewport on pages that include this stylesheet */
+html, body{height:100%;}
+body{
+  display:block !important;
+  align-items: normal !important;
+  justify-content: normal !important;
+  min-height:100vh;
+  background-image: url("../images/azulgradiente.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  background-attachment: fixed;
+}
+.register-full-bg .wrapper, body .wrapper {
+  width:100% !important;
+  max-width:1100px !important; /* wider to show more form fields without zoom */
+  margin:20px auto !important;
+  background:rgba(255,255,255,0.96) !important;
+  border-radius:var(--radius) !important;
+  padding:18px 22px !important; /* slightly reduce internal padding */
+  box-shadow:0 10px 30px rgba(0,79,131,0.16) !important;
+  border:2px solid rgba(0,79,131,0.32) !important;
+}
+
+/* Fallback for any other specificity: ensure wrapper uses full width on large screens */
+.wrapper{max-width:1100px !important}
+h1{margin:0 0 8px;font-size:24px;color:var(--primary);font-weight:700}
+.section-title{font-weight:700;margin:18px 0 8px;color:var(--primary);text-transform:uppercase;font-size:12px;letter-spacing:0.8px}
+.input-box{margin:10px 0}
+.input-box input[type="text"],
+.input-box input[type="email"],
+.input-box input[type="password"],
+.input-box input[type="date"],
+.input-box input[type="tel"],
+.input-box input[type="number"],
+.input-box input[type="time"],
+.input-box textarea{
+  width:100%;
+  padding:14px 16px;
+  border-radius:18px;
+  border:1px solid rgba(0,79,131,0.26);
+  background:#f7fbff;
+  font-size:15px;
+  color:var(--primary);
+  outline:none;
+  transition:border-color .2s ease,box-shadow .2s ease;
+}
+.input-box input[type="text"]:focus,
+.input-box input[type="email"]:focus,
+.input-box input[type="password"]:focus,
+.input-box input[type="date"]:focus,
+.input-box input[type="tel"]:focus,
+.input-box input[type="number"]:focus,
+.input-box input[type="time"]:focus,
+.input-box textarea:focus{
+  border-color:var(--accent);
+  box-shadow:0 0 0 4px rgba(85,104,252,0.12);
+}
+.input-box textarea{resize:vertical}
+.input-box input[type="file"]{font-size:14px}
+label{color:var(--primary);font-weight:600}
+.input-box input::placeholder,
+.input-box textarea::placeholder{
+  color:rgba(0,79,131,0.5);
+}
+.checkbox-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:8px 0}
+.checkbox-grid label{display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:18px;border:1px solid rgba(0,79,131,0.24);background:#eef4ff;color:var(--primary);font-weight:600}
+.checkbox-grid input[type="checkbox"]{width:18px;height:18px}
+.small-input{width:100%;}
+.day-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:6px 0}
+.day-row input[type="time"]{padding:10px;border-radius:14px;border:1px solid rgba(0,79,131,0.24)}
+.btn{
+  display:inline-block;
+  background:linear-gradient(90deg,var(--primary),var(--accent));
+  color:#fff;
+  border:none;
+  padding:14px 20px;
+  border-radius:18px;
+  font-weight:700;
+  cursor:pointer;
+  box-shadow:0 12px 24px rgba(0,79,131,0.24);
+}
+.btn:hover{transform:translateY(-1px);box-shadow:0 14px 28px rgba(0,79,131,0.28)}
+.register-link{margin-top:12px;color:var(--primary);font-size:14px}
+.register-link a{color:#000 !important;}
+#registerMessage{margin-top:10px;font-size:14px;color:var(--primary)}
+@media(max-width:1200px){
+  .wrapper{max-width:920px}
+}
+
+@media(max-width:900px){
+  .wrapper{max-width:760px;}
+  .checkbox-grid{grid-template-columns:repeat(2,1fr)}
+  .small-input{width:100%;}
+  .day-row{gap:8px;}
+}
+
+@media(max-width:760px){
+  .wrapper{max-width:100%;padding:20px;}
+  .checkbox-grid{grid-template-columns:repeat(1,1fr)}
+  .checkbox-grid label{padding:10px 12px;}
+  .section-title{font-size:11px;}
+  .input-box input,
+  .input-box textarea,
+  .day-row input[type="time"]{font-size:14px;}
+}
+
+@media(max-width:520px){
+  .wrapper{padding:16px;}
+  .checkbox-grid{grid-template-columns:repeat(1,1fr)}
+  .day-row{flex-direction:column;align-items:flex-start}
+  .small-input{width:100%;}
+  .btn{width:100%;}
+  .input-box{margin:12px 0;}
+  .section-title{margin-top:14px;}
+}

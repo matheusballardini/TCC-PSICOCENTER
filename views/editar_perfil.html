@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Perfil - Psicocenter</title>
+    <link rel="stylesheet" href="../style/perfil.css">
+    <link rel="stylesheet" href="../style/editar_perfil.css">
+</head>
+
+<body>
+
+    <aside class="sidebar">
+        <div class="logo">Psicocenter</div>
+
+        <div class="usuario">
+            <img id="sidebarPhoto" src="../images/psicologo.webp" alt="Foto">
+            <h3 id="sidebarName">Carregando...</h3>
+            <p id="sidebarRole">Psicólogo</p>
+        </div>
+
+        <nav>
+            <a href="perfil.html">Perfil</a>
+            <a href="pacientes.html">Pacientes</a>
+            <a href="agendamentos.html">Agendamentos</a>
+        </nav>
+
+        <button class="voltar" id="cancelBtn">Cancelar</button>
+    </aside>
+
+    <main class="conteudo">
+        <section class="perfil">
+            <h1>Editar Perfil</h1>
+
+            <form id="editForm" class="card edit-card">
+
+                <div class="photo-preview-wrap">
+                    <img id="photoPreview" src="../images/psicologo.webp" alt="Preview">
+                </div>
+                <label class="file-label">
+                    Escolher foto
+                    <input id="edit_photo" type="file" accept="image/*" hidden>
+                </label>
+
+                <div class="input-box">
+                    <label>Nome</label>
+                    <input id="edit_name" type="text" required>
+                </div>
+
+                <div class="input-box">
+                    <label>Email</label>
+                    <input id="edit_email" type="email" required>
+                </div>
+
+                <div class="input-box">
+                    <label>Telefone</label>
+                    <input id="edit_phone" type="text">
+                </div>
+
+                <div class="input-box">
+                    <label>CRP</label>
+                    <input id="edit_crp" type="text">
+                </div>
+
+                <div class="input-box">
+                    <label>Biografia</label>
+                    <textarea id="edit_bio" rows="4"></textarea>
+                </div>
+
+                <p id="editMessage" class="register-link"></p>
+
+                <div class="edit-actions">
+                    <button type="submit" class="editar" id="saveBtn">Salvar alterações</button>
+                    <button type="button" class="editar cancelar" id="cancelBtn2">Cancelar</button>
+                </div>
+            </form>
+
+            <div class="conta-actions">
+                <button type="button" id="logoutBtn" class="btn-sair">Sair</button>
+                <button type="button" id="deleteAccountBtn" class="btn-excluir">Excluir conta</button>
+            </div>
+        </section>
+    </main>
+
+    <script src="../js/editar_perfil.js"></script>
+</body>
+
+</html>
