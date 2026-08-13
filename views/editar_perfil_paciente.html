@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Perfil - Psicocenter</title>
+    <link rel="stylesheet" href="../style/perfil_paciente.css">
+    <link rel="stylesheet" href="../style/editar_perfil_paciente.css">
+</head>
+
+<body>
+
+    <header class="topo-paciente">
+        <img src="../images/logo-psico-center.png" alt="Logo Psicocenter">
+        <h1 class="titulo-topo">Psicocenter</h1>
+        <nav class="menu-topo">
+            <a href="perfil_paciente.html">← Voltar ao perfil</a>
+        </nav>
+    </header>
+
+    <main class="conteudo-paciente">
+
+        <div class="editar-box">
+
+            <p id="loadingIndicator" class="carregando-dados" style="display:none;">Carregando dados...</p>
+
+            <form id="editForm" class="editar-form">
+
+                <h2 class="titulo-secao">Editar meus dados</h2>
+
+                <div class="photo-preview-wrap">
+                    <img id="photoPreview" src="../images/psicologo.webp" alt="Preview">
+                </div>
+                <label class="file-label">
+                    Escolher foto
+                    <input id="edit_photo" type="file" accept="image/*" hidden>
+                </label>
+
+                <div class="input-box">
+                    <label>Nome</label>
+                    <input id="edit_name" type="text" required>
+                </div>
+
+                <div class="input-box">
+                    <label>Email</label>
+                    <input id="edit_email" type="email" required>
+                </div>
+
+                <div class="input-box">
+                    <label>Telefone</label>
+                    <input id="edit_phone" type="tel">
+                </div>
+
+                <div class="input-box">
+                    <label>Data de nascimento</label>
+                    <input id="edit_birth" type="date">
+                </div>
+
+                <div class="input-box">
+                    <label>Gênero</label>
+                    <select id="edit_gender">
+                        <option value="">Prefiro não dizer</option>
+                        <option value="Feminino">Feminino</option>
+                        <option value="Masculino">Masculino</option>
+                        <option value="Outro">Outro</option>
+                    </select>
+                </div>
+
+                <div class="input-box">
+                    <label>Profissão</label>
+                    <input id="edit_occupation" type="text">
+                </div>
+
+                <div class="input-box">
+                    <label>Cidade</label>
+                    <input id="edit_city" type="text">
+                </div>
+
+                <div class="input-box">
+                    <label>Estado</label>
+                    <input id="edit_state" type="text">
+                </div>
+
+                <p id="editMessage" class="mensagem-edicao"></p>
+
+                <div class="edit-actions">
+                    <button type="submit" class="btn-primario" id="saveBtn">Salvar alterações</button>
+                    <a href="perfil_paciente.html" class="btn-secundario" style="text-decoration:none; display:flex; align-items:center; justify-content:center;">Cancelar</a>
+                </div>
+            </form>
+
+            <div class="conta-actions">
+                <button type="button" id="logoutBtn" class="btn-sair">Sair</button>
+                <button type="button" id="deleteAccountBtn" class="btn-perigo">Excluir conta</button>
+            </div>
+
+        </div>
+
+    </main>
+
+    <script src="../js/editar_perfil_paciente.js"></script>
+</body>
+
+</html>

@@ -1,5 +1,31 @@
 import { supabaseAdmin } from '../config/supabase.js';
 
+// psicologos não tem nome/foto/email (isso mora em profiles), então buscamos
+// as duas tabelas e juntamos pelo profile_id.
+const attachProfileData = async (psicologos) => {
+  const ids = psicologos.map((p) => p.profile_id);
+  if (ids.length === 0) return psicologos;
+
+  const { data: profiles, error } = await supabaseAdmin
+    .from('profiles')
+    .select('id, full_name, nome, email, foto, telefone, cidade, estado')
+    .in('id', ids);
+
+  if (error) throw error;
+
+  const profileById = Object.fromEntries((profiles || []).map((p) => [p.id, p]));
+
+  return psicologos.map((psicologo) => ({
+    ...psicologo,
+    full_name: profileById[psicologo.profile_id]?.full_name || profileById[psicologo.profile_id]?.nome || null,
+    email: profileById[psicologo.profile_id]?.email || null,
+    foto: profileById[psicologo.profile_id]?.foto || null,
+    telefone: profileById[psicologo.profile_id]?.telefone || null,
+    cidade: profileById[psicologo.profile_id]?.cidade || null,
+    estado: profileById[psicologo.profile_id]?.estado || null,
+  }));
+};
+
 export const getPsychologistById = async (psychologistId) => {
   const { data, error } = await supabaseAdmin
     .from('psicologos')
@@ -8,17 +34,19 @@ export const getPsychologistById = async (psychologistId) => {
     .single();
 
   if (error) throw error;
-  return data;
+
+  const [enriched] = await attachProfileData([data]);
+  return enriched;
 };
 
 export const getAllPsychologists = async () => {
   const { data, error } = await supabaseAdmin
     .from('psicologos')
-    .select('*, psicologo_especialidades(especialidades(*)), psychologist_ratings(*)')
+    .select('*')
     .order('created_at', { ascending: false });
 
   if (error) throw error;
-  return data;
+  return attachProfileData(data || []);
 };
 
 export const updatePsychologist = async (psychologistId, updates) => {

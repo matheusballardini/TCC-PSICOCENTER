@@ -116,6 +116,30 @@ async function register(event, role) {
         };
     }
 
+    // Se estiver cadastrando um paciente, coleta os campos extras do formulário
+    if (role === 'paciente') {
+        const birth_date = form.querySelector('#birth_date').value || null;
+        const gender = form.querySelector('#gender').value || null;
+        const occupation = form.querySelector('#occupation').value.trim();
+        const phone = form.querySelector('#phone').value.trim();
+        const city = form.querySelector('#city').value.trim();
+        const state = form.querySelector('#state').value.trim();
+
+        // Foto (opcional) -> lida como base64
+        const photoInput = form.querySelector('#photo');
+        let photoBase64 = null;
+        if (photoInput && photoInput.files && photoInput.files[0]) {
+            const file = photoInput.files[0];
+            photoBase64 = await toBase64(file);
+        }
+
+        payload.profile = {
+            birth_date, gender, occupation, phone,
+            address: { city, state },
+            photo: photoBase64
+        };
+    }
+
     try {
         const response = await fetch(API_BASE + '/api/auth/register', {
             method: 'POST',

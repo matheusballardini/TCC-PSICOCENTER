@@ -1,39 +1,98 @@
+*{
+  box-sizing: border-box;
+}
+
 body, html {
   height: 100%;
   margin: 0;
+  overflow-x: hidden;
+  max-width: 100%;
 }
 
 body {
-   display: flex;
-  justify-content: center; /* Centraliza horizontalmente */
-  margin-top: 10%;     /* Centraliza verticalmente */
-  background:url("../images/azulgradiente.png") no-repeat;
+  font-family: Open Sans, apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background:url("../images/azulgradiente.png") no-repeat center center fixed;
   background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-position: bottom center;
-  background-attachment: fixed;
+  color: #004f83;
 }
 
+/* CABEÇALHO (mesmo padrão do restante do site) */
 
-h1 span {
-  display: block;
-  text-align: center;
-  font-family: Open Sans, apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;
-  color: #2B4391;
-  font-size: 3.5rem; 
+.cabecalho{
+  border-bottom: 3px solid #004F83;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:20px 40px;
+  flex-wrap:wrap;
 }
 
-p span {
-  display: block;
+.cabecalho img{
+  width:85px;
+}
+
+.titulo-logo{
+  color:#fff;
+  font-size:48px;
+  margin-left:20px;
+  margin-right:auto;
+}
+
+.menu{
+  display:flex;
+  align-items:center;
+  gap:35px;
+}
+
+.menu a{
+  text-decoration:none;
+  color:#fff;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition:.3s;
+}
+
+.menu a:hover{
+  color:#d9deff;
+}
+
+.botao-perfil{
+  background:#fff;
+  color:#5568fc !important;
+  padding:12px 28px;
+  border-radius:40px;
+  font-weight:bold;
+  text-transform:uppercase;
+  box-shadow:0 0 8px rgba(132,0,255,.25);
+}
+
+.botao-perfil:hover{
+  background:#7282ff;
+  color:#fff !important;
+}
+
+/* APRESENTAÇÃO */
+
+.apresentacao {
   text-align: center;
-  font-family: Open Sans, apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;
+  padding: 70px 5% 60px;
+}
+
+.apresentacao h2 span {
+  display: block;
   color: #2B4391;
-  font-size: 1.3rem; 
+  font-size: 3.5rem;
+}
+
+.apresentacao p span {
+  display: block;
+  color: #2B4391;
+  font-size: 1.3rem;
 }
 
 .btn {
-  background-color: #2B4391; /* azul bem escuro */
+  background-color: #2B4391;
   color: white;
   border: none;
   padding: 12px 20px;
@@ -46,9 +105,8 @@ p span {
   gap: 10px;
   transition: 0.3s;
   justify-content: center;
-  margin-left: 36%;
+  margin: 24px auto 0;
   text-decoration: none;
-  font-family: Open Sans, apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;
 }
 
 .btn:hover {
@@ -59,79 +117,31 @@ p span {
   font-size: 18px;
 }
 
-.cabecalho {
-  position: absolute;
-  top: 0;
-  left: 100;
-  width: 100%;
-  height: 10%;
-  text-align: center;
-  padding: 2%;
-  border-bottom: 3px solid #2B4391;
-  padding: 0.5rem 0;
-}
+@media (max-width: 900px) {
+  .cabecalho {
+    justify-content: center;
+    text-align: center;
+    padding: 18px 20px;
+  }
 
-.psico {
-  margin: 0;
-  font-size: 2.3rem;
-  margin-top: 0vw;
-  color: #2B4391;
-  text-decoration: none;
-  font-family: Open Sans, apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;
-}
+  .titulo-logo {
+    margin: 15px 0;
+    font-size: 32px;
+  }
 
-.buscar {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    align-items: center;
-    top: 0;
-    text-decoration: none;
-    color: #2B4391;
-    font-size: 2.3rem;
-    margin: 0;
-    font-family: Open Sans, apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;
-    
-
-}
-
-
-
-.logo-container{
-    display: flex;
-    align-items: center;
-    gap: 0vw;
-    max-height: 0vw;
-    z-index: 2;
-    position: relative;
-    flex: 1 1 300px;
+  .menu {
+    width: 100%;
+    justify-content: center;
     flex-wrap: wrap;
-    
-}
+    margin-top: 15px;
+    gap: 16px;
+  }
 
-.logo-container img{
-    width: 7vw;
-    height: 7vw;
-    margin-top: -1vw;
-    
-}
+  .apresentacao h2 span {
+    font-size: 2.2rem;
+  }
 
-.logo-container h1{
-    margin: 0;
-}
-
-h2{
-  color: #2B4391;
-      position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    align-items: center;
-    top: 70%;
-    text-decoration: none;
-    font-size: 2.3rem;
-    margin: 0;
-    font-family: Open Sans, apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;
-
+  .apresentacao p span {
+    font-size: 1rem;
+  }
 }

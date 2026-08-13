@@ -8,6 +8,22 @@ async function login() {
         return;
     }
 
+    const loginBtn = document.getElementById('loginBtn');
+    const loginBtnOriginalText = loginBtn ? loginBtn.textContent : '';
+    if (loginBtn) {
+        loginBtn.disabled = true;
+        loginBtn.style.opacity = '0.6';
+        loginBtn.textContent = 'Carregando...';
+    }
+
+    function resetLoginButton() {
+        if (loginBtn) {
+            loginBtn.disabled = false;
+            loginBtn.style.opacity = '1';
+            loginBtn.textContent = loginBtnOriginalText;
+        }
+    }
+
     try {
         const response = await fetch(API_BASE + '/api/auth/login', {
             method: 'POST',
@@ -23,6 +39,24 @@ async function login() {
             const token = data.data?.token;
             const user = data.data?.user || {};
             const profile = data.data?.profile || {};
+            const tipoConta = profile.tipo || profile.role || '';
+
+            // confere se a conta é do tipo certo pra tela de login usada,
+            // pra não deixar um psicólogo entrar como paciente (ou vice-versa)
+            const loc = window.location.href || '';
+            const isPsicologoLoginPage = loc.includes('loginpsicologo');
+            const isPacienteLoginPage = loc.includes('loginpaciente');
+            if (isPsicologoLoginPage && tipoConta && tipoConta !== 'psicologo') {
+                resetLoginButton();
+                alert('Esta conta não é de psicólogo. Use o login de paciente.');
+                return;
+            }
+            if (isPacienteLoginPage && tipoConta && tipoConta !== 'paciente') {
+                resetLoginButton();
+                alert('Esta conta não é de paciente. Use o login de psicólogo.');
+                return;
+            }
+
             if (token) {
                 localStorage.setItem('authToken', token);
                 try {
@@ -41,9 +75,9 @@ async function login() {
                     if (currentUser.id) localStorage.setItem('authUserId', String(currentUser.id));
                 } catch(e){}
             }
-            alert('Login bem-sucedido!');
-            const loc = window.location.href || '';
-            if (loc.includes('loginpsicologo')) {
+            // mantém o botão em "Carregando..." até a troca de página acontecer;
+            // usa o tipo real da conta pra decidir o destino, não a tela de login usada
+            if (tipoConta === 'psicologo') {
                 window.location.href = 'perfil.html';
             } else {
                 window.location.href = 'paginaposlogin.html';
@@ -51,13 +85,13 @@ async function login() {
             return;
         }
 
+        resetLoginButton();
         const message = data?.message || 'Erro ao fazer login. Verifique e tente novamente.';
         alert(message);
     } catch (error) {
         console.warn('Backend indisponível, tentando fallback local.', error);
         const user = findMockUser(email);
         if (user && user.password === senha_usuario) {
-            alert('Login local bem-sucedido!');
             const currentUser = {
                 id: user.id || null,
                 email: user.email || email,
@@ -80,6 +114,7 @@ async function login() {
             return;
         }
 
+        resetLoginButton();
         alert('Não foi possível conectar ao servidor e não há usuário local cadastrado. Tente novamente mais tarde.');
     }
 }
@@ -88,3 +123,17 @@ function findMockUser(email) {
     const users = JSON.parse(localStorage.getItem('mockUsers') || '[]');
     return users.find(u => u.email.toLowerCase() === email.toLowerCase());
 }
+
+// botão de mostrar/esconder a senha: o cadeado vira um olho enquanto a senha está visível
+document.addEventListener('DOMContentLoaded', () => {
+    const toggleIcon = document.getElementById('togglePassword');
+    const senhaInput = document.getElementById('senha_usuario');
+    if (!toggleIcon || !senhaInput) return;
+
+    toggleIcon.addEventListener('click', () => {
+        const estaEscondida = senhaInput.type === 'password';
+        senhaInput.type = estaEscondida ? 'text' : 'password';
+        toggleIcon.classList.toggle('bx-lock', !estaEscondida);
+        toggleIcon.classList.toggle('bx-eye', estaEscondida);
+    });
+});

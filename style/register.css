@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap');
 :root{
   --primary:#004F83; /* deep brand blue */
   --accent:#5568FC; /* used across site */
@@ -8,7 +7,7 @@
 }
 *{box-sizing:border-box}
 .register-full-bg, body{
-  font-family: "Open Sans", Arial, sans-serif;
+  font-family: "Open Sans", apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   color:var(--primary);
   padding:12px; /* reduce outer padding so content can expand */
   min-height:100vh;
@@ -41,7 +40,66 @@ body{
 /* Fallback for any other specificity: ensure wrapper uses full width on large screens */
 .wrapper{max-width:1100px !important}
 h1{margin:0 0 8px;font-size:24px;color:var(--primary);font-weight:700}
-.section-title{font-weight:700;margin:18px 0 8px;color:var(--primary);text-transform:uppercase;font-size:12px;letter-spacing:0.8px}
+
+/* Cabeçalho no padrão do site, pras páginas de cadastro que não usam styles.css */
+.cabecalho-cadastro{
+  width:100%;
+  max-width:1100px;
+  margin:0 auto 8px;
+  display:flex;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:16px;
+  padding:6px 4px;
+}
+.cabecalho-cadastro img{width:56px;flex-shrink:0}
+.titulo-cadastro{
+  color:#fff;
+  font-size:clamp(22px,3vw,30px);
+  margin-right:auto;
+  text-shadow:0 2px 8px rgba(0,0,0,0.25);
+}
+.voltar-cadastro{
+  color:#fff;
+  text-decoration:none;
+  font-weight:700;
+  background:rgba(255,255,255,0.18);
+  padding:10px 20px;
+  border-radius:30px;
+  border:1px solid rgba(255,255,255,0.4);
+  transition:.3s;
+  white-space:nowrap;
+}
+.voltar-cadastro:hover{background:rgba(255,255,255,0.3)}
+
+.section-title{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-weight:700;
+  margin:26px 0 12px;
+  color:var(--primary);
+  text-transform:none;
+  font-size:16px;
+  letter-spacing:0;
+  padding-bottom:8px;
+  border-bottom:2px solid rgba(0,79,131,0.12);
+}
+.section-title:first-of-type{margin-top:6px}
+.section-title::before{
+  content:attr(data-step);
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:26px;
+  height:26px;
+  flex-shrink:0;
+  border-radius:50%;
+  background:linear-gradient(135deg,var(--primary),var(--accent));
+  color:#fff;
+  font-size:13px;
+  font-weight:700;
+}
 .input-box{margin:10px 0}
 .input-box input[type="text"],
 .input-box input[type="email"],
@@ -50,6 +108,7 @@ h1{margin:0 0 8px;font-size:24px;color:var(--primary);font-weight:700}
 .input-box input[type="tel"],
 .input-box input[type="number"],
 .input-box input[type="time"],
+.input-box select,
 .input-box textarea{
   width:100%;
   padding:14px 16px;
@@ -68,6 +127,7 @@ h1{margin:0 0 8px;font-size:24px;color:var(--primary);font-weight:700}
 .input-box input[type="tel"]:focus,
 .input-box input[type="number"]:focus,
 .input-box input[type="time"]:focus,
+.input-box select:focus,
 .input-box textarea:focus{
   border-color:var(--accent);
   box-shadow:0 0 0 4px rgba(85,104,252,0.12);
@@ -80,11 +140,45 @@ label{color:var(--primary);font-weight:600}
   color:rgba(0,79,131,0.5);
 }
 .checkbox-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:8px 0}
-.checkbox-grid label{display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:18px;border:1px solid rgba(0,79,131,0.24);background:#eef4ff;color:var(--primary);font-weight:600}
+.checkbox-grid label{display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:18px;border:1px solid rgba(0,79,131,0.24);background:#eef4ff;color:var(--primary);font-weight:600;cursor:pointer;transition:.2s}
+.checkbox-grid label:hover{border-color:var(--accent)}
+.checkbox-grid label:has(input:checked){background:linear-gradient(135deg,var(--primary),var(--accent));color:#fff;border-color:transparent;box-shadow:0 8px 18px rgba(0,79,131,0.22)}
 .checkbox-grid input[type="checkbox"]{width:18px;height:18px}
+
+/* Toggle de modalidade (online/presencial), mesmo visual dos chips de especialidade */
+.modalidade-row{display:flex;flex-wrap:wrap;gap:10px;margin:8px 0 4px}
+.modalidade-row label{display:flex;align-items:center;gap:10px;padding:12px 20px;border-radius:18px;border:1px solid rgba(0,79,131,0.24);background:#eef4ff;color:var(--primary);font-weight:600;cursor:pointer;transition:.2s}
+.modalidade-row label:hover{border-color:var(--accent)}
+.modalidade-row label:has(input:checked){background:linear-gradient(135deg,var(--primary),var(--accent));color:#fff;border-color:transparent;box-shadow:0 8px 18px rgba(0,79,131,0.22)}
+.modalidade-row input[type="checkbox"]{width:18px;height:18px}
+
 .small-input{width:100%;}
-.day-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:6px 0}
-.day-row input[type="time"]{padding:10px;border-radius:14px;border:1px solid rgba(0,79,131,0.24)}
+.price-row{display:flex;gap:16px;flex-wrap:wrap}
+.price-field{flex:1;min-width:160px}
+.price-field label{display:block;font-size:12px;font-weight:700;color:var(--primary);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px}
+
+/* Rótulo curto acima de um campo, pra deixar campos ambíguos (tipo data de nascimento) explícitos */
+.field-label{display:block;font-size:12px;font-weight:700;color:var(--primary);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px}
+
+.day-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:8px 0;padding:10px 14px;border-radius:16px;background:#f7fbff;border:1px solid rgba(0,79,131,0.14);transition:.2s}
+.day-row:has(input:checked){background:#eef4ff;border-color:rgba(0,79,131,0.35)}
+.day-row label{display:flex;align-items:center;gap:8px;min-width:110px;color:var(--primary);font-weight:600;cursor:pointer}
+.day-row input[type="time"]{padding:10px;border-radius:14px;border:1px solid rgba(0,79,131,0.24);background:#fff}
+
+/* Upload de foto com preview circular, mesmo padrão da tela de editar perfil */
+.foto-upload{display:flex;align-items:center;gap:18px;margin:10px 0 18px;flex-wrap:wrap}
+.foto-upload .photo-preview-wrap{
+  width:88px;height:88px;border-radius:50%;overflow:hidden;flex-shrink:0;
+  background:#eef4ff;border:2px solid rgba(0,79,131,0.2);
+}
+.foto-upload .photo-preview-wrap img{width:100%;height:100%;object-fit:cover}
+.foto-upload .file-label{
+  display:inline-block;padding:10px 18px;border-radius:16px;
+  border:1px solid rgba(0,79,131,0.28);background:#eef4ff;color:var(--primary);
+  font-weight:700;font-size:14px;cursor:pointer;transition:.2s;
+}
+.foto-upload .file-label:hover{border-color:var(--accent)}
+.foto-upload input[type="file"]{display:none}
 .btn{
   display:inline-block;
   background:linear-gradient(90deg,var(--primary),var(--accent));
@@ -115,7 +209,7 @@ label{color:var(--primary);font-weight:600}
   .wrapper{max-width:100%;padding:20px;}
   .checkbox-grid{grid-template-columns:repeat(1,1fr)}
   .checkbox-grid label{padding:10px 12px;}
-  .section-title{font-size:11px;}
+  .section-title{font-size:14px;}
   .input-box input,
   .input-box textarea,
   .day-row input[type="time"]{font-size:14px;}

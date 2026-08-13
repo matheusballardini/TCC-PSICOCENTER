@@ -1,0 +1,184 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: Open Sans, apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: url("../images/azulgradiente.png") no-repeat center center fixed;
+    background-size: cover;
+    min-height: 100vh;
+    color: #1f2a44;
+}
+
+/* TOPO (mesmo padrão do cabeçalho do restante do site) */
+
+.topo-perfil {
+    border-bottom: 3px solid #004F83;
+    background-color: #eef2fb;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 40px;
+    flex-wrap: wrap;
+}
+
+.topo-perfil img {
+    width: 85px;
+}
+
+.titulo-topo {
+    color: #004f83;
+    font-size: 48px;
+    margin-left: 16px;
+    margin-right: auto;
+}
+
+.menu-topo a {
+    text-decoration: none;
+    color: #fff;
+    background-color: #004f83;
+    padding: 12px 26px;
+    border-radius: 40px;
+    font-weight: bold;
+    transition: .3s;
+}
+
+.menu-topo a:hover {
+    background-color: #003a61;
+}
+
+@media (max-width: 700px) {
+    .topo-perfil {
+        justify-content: center;
+        text-align: center;
+        padding: 16px 20px;
+    }
+
+    .titulo-topo {
+        margin: 12px 0;
+        font-size: 32px;
+        width: 100%;
+    }
+}
+
+/* CONTEÚDO */
+
+.conteudo-perfil {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 50px 20px;
+}
+
+.carregando-dados {
+    color: #004f83;
+    opacity: .75;
+}
+
+.card-perfil {
+    background: #fff;
+    border-radius: 24px;
+    padding: 40px;
+    width: 100%;
+    max-width: 520px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+}
+
+.foto-perfil {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 16px;
+}
+
+.card-perfil h2 {
+    color: #1f2a44;
+    font-size: 24px;
+}
+
+.crp {
+    color: #5f6d86;
+    margin-bottom: 12px;
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.tags .tag {
+    background: #eef2fb;
+    color: #004f83;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 14px;
+}
+
+.localizacao {
+    color: #5f6d86;
+    margin-bottom: 12px;
+}
+
+.modalidades {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.modalidades span {
+    border: 1px solid #d7dcea;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 14px;
+}
+
+.preco {
+    font-weight: bold;
+    font-size: 20px;
+    color: #1f2a44;
+    margin-bottom: 16px;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #eee;
+    margin: 16px 0;
+}
+
+.informacoes {
+    text-align: left;
+}
+
+.informacoes p {
+    margin-bottom: 12px;
+    color: #1f2a44;
+}
+
+.informacoes strong {
+    color: #004f83;
+}
+
+.btn-agendar {
+    display: block;
+    margin-top: 24px;
+    padding: 14px 0;
+    background-color: #004f83;
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 40px;
+    text-align: center;
+    transition: .3s;
+}
+
+.btn-agendar:hover {
+    background-color: #003a61;
+}

@@ -1,3 +1,63 @@
+/* o perfil.css deixa o body como flex (pensado pra sidebar + conteúdo lado a lado);
+   aqui não tem sidebar, então o body precisa empilhar cabeçalho e conteúdo normalmente */
+body {
+    display: block;
+    min-height: auto;
+}
+
+/* CABEÇALHO (substitui a sidebar do perfil.css nesta página) */
+
+.topo-editar {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding: 18px 40px;
+    background: linear-gradient(135deg, #5a7bc9, #4b6cb7);
+    box-shadow: 0 4px 16px rgba(30, 45, 90, 0.18);
+}
+
+.topo-editar img {
+    width: 48px;
+    flex-shrink: 0;
+}
+
+.topo-editar h1 {
+    color: #fff;
+    font-size: 24px;
+    margin-right: auto;
+}
+
+.topo-editar .voltar-link {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 700;
+    background: rgba(255, 255, 255, 0.18);
+    padding: 10px 20px;
+    border-radius: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    transition: .2s;
+    white-space: nowrap;
+}
+
+.topo-editar .voltar-link:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* CONTEÚDO CENTRALIZADO (sem sidebar) */
+
+.editar-conteudo {
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px 60px;
+}
+
+.editar-conteudo .perfil {
+    width: 100%;
+    max-width: 500px;
+}
+
 .edit-card {
     text-align: left;
 }
@@ -66,15 +126,46 @@
     margin-top: 10px;
 }
 
-.edit-actions .editar {
-    margin-top: 0;
+.edit-actions .btn,
+.edit-actions .btn-secondary {
+    flex: 1;
+    padding: 13px;
+    border: none;
+    border-radius: 30px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: .25s;
 }
 
-.editar.cancelar {
-    background-color: #eee;
-    color: #444;
+.edit-actions .btn {
+    background: linear-gradient(90deg, #4b6cb7, #395591);
+    color: #fff;
+    box-shadow: 0 10px 20px rgba(75, 108, 183, 0.25);
 }
 
-.editar.cancelar:hover {
-    background-color: #ddd;
+.edit-actions .btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 12px 24px rgba(75, 108, 183, 0.3);
+}
+
+.edit-actions .btn-secondary {
+    background: #eef1fa;
+    color: #4b6cb7;
+    border: 1px solid rgba(75, 108, 183, 0.3);
+}
+
+.edit-actions .btn-secondary:hover {
+    background: #dfe6f5;
+}
+
+@media (max-width: 480px) {
+    .edit-actions {
+        flex-direction: column;
+    }
+
+    .edit-card .photo-preview-wrap {
+        width: 100px;
+        height: 100px;
+    }
 }

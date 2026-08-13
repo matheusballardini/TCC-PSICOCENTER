@@ -1,21 +1,17 @@
 const API_BASE = 'http://localhost:3001';
 
 document.addEventListener('DOMContentLoaded', () => {
-    initEditPage();
+    initEditPatientPage();
 });
 
 let newPhotoBase64 = null;
 
-async function initEditPage() {
+async function initEditPatientPage() {
     const token = localStorage.getItem('authToken');
     if (!token) {
-        window.location.href = 'loginpsicologo.html';
+        window.location.href = 'loginpaciente.html';
         return;
     }
-
-    document.getElementById('cancelBtn2').addEventListener('click', () => {
-        window.location.href = 'perfil.html';
-    });
 
     const photoInput = document.getElementById('edit_photo');
     photoInput.addEventListener('change', async (e) => {
@@ -85,47 +81,38 @@ async function loadCurrentData(token) {
         const profile = meData.data?.profile || {};
         const userId = meData.data?.user?.id;
 
-        // essa é a página do psicólogo; se quem estiver logado for paciente,
+        // essa é a página do paciente; se quem estiver logado for psicólogo,
         // manda pro painel certo em vez de mostrar os dados dele aqui
-        if (profile.tipo && profile.tipo !== 'psicologo') {
-            alert('Esta é a área do psicólogo. Você está logado como paciente.');
-            window.location.href = 'paginaposlogin.html';
+        if (profile.tipo && profile.tipo !== 'paciente') {
+            alert('Esta é a área do paciente. Você está logado como psicólogo.');
+            window.location.href = 'perfil.html';
             return;
         }
 
-        let psicologo = {};
+        let paciente = {};
         if (userId) {
             try {
-                const pRes = await fetch(API_BASE + '/api/psychologists/' + userId, {
+                const pRes = await fetch(API_BASE + '/api/patients/' + userId, {
                     headers: { 'Authorization': 'Bearer ' + token }
                 });
                 const pData = await pRes.json();
-                if (pRes.ok && pData.success) psicologo = pData.data || {};
+                if (pRes.ok && pData.success) paciente = pData.data || {};
             } catch (e) {
-                console.warn('Erro ao buscar dados do psicólogo', e);
+                console.warn('Erro ao buscar dados do paciente', e);
             }
         }
 
-        const name = profile.full_name || profile.nome || '';
-        const email = profile.email || '';
-        const phone = profile.telefone || '';
-        const bio = psicologo.descricao_profissional || profile.biografia || '';
-        const crp = psicologo.crp || '';
-        const photo = profile.foto || null;
-
-        document.getElementById('edit_name').value = name;
-        document.getElementById('edit_email').value = email;
-        document.getElementById('edit_phone').value = phone;
-        document.getElementById('edit_crp').value = crp;
-        document.getElementById('edit_bio').value = bio;
-        if (photo) document.getElementById('photoPreview').src = photo;
-
-        const sidebarName = document.getElementById('sidebarName');
-        const sidebarPhoto = document.getElementById('sidebarPhoto');
-        if (sidebarName) sidebarName.textContent = name || '—';
-        if (sidebarPhoto && photo) sidebarPhoto.src = photo;
+        document.getElementById('edit_name').value = profile.full_name || profile.nome || '';
+        document.getElementById('edit_email').value = profile.email || '';
+        document.getElementById('edit_phone').value = profile.telefone || '';
+        document.getElementById('edit_birth').value = profile.data_nascimento || '';
+        document.getElementById('edit_gender').value = paciente.genero || '';
+        document.getElementById('edit_occupation').value = paciente.profissao || '';
+        document.getElementById('edit_city').value = profile.cidade || '';
+        document.getElementById('edit_state').value = profile.estado || '';
+        if (profile.foto) document.getElementById('photoPreview').src = profile.foto;
     } catch (err) {
-        console.warn('Erro ao carregar dados do perfil', err);
+        console.warn('Erro ao carregar dados do paciente', err);
         document.getElementById('editMessage').textContent = 'Não foi possível carregar seus dados.';
     } finally {
         if (loadingIndicator) loadingIndicator.style.display = 'none';
@@ -143,7 +130,7 @@ async function saveProfile(event) {
 
     const token = localStorage.getItem('authToken');
     if (!token) {
-        window.location.href = 'loginpsicologo.html';
+        window.location.href = 'loginpaciente.html';
         return;
     }
 
@@ -151,8 +138,11 @@ async function saveProfile(event) {
         full_name: document.getElementById('edit_name').value.trim(),
         email: document.getElementById('edit_email').value.trim(),
         phone: document.getElementById('edit_phone').value.trim(),
-        crp: document.getElementById('edit_crp').value.trim(),
-        bio: document.getElementById('edit_bio').value.trim(),
+        birth_date: document.getElementById('edit_birth').value || null,
+        gender: document.getElementById('edit_gender').value || null,
+        occupation: document.getElementById('edit_occupation').value.trim(),
+        city: document.getElementById('edit_city').value.trim(),
+        state: document.getElementById('edit_state').value.trim(),
     };
     if (newPhotoBase64) payload.photo = newPhotoBase64;
 
@@ -162,7 +152,7 @@ async function saveProfile(event) {
         if (!meRes.ok || !meData.success) throw new Error('Não autenticado');
         const userId = meData.data?.user?.id;
 
-        const res = await fetch(API_BASE + '/api/psychologists/' + userId, {
+        const res = await fetch(API_BASE + '/api/patients/' + userId, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -182,15 +172,13 @@ async function saveProfile(event) {
             currentUser.full_name = payload.full_name;
             currentUser.email = payload.email;
             currentUser.phone = payload.phone;
-            currentUser.crp = payload.crp;
-            currentUser.bio = payload.bio;
             if (newPhotoBase64) currentUser.photo = newPhotoBase64;
             localStorage.setItem('currentUser', JSON.stringify(currentUser));
         } catch (e) { /* ignore */ }
 
         message.style.color = '#2e7d32';
         message.textContent = 'Alterações salvas com sucesso! Voltando...';
-        setTimeout(() => { window.location.href = 'perfil.html'; }, 900);
+        setTimeout(() => { window.location.href = 'perfil_paciente.html'; }, 900);
     } catch (err) {
         message.style.color = '#ff4444';
         message.textContent = err.message || 'Erro ao salvar alterações.';

@@ -27,26 +27,15 @@ body {
 
 .cabecalho {
     width: 100%;
-    min-height: 95px;
 
-    
-
-    border-bottom: 2px solid #2b4391;
-
-    display: flex;
-    align-items: center;
-
-    padding: 0 50px;
-
-    position: relative;
-}
-
-header {
-    width: 100%;
+    border-bottom: 3px solid #2b4391;
 
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
+
+    padding: 20px 40px;
 }
 
 
@@ -59,8 +48,8 @@ header {
 }
 
 .logo-container img {
-    width: 70px;
-    height: 70px;
+    width: 85px;
+    height: 85px;
 
     object-fit: contain;
 }
@@ -70,34 +59,54 @@ header {
 
     color: #2b4391;
 
-    font-size: 32px;
-    font-weight: 600;
+    font-size: 48px;
+    font-weight: bold;
 }
 
 
-/* Mensagens */
+/* Menu do cabeçalho: Mensagens + Voltar */
 
-.buscar {
-    position: absolute;
-
-    left: 50%;
-    transform: translateX(-50%);
-
+.menu-cabecalho {
     display: flex;
     align-items: center;
+    gap: 28px;
+}
 
+.menu-cabecalho a {
+    display: flex;
+    align-items: center;
     gap: 8px;
 
     text-decoration: none;
 
     color: #2b4391;
 
-    font-size: 28px;
+    font-size: 18px;
     font-weight: 500;
 }
 
-.buscar i {
-    font-size: 32px;
+.menu-cabecalho a i {
+    font-size: 22px;
+}
+
+.botao-voltar {
+    background: #2b4391;
+    color: #fff !important;
+    padding: 10px 22px;
+    border-radius: 40px;
+    font-weight: bold;
+    transition: .3s;
+}
+
+.botao-voltar:hover {
+    background: #1c2f68;
+}
+
+.carregando-dados {
+    text-align: center;
+    color: #2b4391;
+    opacity: .75;
+    margin: 20px 0;
 }
 
 
@@ -298,6 +307,7 @@ header {
     flex-shrink: 0;
 
     background: #dbe7f7;
+    object-fit: cover;
 
     color: #2b4391;
 
@@ -504,13 +514,15 @@ header {
         grid-template-columns: repeat(2, 1fr);
     }
 
-    .buscar {
-        position: static;
+    .cabecalho {
+        justify-content: center;
+        text-align: center;
+    }
 
-        transform: none;
-
-        margin-left: auto;
-        margin-right: 30px;
+    .menu-cabecalho {
+        width: 100%;
+        justify-content: center;
+        margin-top: 12px;
     }
 
 }
@@ -523,20 +535,19 @@ header {
     }
 
     .psico {
-        font-size: 24px;
+        font-size: 32px;
     }
 
     .logo-container img {
-        width: 55px;
-        height: 55px;
+        width: 65px;
+        height: 65px;
     }
 
-    .buscar {
+    .menu-cabecalho a:not(.botao-voltar) {
         font-size: 0;
-        margin-right: 0;
     }
 
-    .buscar i {
+    .menu-cabecalho a:not(.botao-voltar) i {
         font-size: 28px;
     }
 
