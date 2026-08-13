@@ -44,7 +44,7 @@ export const register = async (req, res, next) => {
 
     if (profileError) throw profileError;
 
-    // If registering a psychologist, create an entry in the psicologos table
+    // Se estiver cadastrando um psicólogo, cria o registro na tabela psicologos
     if (role === 'psicologo') {
       try {
         const { online, presencial } = profilePayload.modalities || {};
@@ -76,6 +76,25 @@ export const register = async (req, res, next) => {
         }
       } catch (e) {
         console.warn('Erro ao inserir psicologo:', e);
+      }
+    }
+
+    // Se estiver cadastrando um paciente, cria o registro na tabela pacientes
+    if (role === 'paciente') {
+      try {
+        const pacienteRecord = {
+          profile_id: user.id,
+          profissao: profilePayload.occupation || null,
+          genero: profilePayload.gender || null,
+        };
+
+        const { error: pacienteError } = await supabaseAdmin.from('pacientes').insert(pacienteRecord);
+        if (pacienteError) {
+          // registra o erro mas não bloqueia o cadastro
+          console.warn('Falha ao criar paciente record:', pacienteError);
+        }
+      } catch (e) {
+        console.warn('Erro ao inserir paciente:', e);
       }
     }
 
@@ -158,9 +177,46 @@ export const deleteAccount = async (req, res, next) => {
   try {
     const userId = req.user.id;
 
-    await supabaseAdmin.from('psicologos').delete().eq('profile_id', userId);
-    await supabaseAdmin.from('pacientes').delete().eq('profile_id', userId);
-    await supabaseAdmin.from('profiles').delete().eq('id', userId);
+    // limpa tudo que referencia esse usuário antes de apagar psicologos/pacientes/profiles,
+    // senão as chaves estrangeiras (ex: appointments -> pacientes/psicologos) bloqueiam a
+    // exclusão em silêncio e o auth.users acaba não conseguindo ser removido no final
+    const referencingTables = [
+      ['psychologist_ratings', 'patient_id'],
+      ['psychologist_ratings', 'psychologist_id'],
+      ['appointments', 'patient_id'],
+      ['appointments', 'psychologist_id'],
+      ['psychologist_availability', 'psychologist_id'],
+      ['followers', 'paciente_id'],
+      ['followers', 'psicologo_id'],
+      ['psicologo_especialidades', 'psicologo_id'],
+      ['publication_likes', 'user_id'],
+      ['publication_saves', 'user_id'],
+      ['publication_comments', 'author_id'],
+      ['publications', 'psychologist_id'],
+      ['notifications', 'recipient_id'],
+      ['notifications', 'actor_id'],
+      ['reports', 'reporter_id'],
+      ['chat_attachments', 'uploaded_by'],
+      ['messages', 'sender_id'],
+      ['conversations', 'patient_id'],
+      ['conversations', 'psychologist_id'],
+    ];
+
+    for (const [table, column] of referencingTables) {
+      const { error: cleanupError } = await supabaseAdmin.from(table).delete().eq(column, userId);
+      if (cleanupError) {
+        console.warn(`Aviso: falha ao limpar ${table}.${column} para ${userId}:`, cleanupError.message);
+      }
+    }
+
+    const { error: psicologoError } = await supabaseAdmin.from('psicologos').delete().eq('profile_id', userId);
+    if (psicologoError) throw psicologoError;
+
+    const { error: pacienteError } = await supabaseAdmin.from('pacientes').delete().eq('profile_id', userId);
+    if (pacienteError) throw pacienteError;
+
+    const { error: profileError } = await supabaseAdmin.from('profiles').delete().eq('id', userId);
+    if (profileError) throw profileError;
 
     const { error } = await supabaseAdmin.auth.admin.deleteUser(userId);
     if (error) throw error;

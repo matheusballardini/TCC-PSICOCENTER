@@ -3,6 +3,8 @@ document.addEventListener("DOMContentLoaded", function () {
     // fetch professionals from backend and render them
     async function fetchAndRender() {
         const API_BASE = 'http://localhost:3001';
+        const loadingEl = document.getElementById('loadingProfissionais');
+        if (loadingEl) loadingEl.style.display = 'block';
         try {
             const res = await fetch(API_BASE + '/api/psychologists');
             const data = await res.json();
@@ -23,6 +25,8 @@ document.addEventListener("DOMContentLoaded", function () {
             const local = loadLocalPsychologists();
             if (local.length) renderProfessionals(local);
             filtrarProfissionais();
+        } finally {
+            if (loadingEl) loadingEl.style.display = 'none';
         }
     }
 
@@ -63,20 +67,23 @@ document.addEventListener("DOMContentLoaded", function () {
         list.forEach(p => {
             const name = p.full_name || p.name || '—';
             const crp = p.crp ? `CRP ${p.crp}` : '';
-            const specialties = (p.specialties && Array.isArray(p.specialties)) ? p.specialties : (p.psicologo_especialidades || []).map(s => (s.especialidades && s.especialidades.name) || s.especialidade || '').filter(Boolean);
-            const city = (p.address && p.address.city) ? `${p.address.city}, ${p.address.state || ''}` : (p.city || '');
+            const specialties = Array.isArray(p.especialidades) ? p.especialidades : (Array.isArray(p.specialties) ? p.specialties : []);
+            const city = p.cidade ? `${p.cidade}${p.estado ? ', ' + p.estado : ''}` : (p.city || '');
             const modalidades = [];
-            if (p.modalities) {
-                if (p.modalities.presencial) modalidades.push('🏠 Presencial');
-                if (p.modalities.online) modalidades.push('🎥 Online');
-            }
-            const price = (p.price_min || p.price_max) ? `R$ ${p.price_min || '-'} - R$ ${p.price_max || '-'}` : '';
+            if (p.modalidade === 'presencial' || p.modalidade === 'ambos') modalidades.push('🏠 Presencial');
+            if (p.modalidade === 'online' || p.modalidade === 'ambos') modalidades.push('🎥 Online');
+            const price = (p.valor_consulta || p.valor_consulta_max) ? `R$ ${p.valor_consulta || '-'} - R$ ${p.valor_consulta_max || '-'}` : '';
+
+            const psychologistId = p.profile_id || p.id || null;
+            const avatar = p.foto
+                ? `<img class="avatar" src="${p.foto}" alt="${escapeHtml(name)}">`
+                : `<div class="avatar">${getInitials(name)}</div>`;
 
             const card = document.createElement('article');
             card.className = 'card';
             card.innerHTML = `
                 <div class="profissional-topo">
-                    <div class="avatar">${getInitials(name)}</div>
+                    ${avatar}
                     <div>
                         <h2 class="nome">${escapeHtml(name)}</h2>
                         <p class="crp">${escapeHtml(crp)}</p>
@@ -99,13 +106,13 @@ document.addEventListener("DOMContentLoaded", function () {
             try{
                 const link = card.querySelector('.btn-perfil');
                 const agendarLink = card.querySelector('.btn-agendar');
-                const profileHref = p.id ? 'perfil.html?id=' + encodeURIComponent(p.id) : (p.email ? 'perfil.html?email=' + encodeURIComponent(p.email) : (p.profile && p.profile.email ? 'perfil.html?email=' + encodeURIComponent(p.profile.email) : '#'));
+                const profileHref = psychologistId ? 'ver_perfil_psicologo.html?id=' + encodeURIComponent(psychologistId) : '#';
                 if(link){
                     link.setAttribute('href', profileHref);
                 }
                 if(agendarLink){
-                    if (p.id) {
-                        agendarLink.setAttribute('href', 'agendar_consulta.html?psicologo_id=' + encodeURIComponent(p.id) + '&nome=' + encodeURIComponent(name));
+                    if (psychologistId) {
+                        agendarLink.setAttribute('href', 'agendar_consulta.html?psicologo_id=' + encodeURIComponent(psychologistId) + '&nome=' + encodeURIComponent(name));
                     } else {
                         agendarLink.setAttribute('href', 'agendar_consulta.html');
                     }

@@ -1,252 +1,220 @@
 *{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
 body{
-    min-height: 100vh;
-    background-color: #fffed9;
-    background-image: url(../images/background-sobrenos.png);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    overflow-x: hidden;
-    font-family: Open Sans, apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;  
+    font-family: Open Sans, apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background:url("../images/azulgradiente.png") no-repeat center center fixed;
+    background-size:cover;
+    color:#004f83;
 }
 
-/* =========================
-   CABEÇALHO
-========================= */
+/* CABEÇALHO */
 
-.div-titulo{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
-    padding: 20px;
-    position: relative;
+.cabecalho{
+    border-bottom: 3px solid #004F83;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:20px 40px;
+    flex-wrap:wrap;
 }
 
-.logo-sobrenos{
-    width: 130px;
-    height: auto;
+.cabecalho img{
+    width:80px;
 }
 
-.titulo,
-h1{
-    font-size: 48px;
-    color: #004f83;
+.titulo-logo{
+    color:#fff;
+    font-size:48px;
+    margin-left:20px;
+    margin-right:auto;
 }
 
-a{
-    text-decoration: none;
-    color: #004f83;
+.titulo-logo a{
+    color:inherit;
+    text-decoration:none;
 }
 
-.botao-contato{
-    position: absolute;
-    top: 35px;
-    right: 40px;
-    font-size: 20px;
-    font-weight: 600;
+.menu{
+    display:flex;
+    align-items:center;
+    gap:35px;
 }
 
-/* =========================
-   SOBRE NÓS
-========================= */
-
-.sobrenos{
-    margin: 40px 10%;
-    color: #004f83;
-    font-size: 48px;
+.menu a{
+    text-decoration:none;
+    color:#fff;
+    transition:.3s;
 }
 
-.texto-sobrenos{
-    margin: 20px 10%;
-    width: 80%;
-    max-width: 750px;
-    color: #004f83;
-    font-size: 20px;
-    line-height: 1.7;
+.menu a:hover{
+    color:#d9deff;
 }
 
-/* =========================
-   MISSÃO
-========================= */
-
-.nossa-missao{
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    margin: 70px 10% 20px;
-    color: #004f83;
-    font-size: 35px;
+.botao-entrar{
+    background:#fff;
+    color:#5568fc !important;
+    padding:15px 35px;
+    border-radius:40px;
+    font-weight:bold;
+    text-transform:uppercase;
+    box-shadow:0 0 8px rgba(132,0,255,.25);
 }
 
-.imagem-missao{
-    width: 90px;
-    height: auto;
+.botao-entrar:hover{
+    background:#7282ff;
+    color:#fff !important;
 }
 
-.texto-missao{
-    margin: 0 10%;
-    width: 80%;
-    max-width: 750px;
-    color: #004f83;
-    font-size: 20px;
-    line-height: 1.7;
+/* APRESENTAÇÃO */
+
+.apresentacao{
+    text-align:center;
+    padding:70px 20px 40px;
 }
 
-/* =========================
-   EQUIPE
-========================= */
-
-.nossa-equipe{
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    margin: 70px 10% 20px;
-    color: #004f83;
-    font-size: 35px;
+.apresentacao h2{
+    font-size:60px;
+    margin-bottom:20px;
+    color:#fff;
 }
 
-.imagem-equipe{
-    width: 90px;
-    height: auto;
+.subtitulo{
+    font-size:24px;
+    font-weight:400;
+    max-width:800px;
+    margin:0 auto;
+    color:#fff;
 }
 
-.texto-equipe{
-    margin: 0 10% 50px;
-    width: 80%;
-    max-width: 750px;
-    color: #004f83;
-    font-size: 20px;
-    line-height: 1.7;
+/* CARTÕES */
+
+.cartoes-sobre{
+    max-width:1200px;
+    margin:auto;
+    padding:20px 30px 80px;
+    display:flex;
+    justify-content:center;
+    gap:70px;
+    flex-wrap:wrap;
 }
 
-/* =========================
-   TABLETS
-========================= */
+.cartao-sobre{
+    width:420px;
+    background:rgba(255,255,255,.85);
+    padding:35px;
+    border-radius:20px;
+    text-align:center;
+    box-shadow:0 10px 20px rgba(0,0,0,.15);
+    transition:.3s;
+}
 
-@media (max-width: 1024px){
+.cartao-sobre:hover{
+    transform:translateY(-8px);
+}
 
-    .titulo,
-    h1{
-        font-size: 40px;
+.cartao-sobre img{
+    width:90px;
+    margin-bottom:20px;
+}
+
+.cartao-sobre h3{
+    font-size:28px;
+    margin-bottom:15px;
+}
+
+.cartao-sobre p{
+    font-size:18px;
+    line-height:1.7;
+    text-align:center;
+}
+
+/* RODAPÉ */
+
+.rodape{
+    background:#8EB6E3;
+    color:#fff;
+    text-align:center;
+    padding:45px 20px;
+}
+
+.rodape h3{
+    font-size:30px;
+    margin-bottom:15px;
+}
+
+.rodape p{
+    font-size:18px;
+    line-height:1.8;
+}
+
+.rodape hr{
+    width:70%;
+    margin:25px auto;
+    border:none;
+    border-top:1px solid rgba(255,255,255,.3);
+}
+
+/* RESPONSIVIDADE */
+
+@media(max-width:900px){
+
+    .cabecalho{
+        justify-content:center;
+        text-align:center;
+        padding:18px 20px;
     }
 
-    .sobrenos{
-        font-size: 40px;
+    .titulo-logo{
+        margin:15px 0;
+        font-size:38px;
     }
 
-    .nossa-missao,
-    .nossa-equipe{
-        font-size: 30px;
+    .menu{
+        width:100%;
+        justify-content:center;
+        flex-wrap:wrap;
+        margin-top:20px;
+        gap:20px;
     }
 
-    .texto-sobrenos,
-    .texto-missao,
-    .texto-equipe{
-        font-size: 18px;
+    .apresentacao h2{
+        font-size:42px;
     }
 
-    .imagem-missao,
-    .imagem-equipe{
-        width: 75px;
-    }
-}
-
-/* =========================
-   CELULARES
-========================= */
-
-@media (max-width:768px){
-
-    .div-titulo{
-        flex-direction: column;
-        text-align: center;
+    .subtitulo{
+        font-size:20px;
     }
 
-    .logo-sobrenos{
-        width: 100px;
+    .cartoes-sobre{padding:20px 18px 60px; gap:40px;}
+
+    .cartao-sobre{
+        width:90%;
+        max-width:420px;
     }
 
-    .titulo,
-    h1{
-        font-size: 32px;
+    .rodape h3{
+        font-size:26px;
     }
 
-    .botao-contato{
-        position: static;
-        display: block;
-        text-align: center;
-        margin-bottom: 20px;
-    }
-
-    .sobrenos{
-        margin: 30px 20px;
-        font-size: 32px;
-    }
-
-    .texto-sobrenos,
-    .texto-missao,
-    .texto-equipe{
-        width: calc(100% - 40px);
-        margin: 15px 20px;
-        font-size: 17px;
-    }
-
-    .nossa-missao,
-    .nossa-equipe{
-        flex-direction: column;
-        text-align: center;
-        margin: 50px 20px 20px;
-        font-size: 28px;
-    }
-
-    .imagem-missao,
-    .imagem-equipe{
-        width: 120px;
+    .rodape p{
+        font-size:16px;
     }
 }
 
-/* =========================
-   CELULARES PEQUENOS
-========================= */
-
-@media (max-width:480px){
-
-    .titulo,
-    h1{
-        font-size: 26px;
-    }
-
-    .sobrenos{
-        font-size: 28px;
-    }
-
-    .nossa-missao,
-    .nossa-equipe{
-        font-size: 24px;
-    }
-
-    .texto-sobrenos,
-    .texto-missao,
-    .texto-equipe{
-        font-size: 16px;
-    }
-
-    .logo-sobrenos{
-        width: 80px;
-    }
-
-    .imagem-missao,
-    .imagem-equipe{
-        width: 90px;
-    }
-
-    .botao-contato{
-        font-size: 18px;
-    }
+@media(max-width:640px){
+    .cabecalho{padding:18px 12px;}
+    .menu{gap:12px;}
+    .apresentacao h2{font-size:32px;}
+    .subtitulo{font-size:17px;}
+    .cartoes-sobre{padding:18px 14px 48px; gap:20px;}
+    .cartao-sobre{width:100%;max-width:100%;padding:24px;}
+    .cartao-sobre h3{font-size:24px;}
+    .cartao-sobre p{font-size:16px;}
+    .rodape{padding:30px 14px;}
+    .rodape h3{font-size:24px;}
+    .rodape p{font-size:15px;}
 }

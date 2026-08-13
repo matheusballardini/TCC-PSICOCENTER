@@ -147,6 +147,39 @@ body {
   box-shadow: 0 0 0 4px rgba(43, 67, 145, 0.08);
 }
 
+.disponibilidade-info {
+  margin-top: 16px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: rgba(43, 67, 145, 0.08);
+  color: var(--primary-dark);
+  font-size: 0.92rem;
+}
+
+.disponibilidade-info:empty {
+  display: none;
+}
+
+.disponibilidade-erro {
+  margin-top: 10px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: #fef2f2;
+  color: var(--danger);
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.disponibilidade-erro:empty {
+  display: none;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
 .form-actions {
   margin-top: 24px;
   display: flex;
@@ -235,12 +268,13 @@ body {
   color: var(--warning);
 }
 
-.status.confirmada {
+.status.aceita {
   background: #ecfdf5;
   color: var(--success);
 }
 
-.status.cancelada {
+.status.cancelada,
+.status.recusada {
   background: #fef2f2;
   color: var(--danger);
 }

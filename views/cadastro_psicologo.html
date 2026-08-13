@@ -8,25 +8,29 @@
     <link rel="stylesheet" href="../style/register.css">
     <link href="https://cdn.boxicons.com/3.0.8/fonts/basic/boxicons.min.css" rel="stylesheet">
     <script defer src="../js/register.js"></script>
-    <style>
-        .section-title{font-weight:700;margin-top:12px;margin-bottom:6px}
-        .checkbox-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:6px}
-        .small-input{width:48%;display:inline-block}
-        .day-row{display:flex;gap:8px;align-items:center;margin:6px 0}
-    </style>
 </head>
 <body>
+    <header class="cabecalho-cadastro">
+        <img src="../images/logo-psico-center.png" alt="Logo Psicocenter">
+        <h1 class="titulo-cadastro">Psicocenter</h1>
+        <a href="entrar.html" class="voltar-cadastro">← Voltar</a>
+    </header>
+
     <div class="wrapper">
         <form id="cadastroPsicologoForm" onsubmit="register(event, 'psicologo')">
             <h1>Cadastro Psicólogo</h1>
 
-            <p class="section-title">1. Dados pessoais</p>
+            <p class="section-title" data-step="1">Dados pessoais</p>
+            <div class="foto-upload">
+                <div class="photo-preview-wrap">
+                    <img id="photoPreview" src="../images/psicologo.webp" alt="Pré-visualização da foto">
+                </div>
+                <label class="file-label" for="photo">Escolher foto</label>
+                <input id="photo" type="file" accept="image/*">
+            </div>
             <div class="input-box">
                 <input id="full_name" type="text" placeholder="Nome completo" required>
                 <i class="bx bx-user"></i>
-            </div>
-            <div class="input-box">
-                <input id="photo" type="file" accept="image/*">
             </div>
             <div class="input-box">
                 <input id="cpf" type="text" placeholder="CPF" >
@@ -41,7 +45,7 @@
                 <input id="email" type="email" placeholder="E-mail" required>
             </div>
 
-            <p class="section-title">2. Dados profissionais</p>
+            <p class="section-title" data-step="2">Dados profissionais</p>
             <div class="input-box">
                 <input id="crp" type="text" placeholder="CRP" >
             </div>
@@ -61,7 +65,7 @@
                 <textarea id="bio" rows="4" placeholder="Breve descrição/sobre o profissional"></textarea>
             </div>
 
-            <p class="section-title">3. Especialidades (marque uma ou mais)</p>
+            <p class="section-title" data-step="3">Especialidades (marque uma ou mais)</p>
             <div class="checkbox-grid">
                 <label><input type="checkbox" name="specialty" value="Ansiedade"> Ansiedade</label>
                 <label><input type="checkbox" name="specialty" value="Depressão"> Depressão</label>
@@ -77,9 +81,11 @@
                 <label><input type="checkbox" name="specialty" value="Outros"> Outros</label>
             </div>
 
-            <p class="section-title">4. Modalidade de atendimento</p>
-            <label><input type="checkbox" id="mod_online"> Online</label>
-            <label style="margin-left:12px"><input type="checkbox" id="mod_presencial"> Presencial</label>
+            <p class="section-title" data-step="4">Modalidade de atendimento</p>
+            <div class="modalidade-row">
+                <label><input type="checkbox" id="mod_online"> Online</label>
+                <label><input type="checkbox" id="mod_presencial"> Presencial</label>
+            </div>
 
             <div id="presencialFields" style="display:none;margin-top:8px">
                 <div class="input-box">
@@ -93,13 +99,19 @@
                 </div>
             </div>
 
-            <p class="section-title">5. Valores por sessão (R$)</p>
-            <div style="display:flex;gap:8px">
-                <input id="price_min" type="number" min="0" placeholder="Valor mínimo" class="small-input">
-                <input id="price_max" type="number" min="0" placeholder="Valor máximo" class="small-input">
+            <p class="section-title" data-step="5">Valores por sessão (R$)</p>
+            <div class="price-row">
+                <div class="price-field">
+                    <label for="price_min">Valor mínimo</label>
+                    <input id="price_min" type="number" min="0" placeholder="Ex: 100" class="small-input">
+                </div>
+                <div class="price-field">
+                    <label for="price_max">Valor máximo</label>
+                    <input id="price_max" type="number" min="0" placeholder="Ex: 200" class="small-input">
+                </div>
             </div>
 
-            <p class="section-title">6. Disponibilidade</p>
+            <p class="section-title" data-step="6">Disponibilidade</p>
             <div>
                 <div class="day-row">
                     <label><input type="checkbox" id="day_mon"> Segunda</label>
@@ -174,6 +186,17 @@
         const presFields = document.getElementById('presencialFields');
         presCheckbox.addEventListener('change', () => {
             presFields.style.display = presCheckbox.checked ? 'block' : 'none';
+        });
+
+        // pré-visualização da foto escolhida no cadastro
+        const photoInput = document.getElementById('photo');
+        const photoPreview = document.getElementById('photoPreview');
+        photoInput.addEventListener('change', () => {
+            const file = photoInput.files && photoInput.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = () => { photoPreview.src = reader.result; };
+            reader.readAsDataURL(file);
         });
     </script>
 </body>

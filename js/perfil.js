@@ -95,6 +95,15 @@ async function loadProfile() {
             if (res.ok && data.success) {
                 const profile = data.data?.profile || {};
                 const user = data.data?.user || {};
+
+                // essa é a página do psicólogo; se quem estiver logado for paciente,
+                // manda pro painel certo em vez de mostrar os dados dele aqui
+                if (profile.tipo && profile.tipo !== 'psicologo') {
+                    alert('Esta é a área do psicólogo. Você está logado como paciente.');
+                    window.location.href = 'paginaposlogin.html';
+                    return;
+                }
+
                 // if user is psicologo, try get full psicologo record
                 if (profile.role === 'psicologo' && user.id) {
                     try {

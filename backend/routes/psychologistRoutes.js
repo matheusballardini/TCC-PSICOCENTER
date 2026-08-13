@@ -16,9 +16,9 @@ import { requirePsychologist } from '../middleware/psychologist.js';
 
 const router = express.Router();
 
-// lista pública de psicólogos (não requer autenticação)
+// lista e perfil públicos de psicólogos (não requer autenticação)
 router.get('/', getPsychologists);
-router.get('/:id', requireAuth, getPsychologistById);
+router.get('/:id', getPsychologistById);
 router.put('/:id', requireAuth, updatePsychologist);
 
 router.get('/:id/specialties', requireAuth, getPsychologistSpecialties);

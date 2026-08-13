@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Perfil - Psicocenter</title>
+    <link rel="stylesheet" href="../style/perfil_paciente.css">
+</head>
+
+<body>
+
+    <header class="topo-paciente">
+        <img src="../images/logo-psico-center.png" alt="Logo Psicocenter">
+        <h1 class="titulo-topo">Psicocenter</h1>
+        <nav class="menu-topo">
+            <a href="paginaposlogin.html">← Voltar</a>
+        </nav>
+    </header>
+
+    <main class="conteudo-paciente">
+
+        <p id="loadingIndicator" class="loading-indicator" style="display:none;">Carregando dados...</p>
+
+        <div class="perfil-box">
+
+            <aside class="perfil-lado">
+                <img id="profilePhoto" class="foto-perfil" src="../images/psicologo.webp" alt="Foto do paciente">
+                <h2 id="fullName">—</h2>
+                <p class="etiqueta-role">Paciente</p>
+                <p id="statusLogin" class="status-login">Verificando login...</p>
+            </aside>
+
+            <section class="perfil-principal">
+
+                <h2 class="titulo-secao">Meus dados</h2>
+
+                <div class="grid-info">
+                    <div class="info-item">
+                        <span class="info-label">Email</span>
+                        <span id="emailVal" class="info-valor">—</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Telefone</span>
+                        <span id="phoneVal" class="info-valor">—</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Data de nascimento</span>
+                        <span id="birthVal" class="info-valor">—</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Gênero</span>
+                        <span id="genderVal" class="info-valor">—</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Profissão</span>
+                        <span id="occupationVal" class="info-valor">—</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Cidade/Estado</span>
+                        <span id="cityStateVal" class="info-valor">—</span>
+                    </div>
+                </div>
+
+                <div class="conta-actions">
+                    <a href="buscar_profissionais.html" class="btn-primario">Buscar profissionais</a>
+                    <a href="editar_perfil_paciente.html" class="btn-secundario" style="text-decoration:none; display:flex; align-items:center; justify-content:center;">Editar Perfil</a>
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+    <script src="../js/perfil_paciente.js"></script>
+</body>
+
+</html>

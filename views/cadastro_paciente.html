@@ -10,12 +10,55 @@
     <script defer src="../js/register.js"></script>
 </head>
 <body>
+    <header class="cabecalho-cadastro">
+        <img src="../images/logo-psico-center.png" alt="Logo Psicocenter">
+        <h1 class="titulo-cadastro">Psicocenter</h1>
+        <a href="entrar.html" class="voltar-cadastro">← Voltar</a>
+    </header>
+
     <div class="wrapper">
         <form id="cadastroPacienteForm" onsubmit="register(event, 'paciente')">
             <h1>Cadastro Paciente</h1>
+
+            <p class="section-title" data-step="1">Dados pessoais</p>
+            <div class="foto-upload">
+                <div class="photo-preview-wrap">
+                    <img id="photoPreview" src="../images/psicologo.webp" alt="Pré-visualização da foto">
+                </div>
+                <label class="file-label" for="photo">Escolher foto</label>
+                <input id="photo" type="file" accept="image/*">
+            </div>
             <div class="input-box">
                 <input id="full_name" type="text" placeholder="Nome completo" required>
                 <i class="bx bx-user"></i>
+            </div>
+            <div class="input-box">
+                <label for="birth_date" class="field-label">Data de nascimento</label>
+                <input id="birth_date" type="date">
+            </div>
+            <div class="input-box">
+                <select id="gender">
+                    <option value="">Gênero (opcional)</option>
+                    <option value="Feminino">Feminino</option>
+                    <option value="Masculino">Masculino</option>
+                    <option value="Outro">Outro</option>
+                    <option value="Prefiro não dizer">Prefiro não dizer</option>
+                </select>
+            </div>
+            <div class="input-box">
+                <input id="occupation" type="text" placeholder="Profissão (opcional)">
+            </div>
+
+            <p class="section-title" data-step="2">Contato e acesso</p>
+            <div class="input-box">
+                <input id="phone" type="tel" placeholder="Telefone">
+                <i class="bx bx-phone"></i>
+            </div>
+            <div class="input-box">
+                <input id="city" type="text" placeholder="Cidade (opcional)">
+            </div>
+            <div class="input-box">
+                <input id="state" type="text" placeholder="Estado (opcional)">
             </div>
             <div class="input-box">
                 <input id="email" type="email" placeholder="Email" required>
@@ -32,5 +75,20 @@
             </div>
         </form>
     </div>
+
+    <script>
+        // pré-visualização da foto escolhida no cadastro
+        document.addEventListener('DOMContentLoaded', () => {
+            const photoInput = document.getElementById('photo');
+            const photoPreview = document.getElementById('photoPreview');
+            photoInput.addEventListener('change', () => {
+                const file = photoInput.files && photoInput.files[0];
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = () => { photoPreview.src = reader.result; };
+                reader.readAsDataURL(file);
+            });
+        });
+    </script>
 </body>
 </html>

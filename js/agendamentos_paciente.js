@@ -7,7 +7,29 @@ document.addEventListener('DOMContentLoaded', async () => {
     return;
   }
 
+  container.innerHTML = '<div class="empty-state">Carregando agendamentos...</div>';
+
   try {
+    // busca o id direto da sessão atual (em vez de confiar só no que ficou salvo
+    // no navegador de logins anteriores, que pode estar desatualizado)
+    const meRes = await fetch('http://localhost:3001/api/auth/me', {
+      headers: { 'Authorization': 'Bearer ' + token }
+    });
+    const meData = await meRes.json();
+    if (!meRes.ok || !meData.success) throw new Error('Não autenticado');
+
+    // essa é a página do paciente; se quem estiver logado for psicólogo,
+    // manda pro painel certo em vez de mostrar uma lista vazia sem explicação
+    const tipoConta = meData.data?.profile?.tipo;
+    if (tipoConta && tipoConta !== 'paciente') {
+      alert('Esta é a área do paciente. Você está logado como psicólogo.');
+      window.location.href = 'perfil.html';
+      return;
+    }
+
+    const currentUserId = meData.data?.user?.id;
+    if (currentUserId) localStorage.setItem('authUserId', String(currentUserId));
+
     const response = await fetch('http://localhost:3001/api/appointments/me', {
       headers: {
         'Authorization': 'Bearer ' + token
@@ -20,10 +42,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     const appointments = Array.isArray(data.data) ? data.data : [];
-    const currentUserId = localStorage.getItem('authUserId');
     const patientAppointments = appointments.filter((appointment) => {
       const appointmentPatientId = appointment.paciente_id;
-      return String(appointmentPatientId) === String(currentUserId);
+      const isMine = String(appointmentPatientId) === String(currentUserId);
+      const status = appointment.status || 'pendente';
+      // consultas canceladas/recusadas somem da lista, já que não tem mais ação possível nelas
+      return isMine && status !== 'cancelada' && status !== 'recusada';
     });
 
     if (!patientAppointments.length) {
@@ -39,6 +63,10 @@ document.addEventListener('DOMContentLoaded', async () => {
       const rawTime = appointment.horario || '';
       const localeDate = rawDate ? new Date(rawDate + 'T00:00:00').toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' }) : 'Data não informada';
 
+      const cancelBtn = (status === 'pendente' || status === 'aceita')
+        ? `<button class="btn-secondary cancel-btn" data-id="${appointment.id}">Cancelar</button>`
+        : '';
+
       return `
         <article class="appointment-item">
           <div class="item-main">
@@ -53,7 +81,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             <span class="status ${status}">${status}</span>
           </div>
           <div class="item-actions">
-            <button class="btn-secondary cancel-btn" data-id="${appointment.id}">Cancelar</button>
+            ${cancelBtn}
           </div>
         </article>
       `;

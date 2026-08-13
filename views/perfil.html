@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil - Psicocenter</title>
     <link rel="stylesheet" href="../style/perfil.css">
+    <link href="https://cdn.boxicons.com/3.0.8/fonts/basic/boxicons.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -16,35 +17,41 @@
     <aside class="sidebar">
 
         <div class="logo">
-            Psicocenter
+            <img src="../images/logo-psico-center.png" alt="Logo Psicocenter">
+            <span>Psicocenter</span>
         </div>
 
 
         <div class="usuario">
 
-            <img id="sidebarPhoto" src="../images/psicologo.webp" alt="Foto">
+            <div class="avatar-ring">
+                <img id="sidebarPhoto" src="../images/psicologo.webp" alt="Foto">
+            </div>
 
             <h3 id="sidebarName">Dr. João Silva</h3>
 
-            <p id="sidebarRole">Psicólogo</p>
+            <span id="sidebarRole" class="cargo-badge">Psicólogo</span>
 
         </div>
 
 
         <nav>
 
-            <a href="perfil.html">
-                Perfil
+            <a href="perfil.html" class="active">
+                <i class='bx bx-user'></i>
+                <span>Perfil</span>
             </a>
 
 
             <a href="pacientes.html">
-                Pacientes
+                <i class='bx bx-group'></i>
+                <span>Pacientes</span>
             </a>
 
 
             <a href="agendamentos.html">
-                Agendamentos
+                <i class='bx bx-calendar'></i>
+                <span>Agendamentos</span>
             </a>
 
 
