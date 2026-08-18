@@ -8,6 +8,12 @@ export const register = async (req, res, next) => {
     const { email, password, full_name, role = 'paciente' } = req.body;
     const profilePayload = req.body.profile || {};
 
+    if (role === 'psicologo' && !(profilePayload.availability || []).length) {
+      const err = new Error('Selecione pelo menos um dia de disponibilidade.');
+      err.statusCode = 400;
+      throw err;
+    }
+
     // O trigger handle_new_user() cria a linha em public.profiles automaticamente
     // a partir do raw_user_meta_data assim que o usuário é criado no Auth.
     const { data: { user }, error: signUpError } = await supabase.auth.signUp({

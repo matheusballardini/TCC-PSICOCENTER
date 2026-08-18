@@ -57,6 +57,14 @@ body {
   color:#d9deff;
 }
 
+.menu-desativado{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  color:rgba(255,255,255,0.5);
+  cursor:not-allowed;
+}
+
 .botao-perfil{
   background:#fff;
   color:#5568fc !important;

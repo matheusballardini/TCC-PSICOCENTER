@@ -58,6 +58,11 @@ export const createAppointment = async (req, res, next) => {
       return res.status(400).json(errorResponse('psicologo_id, data e horario são obrigatórios', {}, 400));
     }
 
+    const dataHoraEscolhida = new Date(`${req.body.data}T${req.body.horario}:00`);
+    if (dataHoraEscolhida.getTime() < Date.now()) {
+      return res.status(400).json(errorResponse('Não é possível agendar uma consulta em uma data ou horário que já passou.', {}, 400));
+    }
+
     const psicologo = await psychologistService.getPsychologistById(req.body.psicologo_id);
     if (!isWithinAvailability(psicologo, req.body.data, req.body.horario)) {
       return res.status(400).json(errorResponse('Esse horário está fora da disponibilidade do psicólogo.', {}, 400));

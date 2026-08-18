@@ -29,12 +29,12 @@
                 <input id="photo" type="file" accept="image/*">
             </div>
             <div class="input-box">
-                <input id="full_name" type="text" placeholder="Nome completo" required>
+                <input id="full_name" type="text" placeholder="Nome completo" minlength="5" maxlength="100" required>
                 <i class="bx bx-user"></i>
             </div>
             <div class="input-box">
                 <label for="birth_date" class="field-label">Data de nascimento</label>
-                <input id="birth_date" type="date">
+                <input id="birth_date" type="date" required>
             </div>
             <div class="input-box">
                 <select id="gender">
@@ -51,14 +51,14 @@
 
             <p class="section-title" data-step="2">Contato e acesso</p>
             <div class="input-box">
-                <input id="phone" type="tel" placeholder="Telefone">
+                <input id="phone" type="tel" inputmode="numeric" placeholder="Telefone" maxlength="16" required>
                 <i class="bx bx-phone"></i>
             </div>
             <div class="input-box">
-                <input id="city" type="text" placeholder="Cidade (opcional)">
+                <input id="city" type="text" placeholder="Cidade (opcional)" maxlength="100">
             </div>
             <div class="input-box">
-                <input id="state" type="text" placeholder="Estado (opcional)">
+                <input id="state" type="text" placeholder="Estado (opcional, ex: SP)" maxlength="2">
             </div>
             <div class="input-box">
                 <input id="email" type="email" placeholder="Email" required>

@@ -1,5 +1,113 @@
 let registerInProgress = false;
 
+// ============ MÁSCARAS (formatam o campo enquanto o usuário digita) ============
+
+function maskCPF(value) {
+    return value.replace(/\D/g, '').slice(0, 11)
+        .replace(/(\d{3})(\d)/, '$1.$2')
+        .replace(/(\d{3})(\d)/, '$1.$2')
+        .replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+}
+
+function maskPhone(value) {
+    const digits = value.replace(/\D/g, '').slice(0, 11);
+    if (digits.length <= 10) {
+        return digits
+            .replace(/(\d{2})(\d)/, '($1) $2')
+            .replace(/(\d{4})(\d{1,4})$/, '$1-$2');
+    }
+    return digits
+        .replace(/(\d{2})(\d)/, '($1) $2')
+        .replace(/(\d{5})(\d{1,4})$/, '$1-$2');
+}
+
+function maskCRP(value) {
+    return value.replace(/\D/g, '').slice(0, 8)
+        .replace(/(\d{2})(\d)/, '$1/$2');
+}
+
+function maskUF(value) {
+    return value.replace(/[^a-zA-Z]/g, '').slice(0, 2).toUpperCase();
+}
+
+// aplica uma máscara a um input sempre que o usuário digita, mantendo o cursor no lugar certo
+function attachMask(input, maskFn) {
+    if (!input) return;
+    input.addEventListener('input', () => {
+        const cursorFromEnd = input.value.length - input.selectionStart;
+        input.value = maskFn(input.value);
+        const pos = Math.max(0, input.value.length - cursorFromEnd);
+        input.setSelectionRange(pos, pos);
+    });
+}
+
+// mostra "0/500" embaixo do campo e atualiza a cada tecla digitada
+function attachCharCounter(textarea, counterEl, max) {
+    if (!textarea || !counterEl) return;
+    const update = () => {
+        const len = textarea.value.length;
+        counterEl.textContent = `${len}/${max}`;
+        counterEl.classList.toggle('limite-excedido', len >= max);
+    };
+    textarea.addEventListener('input', update);
+    update();
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    attachMask(document.getElementById('cpf'), maskCPF);
+    attachMask(document.getElementById('phone'), maskPhone);
+    attachMask(document.getElementById('crp'), maskCRP);
+    attachMask(document.getElementById('crp_state'), maskUF);
+    attachMask(document.getElementById('state'), maskUF);
+
+    attachCharCounter(document.getElementById('bio'), document.getElementById('bioCounter'), 500);
+});
+
+// ============ VALIDAÇÕES ============
+
+function isValidCPF(cpfValue) {
+    const digits = (cpfValue || '').replace(/\D/g, '');
+    if (digits.length !== 11 || /^(\d)\1{10}$/.test(digits)) return false;
+
+    let sum = 0;
+    for (let i = 0; i < 9; i++) sum += parseInt(digits[i], 10) * (10 - i);
+    let rev = 11 - (sum % 11);
+    if (rev >= 10) rev = 0;
+    if (rev !== parseInt(digits[9], 10)) return false;
+
+    sum = 0;
+    for (let i = 0; i < 10; i++) sum += parseInt(digits[i], 10) * (11 - i);
+    rev = 11 - (sum % 11);
+    if (rev >= 10) rev = 0;
+    if (rev !== parseInt(digits[10], 10)) return false;
+
+    return true;
+}
+
+function isValidEmail(emailValue) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue || '');
+}
+
+function isValidPhone(phoneValue) {
+    const digits = (phoneValue || '').replace(/\D/g, '');
+    return digits.length === 10 || digits.length === 11;
+}
+
+function isValidCRP(crpValue) {
+    return /^\d{2}\/\d{4,6}$/.test(crpValue || '');
+}
+
+function getAge(birthDateStr) {
+    if (!birthDateStr) return null;
+    const today = new Date();
+    const birth = new Date(birthDateStr + 'T00:00:00');
+    let age = today.getFullYear() - birth.getFullYear();
+    const beforeBirthdayThisYear = today.getMonth() < birth.getMonth() ||
+        (today.getMonth() === birth.getMonth() && today.getDate() < birth.getDate());
+    if (beforeBirthdayThisYear) age--;
+    return age;
+}
+
 async function register(event, role) {
     const API_BASE = 'http://localhost:3001';
     event.preventDefault();
@@ -29,23 +137,29 @@ async function register(event, role) {
     message.style.color = '#fff';
     message.textContent = 'Processando cadastro...';
 
+    function falhaValidacao(texto) {
+        message.style.color = '#ff4444';
+        message.textContent = texto;
+        resetSubmitButton();
+    }
+
     const fullName = form.querySelector('#full_name').value.trim();
     const email = form.querySelector('#email').value.trim();
     const password = form.querySelector('#password').value;
     const passwordConfirm = form.querySelector('#password_confirm')?.value || '';
 
-    if (!fullName || !email || !password) {
-        message.style.color = '#ff4444';
-        message.textContent = 'Preencha nome, e-mail e senha.';
-        resetSubmitButton();
-        return;
+    // ---- validações comuns aos dois cadastros ----
+    if (fullName.length < 5 || fullName.length > 100) {
+        return falhaValidacao('Nome deve ter entre 5 e 100 caracteres.');
     }
-
+    if (!isValidEmail(email)) {
+        return falhaValidacao('Informe um e-mail válido.');
+    }
+    if (!password) {
+        return falhaValidacao('Informe uma senha.');
+    }
     if (password !== passwordConfirm && passwordConfirm) {
-        message.style.color = '#ff4444';
-        message.textContent = 'As senhas não conferem.';
-        resetSubmitButton();
-        return;
+        return falhaValidacao('As senhas não conferem.');
     }
 
     // Base payload
@@ -69,15 +183,30 @@ async function register(event, role) {
         // Modalities
         const online = form.querySelector('#mod_online').checked;
         const presencial = form.querySelector('#mod_presencial').checked;
-        const address = presencial ? {
-            city: form.querySelector('#city').value.trim(),
-            state: form.querySelector('#state').value.trim(),
-            address: form.querySelector('#address').value.trim()
-        } : null;
+        const cityVal = form.querySelector('#city').value.trim();
+        const stateVal = form.querySelector('#state').value.trim();
+        const addressVal = form.querySelector('#address').value.trim();
+        const address = presencial ? { city: cityVal, state: stateVal, address: addressVal } : null;
 
         // Prices
         const price_min = form.querySelector('#price_min').value || null;
         const price_max = form.querySelector('#price_max').value || null;
+
+        // ---- validações específicas do psicólogo ----
+        if (!isValidCPF(cpf)) return falhaValidacao('CPF inválido.');
+        if (!birth_date) return falhaValidacao('Informe a data de nascimento.');
+        const idade = getAge(birth_date);
+        if (idade === null || idade < 22) return falhaValidacao('É necessário ter pelo menos 22 anos para se cadastrar como psicólogo.');
+        if (!isValidPhone(phone)) return falhaValidacao('Telefone inválido.');
+        if (!isValidCRP(crp)) return falhaValidacao('CRP inválido. Use o formato 00/000000.');
+        if (crp_state.length !== 2) return falhaValidacao('Informe o estado do CRP (sigla com 2 letras).');
+        if (!education || education.length > 100) return falhaValidacao('Formação é obrigatória (máx. 100 caracteres).');
+        if (!institution || institution.length > 100) return falhaValidacao('Instituição é obrigatória (máx. 100 caracteres).');
+        if (!bio || bio.length > 500) return falhaValidacao('Biografia é obrigatória (máx. 500 caracteres).');
+        if (!specialties.length) return falhaValidacao('Selecione pelo menos uma especialidade.');
+        if (!online && !presencial) return falhaValidacao('Selecione ao menos uma modalidade de atendimento.');
+        if (presencial && (!cityVal || !stateVal || !addressVal)) return falhaValidacao('Informe cidade, estado e endereço do consultório.');
+        if (!price_min || !price_max) return falhaValidacao('Informe os valores mínimo e máximo da sessão.');
 
         // Availability (one range per day)
         const days = [
@@ -102,6 +231,8 @@ async function register(event, role) {
             }
         });
 
+        if (!availability.length) return falhaValidacao('Selecione pelo menos um dia de disponibilidade com horário de início e fim.');
+
         // Photo (optional) -> read as base64
         const photoInput = form.querySelector('#photo');
         let photoBase64 = null;
@@ -124,6 +255,10 @@ async function register(event, role) {
         const phone = form.querySelector('#phone').value.trim();
         const city = form.querySelector('#city').value.trim();
         const state = form.querySelector('#state').value.trim();
+
+        // ---- validações específicas do paciente ----
+        if (!birth_date) return falhaValidacao('Informe a data de nascimento.');
+        if (!isValidPhone(phone)) return falhaValidacao('Telefone inválido.');
 
         // Foto (opcional) -> lida como base64
         const photoInput = form.querySelector('#photo');

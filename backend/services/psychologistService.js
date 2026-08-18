@@ -50,9 +50,14 @@ export const getAllPsychologists = async () => {
 };
 
 export const updatePsychologist = async (psychologistId, updates) => {
-  // full_name/email/phone/photo pertencem a public.profiles; crp/bio (e o resto)
-  // pertencem a public.psicologos. O formulário de edição manda tudo junto.
-  const { full_name, email, phone, bio, photo, crp, ...rest } = updates;
+  // full_name/email/phone/photo/cidade/estado pertencem a public.profiles; o resto
+  // (crp, formação, especialidades, valores, disponibilidade...) pertence a public.psicologos.
+  // O formulário de edição manda tudo junto, com os mesmos nomes usados no cadastro.
+  const {
+    full_name, email, phone, bio, photo, crp, city, state,
+    crp_state, education, institution, years_experience,
+    specialties, modalities, address, price_min, price_max, availability,
+  } = updates;
 
   if (email !== undefined) {
     // Atualiza a credencial de login de verdade no Supabase Auth (via admin API,
@@ -70,6 +75,8 @@ export const updatePsychologist = async (psychologistId, updates) => {
   if (phone !== undefined) profileUpdates.telefone = phone;
   if (bio !== undefined) profileUpdates.biografia = bio;
   if (photo !== undefined) profileUpdates.foto = photo;
+  if (city !== undefined) profileUpdates.cidade = city;
+  if (state !== undefined) profileUpdates.estado = state;
 
   if (Object.keys(profileUpdates).length > 0) {
     const { error: profileError } = await supabaseAdmin
@@ -79,9 +86,25 @@ export const updatePsychologist = async (psychologistId, updates) => {
     if (profileError) throw profileError;
   }
 
-  const psicologoUpdates = { ...rest };
+  const psicologoUpdates = {};
   if (crp !== undefined) psicologoUpdates.crp = crp;
   if (bio !== undefined) psicologoUpdates.descricao_profissional = bio;
+  if (crp_state !== undefined) psicologoUpdates.crp_uf = crp_state;
+  if (education !== undefined) psicologoUpdates.formacao = education;
+  if (institution !== undefined) psicologoUpdates.instituicao = institution;
+  if (years_experience !== undefined) psicologoUpdates.anos_experiencia = years_experience;
+  if (specialties !== undefined) {
+    psicologoUpdates.especialidades = specialties;
+    psicologoUpdates.especialidades_json = specialties;
+  }
+  if (modalities !== undefined) {
+    const { online, presencial } = modalities;
+    psicologoUpdates.modalidade = online && presencial ? 'ambos' : presencial ? 'presencial' : 'online';
+  }
+  if (address !== undefined) psicologoUpdates.endereco = address.address || null;
+  if (price_min !== undefined) psicologoUpdates.valor_consulta = price_min;
+  if (price_max !== undefined) psicologoUpdates.valor_consulta_max = price_max;
+  if (availability !== undefined) psicologoUpdates.disponibilidade = JSON.stringify(availability);
 
   if (Object.keys(psicologoUpdates).length === 0) {
     return getPsychologistById(psychologistId);

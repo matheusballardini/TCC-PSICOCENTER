@@ -89,6 +89,18 @@ body {
     font-size: 22px;
 }
 
+.menu-desativado {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #9aa5c9;
+    cursor: not-allowed;
+}
+
+.menu-desativado i {
+    font-size: 22px;
+}
+
 .botao-voltar {
     background: #2b4391;
     color: #fff !important;
@@ -543,11 +555,13 @@ body {
         height: 65px;
     }
 
-    .menu-cabecalho a:not(.botao-voltar) {
+    .menu-cabecalho a:not(.botao-voltar),
+    .menu-desativado {
         font-size: 0;
     }
 
-    .menu-cabecalho a:not(.botao-voltar) i {
+    .menu-cabecalho a:not(.botao-voltar) i,
+    .menu-desativado i {
         font-size: 28px;
     }
 

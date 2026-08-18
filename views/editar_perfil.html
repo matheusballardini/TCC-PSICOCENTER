@@ -44,17 +44,118 @@
 
                 <div class="input-box">
                     <label>Telefone</label>
-                    <input id="edit_phone" type="text">
+                    <input id="edit_phone" type="text" inputmode="numeric" maxlength="16" required>
                 </div>
 
                 <div class="input-box">
                     <label>CRP</label>
-                    <input id="edit_crp" type="text">
+                    <input id="edit_crp" type="text" inputmode="numeric" placeholder="CRP (ex: 06/123456)" minlength="7" maxlength="9" required>
                 </div>
 
                 <div class="input-box">
                     <label>Biografia</label>
-                    <textarea id="edit_bio" rows="4"></textarea>
+                    <div class="textarea-wrap">
+                        <textarea id="edit_bio" rows="4" maxlength="500" required></textarea>
+                        <span id="edit_bioCounter" class="char-counter">0/500</span>
+                    </div>
+                </div>
+
+                <p class="section-title" data-step="2">Dados profissionais</p>
+                <div class="input-box">
+                    <label>UF do CRP</label>
+                    <input id="edit_crp_state" type="text" placeholder="Estado do CRP (ex: SP)" maxlength="2" required>
+                </div>
+                <div class="input-box">
+                    <label>Formação</label>
+                    <input id="edit_education" type="text" maxlength="100" required>
+                </div>
+                <div class="input-box">
+                    <label>Instituição</label>
+                    <input id="edit_institution" type="text" maxlength="100" required>
+                </div>
+                <div class="input-box">
+                    <label>Anos de experiência</label>
+                    <input id="edit_years" type="number" min="0">
+                </div>
+
+                <p class="section-title" data-step="3">Especialidades (marque uma ou mais)</p>
+                <div class="checkbox-grid">
+                    <label><input type="checkbox" name="edit_specialty" value="Ansiedade"> Ansiedade</label>
+                    <label><input type="checkbox" name="edit_specialty" value="Depressão"> Depressão</label>
+                    <label><input type="checkbox" name="edit_specialty" value="Relacionamentos"> Relacionamentos</label>
+                    <label><input type="checkbox" name="edit_specialty" value="Autoestima"> Autoestima</label>
+                    <label><input type="checkbox" name="edit_specialty" value="Luto"> Luto</label>
+                    <label><input type="checkbox" name="edit_specialty" value="Terapia de Casal"> Terapia de Casal</label>
+                    <label><input type="checkbox" name="edit_specialty" value="Terapia Infantil"> Terapia Infantil</label>
+                    <label><input type="checkbox" name="edit_specialty" value="Burnout"> Burnout</label>
+                    <label><input type="checkbox" name="edit_specialty" value="Trauma"> Trauma</label>
+                    <label><input type="checkbox" name="edit_specialty" value="Família"> Família</label>
+                    <label><input type="checkbox" name="edit_specialty" value="Desenvolvimento"> Desenvolvimento</label>
+                    <label><input type="checkbox" name="edit_specialty" value="Outros"> Outros</label>
+                </div>
+
+                <p class="section-title" data-step="4">Modalidade de atendimento</p>
+                <div class="modalidade-row">
+                    <label><input type="checkbox" id="edit_mod_online"> Online</label>
+                    <label><input type="checkbox" id="edit_mod_presencial"> Presencial</label>
+                </div>
+                <div id="editPresencialFields" style="display:none;margin-top:8px">
+                    <div class="input-box">
+                        <label>Cidade</label>
+                        <input id="edit_city" type="text" placeholder="Cidade" maxlength="100">
+                    </div>
+                    <div class="input-box">
+                        <label>Estado</label>
+                        <input id="edit_state" type="text" placeholder="Estado (ex: SP)" maxlength="2">
+                    </div>
+                    <div class="input-box">
+                        <label>Endereço do consultório</label>
+                        <input id="edit_address" type="text" placeholder="Endereço do consultório" maxlength="150">
+                    </div>
+                </div>
+
+                <p class="section-title" data-step="5">Valores por sessão (R$)</p>
+                <div class="price-row">
+                    <div class="price-field">
+                        <label for="edit_price_min">Valor mínimo</label>
+                        <input id="edit_price_min" type="number" min="0" class="small-input" required>
+                    </div>
+                    <div class="price-field">
+                        <label for="edit_price_max">Valor máximo</label>
+                        <input id="edit_price_max" type="number" min="0" class="small-input" required>
+                    </div>
+                </div>
+
+                <p class="section-title" data-step="6">Disponibilidade</p>
+                <div>
+                    <div class="day-row">
+                        <label><input type="checkbox" id="edit_day_mon"> Segunda</label>
+                        <input id="edit_mon_start" type="time"> - <input id="edit_mon_end" type="time">
+                    </div>
+                    <div class="day-row">
+                        <label><input type="checkbox" id="edit_day_tue"> Terça</label>
+                        <input id="edit_tue_start" type="time"> - <input id="edit_tue_end" type="time">
+                    </div>
+                    <div class="day-row">
+                        <label><input type="checkbox" id="edit_day_wed"> Quarta</label>
+                        <input id="edit_wed_start" type="time"> - <input id="edit_wed_end" type="time">
+                    </div>
+                    <div class="day-row">
+                        <label><input type="checkbox" id="edit_day_thu"> Quinta</label>
+                        <input id="edit_thu_start" type="time"> - <input id="edit_thu_end" type="time">
+                    </div>
+                    <div class="day-row">
+                        <label><input type="checkbox" id="edit_day_fri"> Sexta</label>
+                        <input id="edit_fri_start" type="time"> - <input id="edit_fri_end" type="time">
+                    </div>
+                    <div class="day-row">
+                        <label><input type="checkbox" id="edit_day_sat"> Sábado</label>
+                        <input id="edit_sat_start" type="time"> - <input id="edit_sat_end" type="time">
+                    </div>
+                    <div class="day-row">
+                        <label><input type="checkbox" id="edit_day_sun"> Domingo</label>
+                        <input id="edit_sun_start" type="time"> - <input id="edit_sun_end" type="time">
+                    </div>
                 </div>
 
                 <p id="editMessage" class="register-link"></p>

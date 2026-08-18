@@ -54,9 +54,15 @@ function getSlots(psychologistId) {
 // pega o dia da semana direto da data escolhida no calendário e confere
 // se bate com algum dos horários que o psicólogo disponibilizou
 function checkAvailability(psychologistId, dateStr, timeStr) {
+  if (!dateStr || !timeStr) return { valid: true };
+
+  const dataHoraEscolhida = new Date(dateStr + 'T' + timeStr + ':00');
+  if (dataHoraEscolhida.getTime() < Date.now()) {
+    return { valid: false, reason: 'Não é possível agendar uma consulta em uma data ou horário que já passou.' };
+  }
+
   const slots = getSlots(psychologistId);
   if (!slots.length) return { valid: true };
-  if (!dateStr || !timeStr) return { valid: true };
 
   const diaCodigo = DIA_SEMANA_CODIGO[new Date(dateStr + 'T00:00:00').getDay()];
   const slotsDoDia = slots.filter((slot) => slot.day === diaCodigo);
@@ -166,6 +172,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       const dateInput = document.getElementById('appointmentDate');
       const timeInput = document.getElementById('appointmentTime');
+      if (dateInput) {
+        const hoje = new Date();
+        const hojeStr = hoje.getFullYear() + '-' + String(hoje.getMonth() + 1).padStart(2, '0') + '-' + String(hoje.getDate()).padStart(2, '0');
+        dateInput.min = hojeStr;
+      }
       dateInput?.addEventListener('change', validarFormulario);
       timeInput?.addEventListener('change', validarFormulario);
     }

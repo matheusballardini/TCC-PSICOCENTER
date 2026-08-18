@@ -129,34 +129,209 @@ body {
 .edit-actions .btn,
 .edit-actions .btn-secondary {
     flex: 1;
-    padding: 13px;
-    border: none;
-    border-radius: 30px;
+    padding: 14px;
+    border-radius: 12px;
     font-size: 15px;
     font-weight: 700;
     cursor: pointer;
-    transition: .25s;
+    text-align: center;
+    transition: .3s;
 }
 
 .edit-actions .btn {
-    background: linear-gradient(90deg, #4b6cb7, #395591);
+    background-color: #004f83;
     color: #fff;
-    box-shadow: 0 10px 20px rgba(75, 108, 183, 0.25);
+    border: none;
 }
 
 .edit-actions .btn:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 12px 24px rgba(75, 108, 183, 0.3);
+    background-color: #003a61;
 }
 
 .edit-actions .btn-secondary {
-    background: #eef1fa;
-    color: #4b6cb7;
-    border: 1px solid rgba(75, 108, 183, 0.3);
+    background-color: #eef2fb;
+    color: #004f83;
+    border: 1px solid #cfd9ee;
 }
 
 .edit-actions .btn-secondary:hover {
-    background: #dfe6f5;
+    background-color: #dfe6f7;
+}
+
+/* Seções extras (formação, especialidades, modalidade, valores, disponibilidade) */
+
+.edit-card .section-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    margin: 26px 0 12px;
+    color: #004f83;
+    font-size: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid rgba(0, 79, 131, 0.12);
+}
+
+.edit-card .section-title::before {
+    content: attr(data-step);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #004f83, #4b6cb7);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.edit-card .textarea-wrap {
+    position: relative;
+}
+
+.edit-card .textarea-wrap textarea {
+    padding-bottom: 28px;
+}
+
+.edit-card .char-counter {
+    position: absolute;
+    left: 12px;
+    bottom: 8px;
+    font-size: 12px;
+    color: rgba(0, 79, 131, 0.55);
+    background: rgba(255, 255, 255, 0.9);
+    padding: 0 4px;
+    pointer-events: none;
+}
+
+.edit-card .char-counter.limite-excedido {
+    color: #e74c3c;
+    font-weight: 700;
+}
+
+.edit-card .checkbox-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin: 8px 0;
+}
+
+.edit-card .checkbox-grid label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 1px solid rgba(0, 79, 131, 0.24);
+    background: #eef4ff;
+    color: #004f83;
+    font-weight: 600;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.edit-card .checkbox-grid label:hover {
+    border-color: #4b6cb7;
+}
+
+.edit-card .checkbox-grid label:has(input:checked) {
+    background: linear-gradient(135deg, #004f83, #4b6cb7);
+    color: #fff;
+    border-color: transparent;
+    box-shadow: 0 8px 18px rgba(0, 79, 131, 0.22);
+}
+
+.edit-card .checkbox-grid input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+}
+
+.edit-card .modalidade-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 8px 0 4px;
+}
+
+.edit-card .modalidade-row label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 20px;
+    border-radius: 12px;
+    border: 1px solid rgba(0, 79, 131, 0.24);
+    background: #eef4ff;
+    color: #004f83;
+    font-weight: 600;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.edit-card .modalidade-row label:hover {
+    border-color: #4b6cb7;
+}
+
+.edit-card .modalidade-row label:has(input:checked) {
+    background: linear-gradient(135deg, #004f83, #4b6cb7);
+    color: #fff;
+    border-color: transparent;
+    box-shadow: 0 8px 18px rgba(0, 79, 131, 0.22);
+}
+
+.edit-card .price-row {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.edit-card .price-field {
+    flex: 1;
+    min-width: 140px;
+}
+
+.edit-card .price-field label {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    color: #004f83;
+    margin-bottom: 6px;
+}
+
+.edit-card .day-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    margin: 8px 0;
+    padding: 10px 14px;
+    border-radius: 12px;
+    background: #f7fbff;
+    border: 1px solid rgba(0, 79, 131, 0.14);
+    transition: .2s;
+}
+
+.edit-card .day-row:has(input:checked) {
+    background: #eef4ff;
+    border-color: rgba(0, 79, 131, 0.35);
+}
+
+.edit-card .day-row label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 90px;
+    color: #004f83;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.edit-card .day-row input[type="time"] {
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 79, 131, 0.24);
+    background: #fff;
 }
 
 @media (max-width: 480px) {
@@ -167,5 +342,14 @@ body {
     .edit-card .photo-preview-wrap {
         width: 100px;
         height: 100px;
+    }
+
+    .edit-card .checkbox-grid {
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+    .edit-card .day-row {
+        flex-direction: column;
+        align-items: flex-start;
     }
 }

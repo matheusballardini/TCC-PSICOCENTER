@@ -29,17 +29,17 @@
                 <input id="photo" type="file" accept="image/*">
             </div>
             <div class="input-box">
-                <input id="full_name" type="text" placeholder="Nome completo" required>
+                <input id="full_name" type="text" placeholder="Nome completo" minlength="5" maxlength="100" required>
                 <i class="bx bx-user"></i>
             </div>
             <div class="input-box">
-                <input id="cpf" type="text" placeholder="CPF" >
+                <input id="cpf" type="text" inputmode="numeric" placeholder="CPF" maxlength="14" required>
             </div>
             <div class="input-box">
-                <input id="birth_date" type="date" placeholder="Data de nascimento" >
+                <input id="birth_date" type="date" placeholder="Data de nascimento" required>
             </div>
             <div class="input-box">
-                <input id="phone" type="tel" placeholder="Telefone" >
+                <input id="phone" type="tel" inputmode="numeric" placeholder="Telefone" maxlength="16" required>
             </div>
             <div class="input-box">
                 <input id="email" type="email" placeholder="E-mail" required>
@@ -47,22 +47,25 @@
 
             <p class="section-title" data-step="2">Dados profissionais</p>
             <div class="input-box">
-                <input id="crp" type="text" placeholder="CRP" >
+                <input id="crp" type="text" inputmode="numeric" placeholder="CRP (ex: 06/123456)" minlength="7" maxlength="9" required>
             </div>
             <div class="input-box">
-                <input id="crp_state" type="text" placeholder="Estado do CRP" >
+                <input id="crp_state" type="text" placeholder="Estado do CRP (ex: SP)" maxlength="2" required>
             </div>
             <div class="input-box">
-                <input id="education" type="text" placeholder="Formação (ex: Psicologia Clínica)" >
+                <input id="education" type="text" placeholder="Formação (ex: Psicologia Clínica)" maxlength="100" required>
             </div>
             <div class="input-box">
-                <input id="institution" type="text" placeholder="Instituição onde se formou" >
+                <input id="institution" type="text" placeholder="Instituição onde se formou" maxlength="100" required>
             </div>
             <div class="input-box">
                 <input id="years_experience" type="number" min="0" placeholder="Anos de experiência" >
             </div>
             <div class="input-box">
-                <textarea id="bio" rows="4" placeholder="Breve descrição/sobre o profissional"></textarea>
+                <div class="textarea-wrap">
+                    <textarea id="bio" rows="4" maxlength="500" placeholder="Breve descrição/sobre o profissional (máx. 500 caracteres)" required></textarea>
+                    <span id="bioCounter" class="char-counter">0/500</span>
+                </div>
             </div>
 
             <p class="section-title" data-step="3">Especialidades (marque uma ou mais)</p>
@@ -89,13 +92,13 @@
 
             <div id="presencialFields" style="display:none;margin-top:8px">
                 <div class="input-box">
-                    <input id="city" type="text" placeholder="Cidade" >
+                    <input id="city" type="text" placeholder="Cidade" maxlength="100">
                 </div>
                 <div class="input-box">
-                    <input id="state" type="text" placeholder="Estado" >
+                    <input id="state" type="text" placeholder="Estado (ex: SP)" maxlength="2">
                 </div>
                 <div class="input-box">
-                    <input id="address" type="text" placeholder="Endereço do consultório" >
+                    <input id="address" type="text" placeholder="Endereço do consultório" maxlength="150">
                 </div>
             </div>
 
@@ -103,11 +106,11 @@
             <div class="price-row">
                 <div class="price-field">
                     <label for="price_min">Valor mínimo</label>
-                    <input id="price_min" type="number" min="0" placeholder="Ex: 100" class="small-input">
+                    <input id="price_min" type="number" min="0" placeholder="Ex: 100" class="small-input" required>
                 </div>
                 <div class="price-field">
                     <label for="price_max">Valor máximo</label>
-                    <input id="price_max" type="number" min="0" placeholder="Ex: 200" class="small-input">
+                    <input id="price_max" type="number" min="0" placeholder="Ex: 200" class="small-input" required>
                 </div>
             </div>
 

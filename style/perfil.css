@@ -299,11 +299,11 @@ nav a.active {
 
     flex: 1;
 
-    padding: 13px;
+    padding: 14px;
 
     border: none;
 
-    border-radius: 30px;
+    border-radius: 12px;
 
     font-size: 15px;
     font-weight: 700;
@@ -327,7 +327,6 @@ nav a.active {
 .btn-sair:hover {
 
     background-color: #f8d7d3;
-    transform: translateY(-1px);
 
 }
 
@@ -344,7 +343,6 @@ nav a.active {
 .btn-excluir:hover {
 
     background-color: #c0392b;
-    transform: translateY(-1px);
 
 }
 
