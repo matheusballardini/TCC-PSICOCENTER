@@ -1,0 +1,18 @@
+User-agent: *
+
+# Páginas internas/logadas — não fazem sentido aparecer no Google
+Disallow: /views/agendamentos.html
+Disallow: /views/agendamentos_paciente.html
+Disallow: /views/agendar_consulta.html
+Disallow: /views/editar_perfil.html
+Disallow: /views/editar_perfil_paciente.html
+Disallow: /views/pacientes.html
+Disallow: /views/paginaposlogin.html
+Disallow: /views/perfil.html
+Disallow: /views/perfil_paciente.html
+
+# Resto do site (páginas públicas) pode ser indexado normalmente
+Allow: /
+
+# Troque pelo domínio real quando o site for hospedado publicamente
+Sitemap: https://seusite.com/sitemap.xml

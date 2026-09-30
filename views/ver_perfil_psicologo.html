@@ -2,10 +2,12 @@
 <html lang="pt-br">
 
 <head>
+    <link rel="icon" type="image/png" href="../images/favicon.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil do Psicólogo - Psicocenter</title>
     <link rel="stylesheet" href="../style/ver_perfil_psicologo.css">
+    <link rel="stylesheet" href="../style/avaliacao.css">
 </head>
 
 <body>
@@ -20,7 +22,10 @@
 
     <main class="conteudo-perfil">
 
-        <p id="loadingIndicator" class="carregando-dados">Carregando dados do psicólogo...</p>
+        <p id="loadingIndicator" class="carregando-dados">
+            <span class="spinner"></span>
+            Carregando dados do psicólogo...
+        </p>
 
         <div class="card-perfil" id="cardPerfil" style="display:none;">
 
@@ -28,6 +33,8 @@
 
             <h2 id="fullName">—</h2>
             <p class="crp" id="crpVal">—</p>
+
+            <p id="ratingVal" class="rating-summary"></p>
 
             <div class="tags" id="especialidadesVal"></div>
 
@@ -69,6 +76,10 @@
 
     </main>
 
+    <script src="../js/api-config.js"></script>
+    <script src="../js/avatar.js"></script>
+    <script src="../js/icons.js"></script>
+    <script src="../js/avaliacao.js"></script>
     <script src="../js/ver_perfil_psicologo.js"></script>
 
 </body>

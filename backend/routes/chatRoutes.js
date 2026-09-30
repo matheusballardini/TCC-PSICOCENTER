@@ -1,24 +1,13 @@
 import express from 'express';
-import {
-  createConversation,
-  listConversations,
-  listMessages,
-  sendMessage,
-  deleteMessage,
-  addAttachment,
-  getAttachments,
-} from '../controllers/chatController.js';
+import { listThreads, getThread, postMessage, getUnreadCount, deleteMessage } from '../controllers/chatController.js';
 import { requireAuth } from '../middleware/auth.js';
 
 const router = express.Router();
 
-router.post('/conversations', requireAuth, createConversation);
-router.get('/conversations', requireAuth, listConversations);
-router.get('/conversations/:conversationId/messages', requireAuth, listMessages);
-router.post('/conversations/:conversationId/messages', requireAuth, sendMessage);
-router.delete('/conversations/:conversationId/messages/:messageId', requireAuth, deleteMessage);
-
-router.post('/messages/:messageId/attachments', requireAuth, addAttachment);
-router.get('/messages/:messageId/attachments', requireAuth, getAttachments);
+router.get('/unread-count', requireAuth, getUnreadCount);
+router.get('/threads', requireAuth, listThreads);
+router.get('/threads/:otherUserId', requireAuth, getThread);
+router.post('/threads/:otherUserId', requireAuth, postMessage);
+router.delete('/threads/:otherUserId/messages/:messageId', requireAuth, deleteMessage);
 
 export default router;

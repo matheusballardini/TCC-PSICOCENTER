@@ -2,14 +2,18 @@
 <html lang="pt-BR">
 
 <head>
+    <link rel="icon" type="image/png" href="../images/favicon.png">
 
     <meta charset="UTF-8">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Buscar Profissionais</title>
+    <title>Buscar Profissionais - Psicocenter</title>
+    <meta name="description" content="Busque psicólogos por especialidade, modalidade e localização, e agende sua consulta diretamente pela plataforma.">
 
     <link rel="stylesheet" href="../style/buscarprofi.css">
+    <link rel="stylesheet" href="../style/avaliacao.css">
+    <link rel="stylesheet" href="../style/chat-badge.css">
 
     <link
         href="https://cdn.boxicons.com/3.0.8/fonts/basic/boxicons.min.css"
@@ -43,12 +47,13 @@
 
         <nav class="menu-cabecalho">
 
-            <a href="../views/index.html">
+            <a href="mensagens_paciente.html" id="linkMensagens" class="link-com-badge" style="display:none;">
                 <i class="bx bx-message-circle"></i>
                 Mensagens
+                <span id="mensagensBadge" class="badge-notificacao"></span>
             </a>
 
-            <a href="paginaposlogin.html" class="botao-voltar">← Voltar</a>
+            <a href="index.html" id="botaoVoltar" class="botao-voltar">← Voltar</a>
 
         </nav>
 
@@ -84,7 +89,7 @@
             <div class="search-box">
 
                 <span class="icon">
-                    🔍
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="20" height="20" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"/></svg>
                 </span>
 
                 <input
@@ -206,6 +211,12 @@
 
        </main>
 
+    <script src="../js/api-config.js"></script>
+    <script src="../js/avatar.js"></script>
+    <script src="../js/icons.js"></script>
+    <script src="../js/avaliacao.js"></script>
+    <script src="../js/chat-badge.js"></script>
+    <script src="../js/notifications-bell.js"></script>
     <script src="../js/buscarprofi.js"></script>
 
 </body>

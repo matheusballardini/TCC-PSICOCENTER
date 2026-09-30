@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Troque "https://seusite.com" pelo domínio real quando o site for hospedado publicamente -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <url>
+    <loc>https://seusite.com/views/index.html</loc>
+  </url>
+
+  <url>
+    <loc>https://seusite.com/views/sobrenos.html</loc>
+  </url>
+
+  <url>
+    <loc>https://seusite.com/views/contato.html</loc>
+  </url>
+
+  <url>
+    <loc>https://seusite.com/views/entrar.html</loc>
+  </url>
+
+  <url>
+    <loc>https://seusite.com/views/loginpaciente.html</loc>
+  </url>
+
+  <url>
+    <loc>https://seusite.com/views/loginpsicologo.html</loc>
+  </url>
+
+  <url>
+    <loc>https://seusite.com/views/cadastro_paciente.html</loc>
+  </url>
+
+  <url>
+    <loc>https://seusite.com/views/cadastro_psicologo.html</loc>
+  </url>
+
+  <url>
+    <loc>https://seusite.com/views/buscar_profissionais.html</loc>
+  </url>
+
+  <url>
+    <loc>https://seusite.com/views/privacidade.html</loc>
+  </url>
+
+</urlset>

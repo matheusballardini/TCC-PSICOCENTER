@@ -1,28 +1,74 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+    <link rel="icon" type="image/png" href="../images/favicon.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Agendamentos</title>
   <link rel="stylesheet" href="../style/agendamentos.css" />
+  <link rel="stylesheet" href="../style/avaliacao.css" />
+  <link rel="stylesheet" href="../style/chat-badge.css" />
+  <link rel="stylesheet" href="../style/perfil.css" />
+  <link href="https://cdn.boxicons.com/3.0.8/fonts/basic/boxicons.min.css" rel="stylesheet">
 </head>
 <body>
-  <div class="container">
-    <div class="topbar">
-      <div class="logo">Psicocenter</div>
-      <nav class="nav-links">
-        <a href="perfil.html">Perfil</a>
-        <a href="pacientes.html">Pacientes</a>
-        <a href="agendamentos.html">Agendamentos</a>
-      </nav>
+
+  <aside class="sidebar">
+    <div class="logo">
+      <img src="../images/logo-psico-center.png" alt="Logo Psicocenter">
+      <span>Psicocenter</span>
     </div>
 
-    <h1 class="page-title">Agenda do psicólogo</h1>
-    <p class="subtitle">Veja os agendamentos recebidos e atualize o status de cada atendimento.</p>
+    <div class="usuario">
+      <div class="avatar-ring">
+        <img id="sidebarPhoto" src="../images/psicologo.webp" alt="Foto">
+      </div>
+      <h3 id="sidebarName">Carregando...</h3>
+      <span class="cargo-badge">Psicólogo</span>
+    </div>
 
-    <section id="appointmentsContainer" class="list"></section>
-  </div>
+    <nav>
+      <a href="perfil.html">
+        <i class='bx bx-user'></i>
+        <span>Perfil</span>
+      </a>
+      <a href="pacientes.html">
+        <i class='bx bx-group'></i>
+        <span>Pacientes</span>
+      </a>
+      <a href="agendamentos.html" class="active">
+        <i class='bx bx-calendar'></i>
+        <span>Agendamentos</span>
+      </a>
+      <a href="mensagens.html" class="link-com-badge">
+        <i class='bx bx-message-circle'></i>
+        <span>Mensagens</span>
+        <span id="mensagensBadge" class="badge-notificacao"></span>
+      </a>
+    </nav>
 
+    <button id="sidebarLogoutBtn" type="button" class="sidebar-sair">
+      <i class='bx bx-log-out'></i>
+      <span>Sair</span>
+    </button>
+  </aside>
+
+  <main class="conteudo-lista-psicologo">
+    <div class="container">
+      <h1 class="page-title">Agenda do psicólogo</h1>
+      <p class="subtitle">Veja os agendamentos recebidos e atualize o status de cada atendimento.</p>
+
+      <section id="appointmentsContainer" class="list"></section>
+    </div>
+  </main>
+
+  <script src="../js/api-config.js"></script>
+    <script src="../js/avatar.js"></script>
+  <script src="../js/icons.js"></script>
+  <script src="../js/avaliacao.js"></script>
+  <script src="../js/chat-badge.js"></script>
+  <script src="../js/notifications-bell.js"></script>
+  <script src="../js/sidebar-psicologo.js"></script>
   <script src="../js/agendamentos.js"></script>
 </body>
 </html>

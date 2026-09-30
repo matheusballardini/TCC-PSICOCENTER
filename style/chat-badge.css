@@ -1,0 +1,18 @@
+/* Bolinha vermelha de aviso de mensagem não lida, ancorada no canto do link
+   "Mensagens" — o link precisa ter position:relative (classe .link-com-badge). */
+
+.link-com-badge {
+  position: relative;
+}
+
+.badge-notificacao {
+  display: none;
+  position: absolute;
+  top: -3px;
+  right: -6px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: #ef4444;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.95);
+}

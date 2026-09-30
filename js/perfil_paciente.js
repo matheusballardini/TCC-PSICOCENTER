@@ -1,4 +1,3 @@
-const API_BASE = 'http://localhost:3001';
 
 document.addEventListener('DOMContentLoaded', () => {
     initPatientProfile();
@@ -6,19 +5,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function initPatientProfile() {
     const token = localStorage.getItem('authToken');
-    const statusEl = document.getElementById('statusLogin');
+    const loadingIndicator = document.getElementById('loadingIndicator');
+
+    const logoutBtn = document.getElementById('sidebarLogoutBtn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', () => {
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('authUserId');
+            window.location.href = 'entrar.html';
+        });
+    }
 
     if (!token) {
-        if (statusEl) {
-            statusEl.textContent = 'Você não está logado.';
-            statusEl.style.color = '#c0392b';
-        }
-        setTimeout(() => { window.location.href = 'loginpaciente.html'; }, 1500);
+        window.location.href = 'loginpaciente.html';
         return;
     }
 
-    const loadingIndicator = document.getElementById('loadingIndicator');
-    if (loadingIndicator) loadingIndicator.style.display = 'block';
+    if (loadingIndicator) loadingIndicator.style.display = 'flex';
 
     try {
         const meRes = await fetch(API_BASE + '/api/auth/me', {
@@ -52,18 +55,9 @@ async function initPatientProfile() {
         }
 
         renderProfile(profile, paciente);
-
-        if (statusEl) {
-            statusEl.textContent = 'Logado como ' + (profile.email || '');
-            statusEl.style.color = '#2e7d32';
-        }
     } catch (err) {
         console.warn('Erro ao carregar perfil do paciente', err);
-        if (statusEl) {
-            statusEl.textContent = 'Sessão expirada. Faça login novamente.';
-            statusEl.style.color = '#c0392b';
-        }
-        setTimeout(() => { window.location.href = 'loginpaciente.html'; }, 1500);
+        window.location.href = 'loginpaciente.html';
     } finally {
         if (loadingIndicator) loadingIndicator.style.display = 'none';
     }
@@ -71,7 +65,6 @@ async function initPatientProfile() {
 
 function renderProfile(profile, paciente) {
     const name = profile.full_name || profile.nome || '—';
-    const photo = profile.foto || null;
 
     document.getElementById('fullName').textContent = name;
     document.getElementById('emailVal').textContent = profile.email || '—';
@@ -85,5 +78,11 @@ function renderProfile(profile, paciente) {
     const cityState = [cidade, estado].filter(Boolean).join(' / ');
     document.getElementById('cityStateVal').textContent = cityState || '—';
 
-    if (photo) document.getElementById('profilePhoto').src = photo;
+    const photo = avatarSrc(profile.foto, name);
+    document.getElementById('profilePhoto').src = photo;
+
+    const sidebarPhoto = document.getElementById('sidebarPhoto');
+    const sidebarName = document.getElementById('sidebarName');
+    if (sidebarPhoto) sidebarPhoto.src = photo;
+    if (sidebarName) sidebarName.textContent = name;
 }

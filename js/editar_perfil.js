@@ -1,10 +1,99 @@
-const API_BASE = 'http://localhost:3001';
 
 document.addEventListener('DOMContentLoaded', () => {
     initEditPage();
 });
 
 let newPhotoBase64 = null;
+let fotoRemovida = false;
+
+// ============ MÁSCARAS (formatam o campo enquanto o usuário digita) ============
+
+function maskPhone(value) {
+    const digits = value.replace(/\D/g, '').slice(0, 11);
+    if (digits.length <= 10) {
+        return digits
+            .replace(/(\d{2})(\d)/, '($1) $2')
+            .replace(/(\d{4})(\d{1,4})$/, '$1-$2');
+    }
+    return digits
+        .replace(/(\d{2})(\d)/, '($1) $2')
+        .replace(/(\d{5})(\d{1,4})$/, '$1-$2');
+}
+
+function maskCRP(value) {
+    return value.replace(/\D/g, '').slice(0, 8)
+        .replace(/(\d{2})(\d)/, '$1/$2');
+}
+
+function maskCEP(value) {
+    return value.replace(/\D/g, '').slice(0, 8)
+        .replace(/(\d{5})(\d)/, '$1-$2');
+}
+
+function maskName(value) {
+    return value.replace(/[^a-zA-ZÀ-ÖØ-öø-ÿ '-]/g, '');
+}
+
+function attachMask(input, maskFn) {
+    if (!input) return;
+    input.addEventListener('input', () => {
+        const cursorFromEnd = input.value.length - input.selectionStart;
+        input.value = maskFn(input.value);
+        const pos = Math.max(0, input.value.length - cursorFromEnd);
+        input.setSelectionRange(pos, pos);
+    });
+}
+
+function attachCharCounter(textarea, counterEl, max) {
+    if (!textarea || !counterEl) return;
+    const update = () => {
+        const len = textarea.value.length;
+        counterEl.textContent = `${len}/${max}`;
+        counterEl.classList.toggle('limite-excedido', len >= max);
+    };
+    textarea.addEventListener('input', update);
+    update();
+}
+
+// ============ VALIDAÇÕES (mesmas regras do cadastro) ============
+
+function isValidPhone(phoneValue) {
+    const digits = (phoneValue || '').replace(/\D/g, '');
+    return digits.length === 10 || digits.length === 11;
+}
+
+function isValidCRP(crpValue) {
+    return /^\d{2}\/\d{4,6}$/.test(crpValue || '');
+}
+
+const HORARIO_MIN_DISPONIBILIDADE = '06:00';
+const HORARIO_MAX_DISPONIBILIDADE = '22:00';
+const DURACAO_MINIMA_MINUTOS = 30;
+function paraMinutos(horario) {
+    const [horas, minutos] = horario.split(':').map(Number);
+    return horas * 60 + minutos;
+}
+function isValidHorarioDisponibilidade(start, end) {
+    if (!start || !end) return false;
+    if (start < HORARIO_MIN_DISPONIBILIDADE || end > HORARIO_MAX_DISPONIBILIDADE) return false;
+    if (start >= end) return false;
+    return paraMinutos(end) - paraMinutos(start) >= DURACAO_MINIMA_MINUTOS;
+}
+
+function isValidEmail(emailValue) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue || '');
+}
+
+function isValidName(nameValue) {
+    if (/\d/.test(nameValue || '')) return false;
+    if (/([a-zA-ZÀ-ÖØ-öø-ÿ])\1{3,}/.test(nameValue || '')) return false;
+    return true;
+}
+
+const DAYS = [
+    { key: 'mon', label: 'Segunda' }, { key: 'tue', label: 'Terça' }, { key: 'wed', label: 'Quarta' }, { key: 'thu', label: 'Quinta' },
+    { key: 'fri', label: 'Sexta' }, { key: 'sat', label: 'Sábado' }, { key: 'sun', label: 'Domingo' },
+];
 
 async function initEditPage() {
     const token = localStorage.getItem('authToken');
@@ -21,8 +110,17 @@ async function initEditPage() {
     photoInput.addEventListener('change', async (e) => {
         const file = e.target.files[0];
         if (!file) return;
-        newPhotoBase64 = await toBase64(file);
+        newPhotoBase64 = await comprimirImagem(file);
+        fotoRemovida = false;
         document.getElementById('photoPreview').src = newPhotoBase64;
+    });
+
+    document.getElementById('removePhotoBtn').addEventListener('click', () => {
+        newPhotoBase64 = null;
+        fotoRemovida = true;
+        photoInput.value = '';
+        const nomeAtual = document.getElementById('edit_name').value;
+        document.getElementById('photoPreview').src = initialsAvatarSrc(nomeAtual);
     });
 
     document.getElementById('editForm').addEventListener('submit', saveProfile);
@@ -32,6 +130,21 @@ async function initEditPage() {
 
     const deleteAccountBtn = document.getElementById('deleteAccountBtn');
     if (deleteAccountBtn) deleteAccountBtn.addEventListener('click', deleteAccount);
+
+    attachMask(document.getElementById('edit_name'), maskName);
+    attachMask(document.getElementById('edit_phone'), maskPhone);
+    attachMask(document.getElementById('edit_crp'), maskCRP);
+    attachCharCounter(document.getElementById('edit_bio'), document.getElementById('edit_bioCounter'), 500);
+
+    const presCheckbox = document.getElementById('edit_mod_presencial');
+    const presFields = document.getElementById('editPresencialFields');
+    presCheckbox.addEventListener('change', () => {
+        presFields.style.display = presCheckbox.checked ? 'grid' : 'none';
+    });
+
+    ligarEstadoCidade(document.getElementById('edit_state'), document.getElementById('edit_city'));
+    ligarCepEndereco(document.getElementById('edit_cep'), document.getElementById('edit_state'), document.getElementById('edit_city'), document.getElementById('edit_address'));
+    attachMask(document.getElementById('edit_cep'), maskCEP);
 
     await loadCurrentData(token);
 }
@@ -44,17 +157,14 @@ function logout() {
     window.location.href = 'index.html';
 }
 
-async function deleteAccount() {
-    const confirmed = confirm('Tem certeza que deseja excluir sua conta? Essa ação não pode ser desfeita.');
-    if (!confirmed) return;
-
+function deleteAccount() {
     const token = localStorage.getItem('authToken');
     if (!token) {
         alert('Você precisa estar logado para excluir a conta.');
         return;
     }
 
-    try {
+    abrirModalExcluirConta(async () => {
         const res = await fetch(API_BASE + '/api/auth/me', {
             method: 'DELETE',
             headers: { 'Authorization': 'Bearer ' + token }
@@ -67,14 +177,12 @@ async function deleteAccount() {
         localStorage.clear();
         alert('Conta excluída com sucesso.');
         window.location.href = 'index.html';
-    } catch (err) {
-        alert('Erro ao excluir conta: ' + (err?.message || err));
-    }
+    });
 }
 
 async function loadCurrentData(token) {
     const loadingIndicator = document.getElementById('loadingIndicator');
-    if (loadingIndicator) loadingIndicator.style.display = 'block';
+    if (loadingIndicator) loadingIndicator.style.display = 'flex';
     try {
         const meRes = await fetch(API_BASE + '/api/auth/me', {
             headers: { 'Authorization': 'Bearer ' + token }
@@ -115,15 +223,67 @@ async function loadCurrentData(token) {
 
         document.getElementById('edit_name').value = name;
         document.getElementById('edit_email').value = email;
-        document.getElementById('edit_phone').value = phone;
+        document.getElementById('edit_phone').value = phone ? maskPhone(phone) : '';
         document.getElementById('edit_crp').value = crp;
         document.getElementById('edit_bio').value = bio;
-        if (photo) document.getElementById('photoPreview').src = photo;
+        document.getElementById('edit_bio').dispatchEvent(new Event('input'));
+        document.getElementById('photoPreview').src = avatarSrc(photo, name);
+
+        // dados profissionais
+        document.getElementById('edit_crp_state').value = psicologo.crp_uf || '';
+        document.getElementById('edit_education').value = psicologo.formacao || '';
+        document.getElementById('edit_institution').value = psicologo.instituicao || '';
+        document.getElementById('edit_years').value = psicologo.anos_experiencia ?? '';
+
+        // especialidades
+        const especialidades = Array.isArray(psicologo.especialidades_json)
+            ? psicologo.especialidades_json
+            : (Array.isArray(psicologo.especialidades) ? psicologo.especialidades : []);
+        document.querySelectorAll('input[name="edit_specialty"]').forEach((el) => {
+            el.checked = especialidades.includes(el.value);
+        });
+
+        // modalidade + endereço
+        const modalidade = psicologo.modalidade || 'online';
+        const isOnline = modalidade === 'online' || modalidade === 'ambos';
+        const isPresencial = modalidade === 'presencial' || modalidade === 'ambos';
+        document.getElementById('edit_mod_online').checked = isOnline;
+        document.getElementById('edit_mod_presencial').checked = isPresencial;
+        document.getElementById('editPresencialFields').style.display = isPresencial ? 'grid' : 'none';
+        const cidadeSalva = psicologo.cidade || profile.cidade || '';
+        document.getElementById('edit_state').value = psicologo.estado || profile.estado || '';
+        document.getElementById('edit_address').value = psicologo.endereco || '';
+        await atualizarCidadesDoEstado(document.getElementById('edit_state'), document.getElementById('edit_city'), cidadeSalva);
+
+        // valores
+        document.getElementById('edit_price_min').value = psicologo.valor_consulta ?? '';
+        document.getElementById('edit_price_max').value = psicologo.valor_consulta_max ?? '';
+
+        // disponibilidade
+        let slots = [];
+        try {
+            slots = typeof psicologo.disponibilidade === 'string'
+                ? JSON.parse(psicologo.disponibilidade)
+                : (psicologo.disponibilidade || []);
+        } catch (e) {
+            slots = [];
+        }
+        DAYS.forEach((d) => {
+            const slot = (slots || []).find((s) => s.day === d.key);
+            const checkbox = document.getElementById(`edit_day_${d.key}`);
+            const startInput = document.getElementById(`edit_${d.key}_start`);
+            const endInput = document.getElementById(`edit_${d.key}_end`);
+            if (slot) {
+                checkbox.checked = true;
+                startInput.value = slot.start || '';
+                endInput.value = slot.end || '';
+            }
+        });
 
         const sidebarName = document.getElementById('sidebarName');
         const sidebarPhoto = document.getElementById('sidebarPhoto');
         if (sidebarName) sidebarName.textContent = name || '—';
-        if (sidebarPhoto && photo) sidebarPhoto.src = photo;
+        if (sidebarPhoto) sidebarPhoto.src = avatarSrc(photo, name);
     } catch (err) {
         console.warn('Erro ao carregar dados do perfil', err);
         document.getElementById('editMessage').textContent = 'Não foi possível carregar seus dados.';
@@ -147,14 +307,90 @@ async function saveProfile(event) {
         return;
     }
 
+    function falhaValidacao(texto) {
+        message.style.color = '#ff4444';
+        message.textContent = texto;
+        saveBtn.disabled = false;
+        saveBtn.textContent = 'Salvar alterações';
+        return false;
+    }
+
+    const nameVal = document.getElementById('edit_name').value.trim();
+    const emailVal = document.getElementById('edit_email').value.trim();
+    const phoneVal = document.getElementById('edit_phone').value.trim();
+    const crpVal = document.getElementById('edit_crp').value.trim();
+    const crpStateVal = document.getElementById('edit_crp_state').value.trim();
+    const bioVal = document.getElementById('edit_bio').value.trim();
+    const educationVal = document.getElementById('edit_education').value.trim();
+    const institutionVal = document.getElementById('edit_institution').value.trim();
+    const priceMinVal = document.getElementById('edit_price_min').value;
+    const priceMaxVal = document.getElementById('edit_price_max').value;
+    const cityVal = document.getElementById('edit_city').value.trim();
+    const stateVal = document.getElementById('edit_state').value.trim();
+    const addressVal = document.getElementById('edit_address').value.trim();
+    const addressNumberVal = document.getElementById('edit_address_number').value.trim();
+    const addressCompleto = addressNumberVal ? `${addressVal}, ${addressNumberVal}` : addressVal;
+
+    const specialties = Array.from(document.querySelectorAll('input[name="edit_specialty"]:checked')).map((el) => el.value);
+    const online = document.getElementById('edit_mod_online').checked;
+    const presencial = document.getElementById('edit_mod_presencial').checked;
+
+    if (nameVal.length < 5 || nameVal.length > 100) return falhaValidacao('Nome deve ter entre 5 e 100 caracteres.');
+    if (!isValidName(nameVal)) return falhaValidacao('Nome inválido: não pode ter números nem 4 ou mais letras repetidas seguidas.');
+    if (!isValidEmail(emailVal)) return falhaValidacao('Informe um e-mail válido.');
+    if (!isValidPhone(phoneVal)) return falhaValidacao('Telefone inválido.');
+    if (!isValidCRP(crpVal)) return falhaValidacao('CRP inválido. Use o formato 00/000000.');
+    if (crpStateVal.length !== 2) return falhaValidacao('Informe o estado do CRP (sigla com 2 letras).');
+    if (!educationVal || educationVal.length > 100) return falhaValidacao('Formação é obrigatória (máx. 100 caracteres).');
+    if (!institutionVal || institutionVal.length > 100) return falhaValidacao('Instituição é obrigatória (máx. 100 caracteres).');
+    const anosExperienciaVal = document.getElementById('edit_years').value;
+    if (anosExperienciaVal !== '' && (Number(anosExperienciaVal) < 0 || Number(anosExperienciaVal) > 80)) return falhaValidacao('Número inválido, coloque um número de anos de experiência válido.');
+    if (!bioVal || bioVal.length > 500) return falhaValidacao('Biografia é obrigatória (máx. 500 caracteres).');
+    if (!specialties.length) return falhaValidacao('Selecione pelo menos uma especialidade.');
+    if (!online && !presencial) return falhaValidacao('Selecione ao menos uma modalidade de atendimento.');
+    if (presencial && (!cityVal || !stateVal || !addressVal)) return falhaValidacao('Informe cidade, estado e endereço do consultório.');
+    if (!priceMinVal || !priceMaxVal) return falhaValidacao('Informe os valores mínimo e máximo da sessão.');
+    if (Number(priceMinVal) < 1) return falhaValidacao('O valor mínimo deve ser no mínimo 1.');
+    if (Number(priceMaxVal) <= Number(priceMinVal)) return falhaValidacao('O valor máximo deve ser maior que o valor mínimo.');
+
+    const availability = [];
+    for (const d of DAYS) {
+        const checked = document.getElementById(`edit_day_${d.key}`).checked;
+        if (checked) {
+            const start = document.getElementById(`edit_${d.key}_start`).value;
+            const end = document.getElementById(`edit_${d.key}_end`).value;
+            if (start && end) {
+                if (!isValidHorarioDisponibilidade(start, end)) {
+                    return falhaValidacao(`Horário inválido em ${d.label}: use um intervalo entre ${HORARIO_MIN_DISPONIBILIDADE} e ${HORARIO_MAX_DISPONIBILIDADE}, com o fim pelo menos ${DURACAO_MINIMA_MINUTOS} minutos depois do início.`);
+                }
+                availability.push({ day: d.key, start, end });
+            }
+        }
+    }
+
+    if (!availability.length) return falhaValidacao('Selecione pelo menos um dia de disponibilidade com horário de início e fim.');
+
     const payload = {
         full_name: document.getElementById('edit_name').value.trim(),
         email: document.getElementById('edit_email').value.trim(),
         phone: document.getElementById('edit_phone').value.trim(),
         crp: document.getElementById('edit_crp').value.trim(),
         bio: document.getElementById('edit_bio').value.trim(),
+        crp_state: document.getElementById('edit_crp_state').value.trim(),
+        education: document.getElementById('edit_education').value.trim(),
+        institution: document.getElementById('edit_institution').value.trim(),
+        years_experience: document.getElementById('edit_years').value || null,
+        specialties,
+        modalities: { online, presencial },
+        city: document.getElementById('edit_city').value.trim(),
+        state: document.getElementById('edit_state').value.trim(),
+        address: { address: addressCompleto },
+        price_min: document.getElementById('edit_price_min').value || null,
+        price_max: document.getElementById('edit_price_max').value || null,
+        availability,
     };
     if (newPhotoBase64) payload.photo = newPhotoBase64;
+    else if (fotoRemovida) payload.photo = null;
 
     try {
         const meRes = await fetch(API_BASE + '/api/auth/me', { headers: { 'Authorization': 'Bearer ' + token } });
@@ -185,6 +421,7 @@ async function saveProfile(event) {
             currentUser.crp = payload.crp;
             currentUser.bio = payload.bio;
             if (newPhotoBase64) currentUser.photo = newPhotoBase64;
+            else if (fotoRemovida) currentUser.photo = null;
             localStorage.setItem('currentUser', JSON.stringify(currentUser));
         } catch (e) { /* ignore */ }
 
@@ -197,13 +434,4 @@ async function saveProfile(event) {
         saveBtn.disabled = false;
         saveBtn.textContent = 'Salvar alterações';
     }
-}
-
-function toBase64(file) {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
-    });
 }

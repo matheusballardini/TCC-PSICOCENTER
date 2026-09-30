@@ -2,11 +2,14 @@
 <html lang="pt-br">
 
 <head>
+    <link rel="icon" type="image/png" href="../images/favicon.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Entrar - Psicocenter</title>
+    <meta name="description" content="Acesse o Psicocenter como paciente ou psicólogo e comece a usar a plataforma de agendamento de consultas psicológicas.">
 
     <link rel="stylesheet" href="../style/entrar.css">
+    <script defer src="../js/nav-indicator.js"></script>
 </head>
 
 <body>
@@ -15,12 +18,12 @@
     <header class="cabecalho">
 
         <a href="index.html">
-            <img src="../images/logo-psico-center.png" alt="Logo Psicocenter">
+            <img class="entra-inicial" style="animation-delay:.05s" src="../images/logo-psico-center.png" alt="Logo Psicocenter">
         </a>
 
-        <h1 class="titulo-logo">Psicocenter</h1>
+        <h1 class="titulo-logo entra-inicial" style="animation-delay:.12s">Psicocenter</h1>
 
-        <nav class="menu">
+        <nav class="menu entra-inicial" style="animation-delay:.2s">
             <a href="index.html">Início</a>
             <a href="sobrenos.html">Sobre nós</a>
             <a href="contato.html">Contato</a>
@@ -31,9 +34,9 @@
     <!-- Conteúdo -->
     <main class="conteudo">
 
-        <h2>Escolha como deseja acessar a plataforma</h2>
+        <h2 class="entra-inicial" style="animation-delay:.3s">Escolha como deseja acessar a plataforma</h2>
 
-        <p class="texto">
+        <p class="texto entra-inicial" style="animation-delay:.4s">
             Selecione a opção que corresponde ao seu perfil para continuar.
         </p>
 
@@ -41,9 +44,9 @@
 
             <div class="opcoes">
 
-                <div class="opcao">
+                <div class="opcao entra-inicial" style="animation-delay:.5s">
 
-                    <a href="../views/cadastro_psicologo.html" class="botao-opcao">
+                    <a href="../views/loginpsicologo.html" class="botao-opcao">
                         Sou Psicólogo(a)
                     </a>
 
@@ -53,9 +56,9 @@
 
                 </div>
 
-                <div class="opcao">
+                <div class="opcao entra-inicial" style="animation-delay:.6s">
 
-                    <a href="../views/cadastro_paciente.html" class="botao-opcao">
+                    <a href="../views/loginpaciente.html" class="botao-opcao">
                         Sou Paciente
                     </a>
 
@@ -70,6 +73,28 @@
         </section>
 
     </main>
+
+    <!-- Rodapé -->
+    <footer class="rodape">
+
+        <h3>Psicocenter</h3>
+
+        <p>
+            Conectando pacientes e psicólogos através de uma plataforma
+            moderna, segura e intuitiva.
+        </p>
+
+        <p class="links-rodape">
+            <a href="privacidade.html">Política de Privacidade</a>
+        </p>
+
+        <hr>
+
+        <p>
+            © 2026 Psicocenter - Todos os direitos reservados.
+        </p>
+
+    </footer>
 
 </body>
 

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página não encontrada - Psicocenter</title>
+    <link rel="stylesheet" href="style/styles.css">
+    <style>
+        .erro-404 {
+            min-height: calc(100vh - 130px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .erro-404 .codigo {
+            font-size: clamp(80px, 15vw, 160px);
+            font-weight: 800;
+            color: #fff;
+            text-shadow: 0 6px 24px rgba(0, 0, 0, 0.15);
+            line-height: 1;
+            margin: 0;
+        }
+
+        .erro-404 h2 {
+            color: #004f83;
+            font-size: clamp(22px, 4vw, 32px);
+            margin: 10px 0 12px;
+        }
+
+        .erro-404 p {
+            color: #24406e;
+            font-size: 16px;
+            max-width: 460px;
+            margin: 0 0 32px;
+        }
+
+        .erro-404 .botao-entrar {
+            text-decoration: none;
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="cabecalho">
+        <a href="views/index.html">
+            <img src="images/logo-psico-center.png" alt="Logo Psicocenter">
+        </a>
+        <h1 class="titulo-logo">Psicocenter</h1>
+        <nav class="menu">
+            <a href="views/index.html" class="botao-entrar">Voltar ao início</a>
+        </nav>
+    </header>
+
+    <main class="erro-404">
+        <p class="codigo">404</p>
+        <h2>Página não encontrada</h2>
+        <p>
+            O endereço que você tentou acessar não existe ou foi movido.
+            Verifique o link ou volte para a página inicial do Psicocenter.
+        </p>
+        <a href="views/index.html" class="botao-entrar">← Voltar ao início</a>
+    </main>
+
+</body>
+
+</html>

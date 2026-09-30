@@ -12,6 +12,38 @@ body{
     min-height:100vh;
 }
 
+/* ANIMAÇÕES DE ENTRADA (efeito sutil de "chegando") */
+
+@keyframes entra{
+    from{opacity:0; transform:translateY(14px);}
+    to{opacity:1; transform:translateY(0);}
+}
+
+.entra-inicial{
+    opacity:0;
+    animation:entra .7s ease-out forwards;
+}
+
+.reveal{
+    opacity:0;
+    transform:translateY(18px);
+    transition:opacity .6s ease-out, transform .6s ease-out;
+}
+
+.reveal.visivel{
+    opacity:1;
+    transform:translateY(0);
+}
+
+@media(prefers-reduced-motion:reduce){
+    .entra-inicial, .reveal{
+        animation:none !important;
+        transition:none !important;
+        opacity:1 !important;
+        transform:none !important;
+    }
+}
+
 /* CABEÇALHO */
 
 .cabecalho{
@@ -40,14 +72,17 @@ body{
 }
 
 .menu{
+    position:relative;
     display:flex;
     align-items:center;
     gap:35px;
+    padding-bottom:6px;
 }
 
 .menu a{
     text-decoration:none;
     color:#fff;
+    font-weight:600;
     transition:.3s;
 }
 
@@ -55,18 +90,35 @@ body{
     color:#d9deff;
 }
 
-.botao-entrar{
+/* barrinha que desliza sob o link ativo/sob o mouse (ver js/nav-indicator.js) */
+.nav-indicator{
+    position:absolute;
+    bottom:0;
+    left:0;
+    height:2px;
+    width:0;
     background:#fff;
-    color:#5568fc !important;
-    padding:15px 35px;
-    border-radius:40px;
-    font-weight:bold;
-    text-transform:uppercase;
-    box-shadow:0 0 8px rgba(132,0,255,.25);
+    border-radius:2px;
+    opacity:0;
+    pointer-events:none;
+    transition:left .3s cubic-bezier(.65,0,.35,1), width .3s cubic-bezier(.65,0,.35,1), opacity .2s ease;
+}
+
+.nav-indicator.pronto{
+    opacity:1;
+}
+
+.botao-entrar{
+    background:#8EB6E3;
+    color:#fff !important;
+    padding:9px 24px;
+    border-radius:30px;
+    font-weight:600;
+    text-decoration:none;
 }
 
 .botao-entrar:hover{
-    background:#7282ff;
+    background:#2b4391;
     color:#fff !important;
 }
 
@@ -147,6 +199,20 @@ body{
     border-top:1px solid rgba(255,255,255,.3);
 }
 
+.links-rodape{
+    margin-top:-5px;
+}
+
+.links-rodape a{
+    color:#fff;
+    font-weight:600;
+    text-decoration:underline;
+}
+
+.links-rodape a:hover{
+    color:#eaf2ff;
+}
+
 /* RESPONSIVIDADE */
 
 @media(max-width:900px){
@@ -168,6 +234,11 @@ body{
         flex-wrap:wrap;
         margin-top:20px;
         gap:20px;
+    }
+
+    .menu a.active{
+        padding-bottom:4px;
+        border-bottom:2px solid #fff;
     }
 
     .apresentacao h2{

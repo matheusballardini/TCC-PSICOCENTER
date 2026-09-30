@@ -2,9 +2,19 @@ document.addEventListener('DOMContentLoaded', () => {
     initProfilePage();
 });
 
-const API_BASE = 'http://localhost:3001';
 
 async function initProfilePage() {
+    const logoutBtn = document.getElementById('sidebarLogoutBtn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', () => {
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('currentUser');
+            localStorage.removeItem('mockCurrentUser');
+            localStorage.removeItem('authUserId');
+            window.location.href = 'entrar.html';
+        });
+    }
+
     const scheduleBtn = document.getElementById('scheduleBtn');
     if (scheduleBtn) {
         scheduleBtn.addEventListener('click', () => {
@@ -16,6 +26,8 @@ async function initProfilePage() {
         });
     }
 
+    // pinta com o que ficou salvo do último login enquanto o /api/auth/me
+    // (mais abaixo, em loadProfile) busca os dados atualizados de verdade
     const storedUser = getStoredCurrentUser();
     if (storedUser) {
         renderProfile({
@@ -26,11 +38,11 @@ async function initProfilePage() {
             crp: storedUser.crp || 'Carregando...',
             bio: storedUser.bio || '',
             photo: storedUser.photo || null
-        }, storedUser.id || null, true);
+        }, storedUser.id || null);
     }
 
     const loadingIndicator = document.getElementById('loadingIndicator');
-    if (loadingIndicator) loadingIndicator.style.display = 'block';
+    if (loadingIndicator) loadingIndicator.style.display = 'flex';
 
     await loadProfile();
 
@@ -39,6 +51,8 @@ async function initProfilePage() {
     if (crpEl && crpEl.textContent === 'Carregando...') crpEl.textContent = '—';
 }
 
+// cache local do último usuário logado (gravado de verdade pelo login.js/register.js),
+// usado só pra pintar a tela na hora antes da resposta do /api/auth/me chegar
 function getStoredCurrentUser() {
     try {
         const raw = localStorage.getItem('currentUser');
@@ -52,40 +66,25 @@ function getStoredCurrentUser() {
 async function loadProfile() {
     const token = localStorage.getItem('authToken');
 
-    // check query params: ?id= or ?email=
+    // ?id= na URL: alguém vendo o perfil público de outro psicólogo (não precisa estar logado)
     const params = new URLSearchParams(window.location.search);
     const viewId = params.get('id');
-    const viewEmail = params.get('email');
 
-    // if viewing another professional by id, load without requiring auth
     if (viewId) {
         try {
             const res = await fetch(API_BASE + '/api/psychologists/' + encodeURIComponent(viewId));
             const data = await res.json();
             if (res.ok && data.success) {
-                renderProfile(data.data || {}, viewId, false);
-                // hide edit/account buttons when viewing other profile
+                renderProfile(data.data || {}, viewId);
                 hideOwnerActions();
                 return;
             }
         } catch (e) {
             console.warn('Erro ao buscar psicólogo por id', e);
         }
-        // fallback: continue to try local
+        // fallback: continua tentando os outros fluxos abaixo
     }
 
-    if (viewEmail) {
-        const mock = findMockUser(viewEmail);
-        if (mock) {
-            const profile = mock.profile || {};
-            profile.full_name = mock.full_name || profile.full_name;
-            profile.email = mock.email;
-            renderProfile(profile, null, true);
-            hideOwnerActions();
-            return;
-        }
-        // if not found locally, continue to other flows
-    }
     if (token) {
         try {
             const res = await fetch(API_BASE + '/api/auth/me', {
@@ -130,17 +129,8 @@ async function loadProfile() {
         }
     }
 
-    // fallback: try mock users stored in localStorage
-    const mockEmail = localStorage.getItem('mockCurrentUser');
-    const mockUser = findMockUser(mockEmail);
-    if (mockUser) {
-        const profile = mockUser.profile || {};
-        profile.full_name = mockUser.full_name || profile.full_name;
-        profile.email = mockUser.email;
-        renderProfile(profile, mockUser.id || null, true);
-        return;
-    }
-
+    // sem token válido (sessão expirada, por exemplo): último recurso é o
+    // cache do último login real, só pra não deixar a tela em branco
     const storedUser = getStoredCurrentUser();
     if (storedUser) {
         renderProfile({
@@ -151,7 +141,7 @@ async function loadProfile() {
             crp: storedUser.crp || '—',
             bio: storedUser.bio || '',
             photo: storedUser.photo || null
-        }, storedUser.id || null, true);
+        }, storedUser.id || null);
         return;
     }
 
@@ -162,7 +152,7 @@ function hideOwnerActions() {
     const eb = document.getElementById('editBtn'); if (eb) eb.style.display = 'none';
 }
 
-function renderProfile(profile = {}, userId = null, isMock = false) {
+function renderProfile(profile = {}, userId = null) {
     const nameEl = document.getElementById('fullName');
     const roleEl = document.getElementById('role');
     const emailEl = document.getElementById('emailVal');
@@ -188,12 +178,10 @@ function renderProfile(profile = {}, userId = null, isMock = false) {
     crpEl.textContent = profile.crp || '—';
     bioEl.textContent = bio;
 
-    if (photo) {
-        photoEl.src = photo;
-    }
+    photoEl.src = avatarSrc(photo, displayName);
 
     // update sidebar if present
-    if (sidebarPhoto && photo) sidebarPhoto.src = photo;
+    if (sidebarPhoto) sidebarPhoto.src = avatarSrc(photo, displayName);
     if (sidebarName) sidebarName.textContent = displayName;
     if (sidebarRole) sidebarRole.textContent = displayRole;
 
@@ -204,14 +192,4 @@ function renderProfile(profile = {}, userId = null, isMock = false) {
         scheduleBtn.style.display = shouldShowSchedule ? 'inline-flex' : 'none';
         scheduleBtn.dataset.psicologoId = userId || '';
     }
-
-    // store current ids for update
-    photoEl.dataset.userId = userId || '';
-    photoEl.dataset.isMock = isMock ? '1' : '0';
-}
-
-function findMockUser(email) {
-    if (!email) return null;
-    const users = JSON.parse(localStorage.getItem('mockUsers') || '[]');
-    return users.find(u => u.email.toLowerCase() === email.toLowerCase());
 }

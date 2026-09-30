@@ -9,12 +9,49 @@ body {
     font-family: Open Sans, apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     background-color: #f4f6f9;
     display: flex;
+    flex-direction: column;
     min-height: 100vh;
+    overflow-x: hidden;
 }
 
 
 
 /* MENU LATERAL */
+
+.sidebar-sair {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    margin-top: auto;
+    padding: 11px 12px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    box-shadow: 0 8px 18px rgba(192, 57, 43, 0.35);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.sidebar-sair i {
+    font-size: 16px;
+}
+
+.sidebar-sair:hover {
+    background: linear-gradient(135deg, #c0392b, #a5281b);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 22px rgba(192, 57, 43, 0.45);
+}
+
+.sidebar-sair:active {
+    transform: translateY(0);
+    box-shadow: 0 6px 14px rgba(192, 57, 43, 0.35);
+}
 
 .sidebar {
 
@@ -44,17 +81,19 @@ body {
 
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
 
     font-size: 26px;
     font-weight: bold;
+    letter-spacing: normal;
+    color: #fff;
 
     margin-bottom: 40px;
 
 }
 
 .logo img {
-    width: 34px;
+    width: 54px;
     flex-shrink: 0;
 }
 
@@ -106,6 +145,9 @@ body {
     font-size: 19px;
     font-weight: 700;
     margin-bottom: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 
 }
 
@@ -128,14 +170,14 @@ body {
 
 /* LINKS */
 
-nav {
+.sidebar nav {
 
     width: 100%;
 
 }
 
 
-nav a {
+.sidebar nav a {
 
     display: flex;
 
@@ -160,21 +202,21 @@ nav a {
 
 }
 
-nav a i {
+.sidebar nav a i {
 
     font-size: 19px;
 
 }
 
 
-nav a:hover {
+.sidebar nav a:hover {
 
     background-color: rgba(255,255,255,0.12);
     color: #fff;
 
 }
 
-nav a.active {
+.sidebar nav a.active {
 
     background-color: rgba(255, 255, 255, 0.16);
     border-left-color: #fff;
@@ -220,6 +262,82 @@ nav a.active {
 
 
 
+/* barra fininha com Início/Buscar profissionais, acima do conteúdo (só nas
+   páginas do paciente, que têm esses dois atalhos). O visual em si (altura,
+   fundo, padding...) já vem do sidebar-paciente.css, que essa página também
+   carrega — aqui só o margin-left, que muda dependendo de como a barra está
+   encaixada no HTML: quando é filha direta do body (como aqui em
+   perfil_paciente.html), ela mesma precisa empurrar 260px pra não ficar
+   embaixo da sidebar; quando está dentro de .conteudo-lista (outras páginas),
+   quem já empurra é o próprio .conteudo-lista, então ali o certo é 0. Usar
+   "body > .topo-fino" deixa essa regra específica o bastante pra vencer a
+   do sidebar-paciente.css sem depender da ordem dos <link>. */
+body > .topo-fino {
+
+    margin-left: 260px;
+
+}
+
+/* subtrai a altura da barra do conteúdo logo abaixo, senão os dois juntos
+   passam de 100vh e cria uma rolagem vertical sem necessidade */
+.topo-fino + .conteudo {
+
+    min-height: calc(100vh - 52px);
+
+}
+
+.topo-fino a {
+
+    text-decoration: none;
+
+    color: #2b4391;
+
+    font-weight: 700;
+
+    font-size: 16px;
+
+    transition: color .2s ease;
+
+}
+
+.topo-fino a:hover {
+
+    color: #1f2d6a;
+
+}
+
+/* barrinha que desliza sob o link sob o mouse (mesmo componente do cabeçalho
+   das páginas públicas, ver js/nav-indicator.js) */
+.nav-indicator {
+
+    position: absolute;
+
+    bottom: 6px;
+
+    left: 0;
+
+    height: 2px;
+
+    width: 0;
+
+    background: #2b4391;
+
+    border-radius: 2px;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transition: left .3s cubic-bezier(.65,0,.35,1), width .3s cubic-bezier(.65,0,.35,1), opacity .2s ease;
+
+}
+
+.nav-indicator.pronto {
+
+    opacity: 1;
+
+}
+
 /* CONTEÚDO PRINCIPAL */
 
 .conteudo {
@@ -237,6 +355,31 @@ nav a.active {
     align-items: center;
 
     min-height: 100vh;
+
+}
+
+/* conteúdo ao lado da sidebar pras páginas de lista do psicólogo (Pacientes,
+   Agendamentos, Mensagens) — sem centralizar como o .conteudo acima, que é
+   feito só pra um card único */
+.conteudo-lista-psicologo {
+
+    margin-left: 260px;
+
+    width: calc(100% - 260px);
+
+    min-height: 100vh;
+
+}
+
+@media(max-width: 800px) {
+
+    .conteudo-lista-psicologo {
+
+        margin-left: 80px;
+
+        width: calc(100% - 80px);
+
+    }
 
 }
 
@@ -278,6 +421,45 @@ nav a.active {
 
 
 
+/* BOTÃO VOLTAR (canto superior esquerdo) */
+
+.btn-back-top {
+
+    position: absolute;
+
+    top: 25px;
+
+    left: 30px;
+
+    padding: 10px 20px;
+
+    background-color: #fff;
+
+    color: #4b6cb7;
+
+    border: 1px solid #4b6cb7;
+
+    text-decoration: none;
+
+    border-radius: 10px;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    transition: 0.3s;
+
+}
+
+.btn-back-top:hover {
+
+    background-color: #4b6cb7;
+    color: #fff;
+
+}
+
+
+
 /* AÇÕES DE CONTA (sair / excluir) */
 
 .conta-actions {
@@ -299,11 +481,11 @@ nav a.active {
 
     flex: 1;
 
-    padding: 13px;
+    padding: 14px;
 
     border: none;
 
-    border-radius: 30px;
+    border-radius: 12px;
 
     font-size: 15px;
     font-weight: 700;
@@ -327,7 +509,6 @@ nav a.active {
 .btn-sair:hover {
 
     background-color: #f8d7d3;
-    transform: translateY(-1px);
 
 }
 
@@ -344,7 +525,6 @@ nav a.active {
 .btn-excluir:hover {
 
     background-color: #c0392b;
-    transform: translateY(-1px);
 
 }
 
@@ -374,6 +554,35 @@ nav a.active {
 
 
 
+
+/* CARREGANDO */
+
+.carregando-dados {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 16px 0 24px;
+    color: #004f83;
+    opacity: .8;
+    font-size: 14px;
+}
+
+.carregando-dados .spinner {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    border: 2px solid rgba(0, 79, 131, .25);
+    border-top-color: #004f83;
+    border-radius: 50%;
+    animation: girar .7s linear infinite;
+}
+
+@keyframes girar {
+    to {
+        transform: rotate(360deg);
+    }
+}
 
 /* CARD */
 
@@ -533,22 +742,42 @@ nav a.active {
 
     }
 
+    .logo img {
+
+        width: 36px;
+
+    }
+
     .logo span,
     .usuario h3,
     .cargo-badge,
-    nav a span {
+    .sidebar nav a span,
+    .sidebar-sair span {
 
         display: none;
 
     }
 
-    nav a {
+    .sidebar nav a {
 
         justify-content: center;
         padding: 14px 8px;
 
     }
 
+    /* com o texto escondido e o ícone centralizado, a bolinha (que fica
+       ancorada na borda direita do link inteiro) precisa se aproximar do
+       ícone em vez de ficar solta no canto da barra lateral estreita */
+    .link-com-badge .badge-notificacao {
+        top: 8px;
+        right: 14px;
+    }
+
+    .topo-fino {
+        margin-left: 80px;
+        padding: 14px 20px;
+        gap: 18px;
+    }
 
     .conteudo {
 
@@ -556,6 +785,23 @@ nav a.active {
 
         width: calc(100% - 80px);
 
+    }
+
+    /* em telas estreitas, os dois botões de canto (Voltar/Editar) ficariam
+       espremidos lado a lado — encolhe o padding/fonte pra caberem sem sobrepor */
+    .btn-back-top,
+    .btn-edit-top {
+        top: 16px;
+        padding: 8px 12px;
+        font-size: 13px;
+    }
+
+    .btn-back-top {
+        left: 12px;
+    }
+
+    .btn-edit-top {
+        right: 12px;
     }
 
 

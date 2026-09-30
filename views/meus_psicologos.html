@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <link rel="icon" type="image/png" href="../images/favicon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meus Psicólogos - Psicocenter</title>
+  <link rel="stylesheet" href="../style/agendamentos.css" />
+  <link rel="stylesheet" href="../style/pacientes.css" />
+  <link rel="stylesheet" href="../style/avaliacao.css" />
+  <link rel="stylesheet" href="../style/chat-badge.css" />
+  <link rel="stylesheet" href="../style/sidebar-paciente.css" />
+  <link href="https://cdn.boxicons.com/3.0.8/fonts/basic/boxicons.min.css" rel="stylesheet">
+</head>
+<body>
+
+  <aside class="sidebar">
+    <div class="logo">
+      <img src="../images/logo-psico-center.png" alt="Logo Psicocenter">
+      <span>Psicocenter</span>
+    </div>
+
+    <div class="usuario">
+      <div class="avatar-ring">
+        <img id="sidebarPhoto" src="../images/psicologo.webp" alt="Foto">
+      </div>
+      <h3 id="sidebarName">Carregando...</h3>
+      <span class="cargo-badge">Paciente</span>
+    </div>
+
+    <nav>
+      <a href="perfil_paciente.html">
+        <i class='bx bx-user'></i>
+        <span>Perfil</span>
+      </a>
+      <a href="meus_psicologos.html" class="active">
+        <i class='bx bx-group'></i>
+        <span>Psicólogos</span>
+      </a>
+      <a href="agendamentos_paciente.html">
+        <i class='bx bx-calendar'></i>
+        <span>Agendamentos</span>
+      </a>
+      <a href="mensagens_paciente.html" class="link-com-badge">
+        <i class='bx bx-message-circle'></i>
+        <span>Mensagens</span>
+        <span id="mensagensBadge" class="badge-notificacao"></span>
+      </a>
+    </nav>
+
+    <button id="sidebarLogoutBtn" type="button" class="sidebar-sair">
+      <i class='bx bx-log-out'></i>
+      <span>Sair</span>
+    </button>
+  </aside>
+
+  <main class="conteudo-lista">
+    <nav class="topo-fino">
+      <a href="paginaposlogin.html">Início</a>
+      <a href="buscar_profissionais.html">Buscar profissionais</a>
+    </nav>
+
+    <div class="container">
+      <h1 class="page-title">Meus psicólogos</h1>
+      <p class="subtitle">Psicólogos com quem você tem consultas aceitas ou concluídas.</p>
+
+      <section id="psychologistsContainer" class="list"></section>
+    </div>
+  </main>
+
+  <script src="../js/api-config.js"></script>
+    <script src="../js/avatar.js"></script>
+  <script src="../js/icons.js"></script>
+  <script src="../js/avaliacao.js"></script>
+  <script src="../js/chat-badge.js"></script>
+  <script src="../js/notifications-bell.js"></script>
+  <script src="../js/sidebar-paciente.js"></script>
+  <script src="../js/nav-indicator.js"></script>
+  <script src="../js/meus_psicologos.js"></script>
+</body>
+</html>

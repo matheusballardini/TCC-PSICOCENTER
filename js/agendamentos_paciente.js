@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   try {
     // busca o id direto da sessão atual (em vez de confiar só no que ficou salvo
     // no navegador de logins anteriores, que pode estar desatualizado)
-    const meRes = await fetch('http://localhost:3001/api/auth/me', {
+    const meRes = await fetch(`${API_BASE}/api/auth/me`, {
       headers: { 'Authorization': 'Bearer ' + token }
     });
     const meData = await meRes.json();
@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const currentUserId = meData.data?.user?.id;
     if (currentUserId) localStorage.setItem('authUserId', String(currentUserId));
 
-    const response = await fetch('http://localhost:3001/api/appointments/me', {
+    const response = await fetch(`${API_BASE}/api/appointments/me`, {
       headers: {
         'Authorization': 'Bearer ' + token
       }
@@ -63,18 +63,21 @@ document.addEventListener('DOMContentLoaded', async () => {
       const rawTime = appointment.horario || '';
       const localeDate = rawDate ? new Date(rawDate + 'T00:00:00').toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' }) : 'Data não informada';
 
-      const cancelBtn = (status === 'pendente' || status === 'aceita')
-        ? `<button class="btn-secondary cancel-btn" data-id="${appointment.id}">Cancelar</button>`
-        : '';
+      let cancelBtn = '';
+      if (status === 'pendente' || status === 'aceita') {
+        cancelBtn = `<button class="btn-secondary cancel-btn" data-id="${appointment.id}">Cancelar</button>`;
+      } else if (status === 'concluida') {
+        cancelBtn = `<button class="btn-secondary rate-btn" data-id="${appointment.id}" data-nome="${psychologist.full_name || 'psicólogo'}">Avaliar psicólogo</button>`;
+      }
 
       return `
         <article class="appointment-item">
           <div class="item-main">
             <h3>${psychologist.full_name || 'Psicólogo'}</h3>
             <div class="meta">
-              <span>📅 ${localeDate}</span>
-              <span>🕒 ${rawTime || 'Horário não informado'}</span>
-              <span>👤 ${patientName}</span>
+              <span>${heroIcon('calendario')} ${localeDate}</span>
+              <span>${heroIcon('relogio')} ${rawTime || 'Horário não informado'}</span>
+              <span>${heroIcon('usuario')} ${patientName}</span>
             </div>
           </div>
           <div>
@@ -92,7 +95,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const appointmentId = event.target.dataset.id;
 
         try {
-          const response = await fetch(`http://localhost:3001/api/appointments/${appointmentId}/cancel`, {
+          const response = await fetch(`${API_BASE}/api/appointments/${appointmentId}/cancel`, {
             method: 'PATCH',
             headers: {
               'Authorization': 'Bearer ' + token
@@ -109,6 +112,29 @@ document.addEventListener('DOMContentLoaded', async () => {
         } catch (error) {
           alert(error.message || 'Erro ao cancelar consulta.');
         }
+      });
+    });
+
+    document.querySelectorAll('.rate-btn').forEach((button) => {
+      button.addEventListener('click', () => {
+        const appointmentId = button.dataset.id;
+        abrirModalAvaliacao({
+          nomeAvaliado: button.dataset.nome || 'psicólogo',
+          onEnviar: async ({ rating, review }) => {
+            const response = await fetch(`${API_BASE}/api/appointments/${appointmentId}/rate`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+              },
+              body: JSON.stringify({ rating, review })
+            });
+            const result = await response.json();
+            if (!response.ok) throw new Error(result?.message || 'Erro ao enviar avaliação.');
+
+            button.outerHTML = '<span class="status concluida">Avaliado ★</span>';
+          }
+        });
       });
     });
   } catch (error) {

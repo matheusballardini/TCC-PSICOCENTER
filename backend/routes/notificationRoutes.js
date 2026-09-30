@@ -1,7 +1,7 @@
 import express from 'express';
 import {
   listNotifications,
-  getNotificationById,
+  getUnreadCount,
   markAsRead,
   markAllAsRead,
   deleteNotification,
@@ -11,9 +11,9 @@ import { requireAuth } from '../middleware/auth.js';
 const router = express.Router();
 
 router.get('/', requireAuth, listNotifications);
-router.get('/:id', requireAuth, getNotificationById);
-router.patch('/:id/read', requireAuth, markAsRead);
+router.get('/unread-count', requireAuth, getUnreadCount);
 router.patch('/mark-all-read', requireAuth, markAllAsRead);
+router.patch('/:id/read', requireAuth, markAsRead);
 router.delete('/:id', requireAuth, deleteNotification);
 
 export default router;

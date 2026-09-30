@@ -1,46 +1,125 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
+    <link rel="icon" type="image/png" href="../images/favicon.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Psicocenter</title>
     <link rel="stylesheet" href="../style/poslogin.css">
+    <link rel="stylesheet" href="../style/chat-badge.css">
     <link href="https://cdn.boxicons.com/3.0.8/fonts/basic/boxicons.min.css" rel="stylesheet">
+    <script src="../js/api-config.js"></script>
+    <script defer src="../js/avatar.js"></script>
+    <script defer src="../js/icons.js"></script>
+    <script defer src="../js/chat-badge.js"></script>
+    <script defer src="../js/notifications-bell.js"></script>
+    <script defer src="../js/reveal.js"></script>
+    <script defer src="../js/paginaposlogin.js"></script>
 </head>
 
 <body>
 
   <header class="cabecalho">
-    <img src="../images/logo-psico-center.png" alt="Logo Psicocenter">
-    <h1 class="titulo-logo">Psicocenter</h1>
+    <img class="entra-inicial" style="animation-delay:.05s" src="../images/logo-psico-center.png" alt="Logo Psicocenter">
+    <h1 class="titulo-logo entra-inicial" style="animation-delay:.12s">Psicocenter</h1>
 
-    <nav class="menu">
-      <a href="../views/index.html">
+    <nav class="menu entra-inicial" style="animation-delay:.2s">
+      <a href="../views/mensagens_paciente.html" class="link-com-badge">
         <i class='bx bx-message-circle'></i>
         Mensagens
+        <span id="mensagensBadge" class="badge-notificacao"></span>
       </a>
-      <a href="../views/perfil_paciente.html" class="botao-perfil">Meu Perfil</a>
+
+      <div class="conta-menu">
+        <button id="contaBtn" class="conta-avatar-btn" type="button" aria-haspopup="true" aria-expanded="false">
+          <img id="contaFoto" src="../images/psicologo.webp" alt="Foto de perfil">
+        </button>
+
+        <div id="contaDropdown" class="conta-dropdown">
+          <div class="conta-dropdown-header">
+            <img id="contaFotoGrande" src="../images/psicologo.webp" alt="Foto de perfil">
+            <div class="conta-dropdown-info">
+              <p id="contaNome" class="conta-nome">Carregando...</p>
+              <p id="contaEmail" class="conta-email"></p>
+            </div>
+          </div>
+
+          <a href="../views/perfil_paciente.html" class="conta-dropdown-item">
+            <i class='bx bx-user'></i> Meu perfil
+          </a>
+          <button id="contaSairBtn" type="button" class="conta-dropdown-item conta-sair">
+            <i class='bx bx-log-out'></i> Sair
+          </button>
+        </div>
+      </div>
     </nav>
   </header>
 
   <section class="apresentacao">
-    <h2>
+    <h2 class="entra-inicial" style="animation-delay:.3s">
       <span>Encontre o psicólogo ideal</span>
-      <span>para você</span>
+      <span class="destaque">para você</span>
     </h2>
 
-    <p>
+    <p class="entra-inicial" style="animation-delay:.4s">
       <span>Conectamos você com profissionais qualificados...</span>
       <span>Comece sua jornada de cuidado mental hoje!</span>
     </p>
 
-    <a href="../views/buscar_profissionais.html" class="btn">
+    <a href="../views/buscar_profissionais.html" class="btn entra-inicial" style="animation-delay:.5s">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="18" height="18" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"/></svg>
       Buscar Profissionais <span class="arrow">→</span>
     </a>
 
-    <a href="../views/agendamentos_paciente.html" class="btn" style="margin-top: 18px; display: inline-block;">
+    <a href="../views/agendamentos_paciente.html" class="btn entra-inicial" style="margin-left: 16px; animation-delay:.58s">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="18" height="18" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5"/></svg>
       Meus agendamentos <span class="arrow">→</span>
     </a>
+  </section>
+
+  <section class="como-funciona-poslogin">
+
+    <div class="passo reveal">
+        <span class="passo-numero">1</span>
+        <div class="passo-icone">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="26" height="26" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"/></svg>
+        </div>
+        <div class="passo-texto">
+            <h3>Busque</h3>
+            <p>Encontre psicólogos por especialidade, modalidade e localização.</p>
+        </div>
+    </div>
+
+    <div class="passo-seta">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="16" height="16" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"/></svg>
+    </div>
+
+    <div class="passo reveal" style="transition-delay:.1s">
+        <span class="passo-numero">2</span>
+        <div class="passo-icone">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="26" height="26" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5"/></svg>
+        </div>
+        <div class="passo-texto">
+            <h3>Agende</h3>
+            <p>Escolha o melhor horário dentro da disponibilidade do profissional.</p>
+        </div>
+    </div>
+
+    <div class="passo-seta">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="16" height="16" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"/></svg>
+    </div>
+
+    <div class="passo reveal" style="transition-delay:.2s">
+        <span class="passo-numero">3</span>
+        <div class="passo-icone">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="26" height="26" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z"/></svg>
+        </div>
+        <div class="passo-texto">
+            <h3>Converse</h3>
+            <p>Fale com seu psicólogo antes e depois das consultas direto pelo chat.</p>
+        </div>
+    </div>
+
   </section>
 
 </body>

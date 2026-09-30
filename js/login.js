@@ -1,5 +1,4 @@
 async function login() {
-    const API_BASE = 'http://localhost:3001';
     const email = document.getElementById("email").value.trim();
     const senha_usuario = document.getElementById("senha_usuario").value;
 

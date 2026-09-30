@@ -1,57 +1,104 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+    <link rel="icon" type="image/png" href="../images/favicon.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Agendar Consulta</title>
   <link rel="stylesheet" href="../style/agendamentos.css" />
+  <link rel="stylesheet" href="../style/chat-badge.css" />
+  <link rel="stylesheet" href="../style/sidebar-paciente.css" />
+  <link href="https://cdn.boxicons.com/3.0.8/fonts/basic/boxicons.min.css" rel="stylesheet">
 </head>
 <body>
-  <div class="container">
-    <div class="topbar">
-      <div class="logo">Psicocenter</div>
-      <nav class="nav-links">
-        <a href="paginaposlogin.html">Início</a>
-        <a href="buscar_profissionais.html">Buscar profissionais</a>
-        <a href="agendamentos_paciente.html">Meus agendamentos</a>
-      </nav>
+
+  <aside class="sidebar">
+    <div class="logo">
+      <img src="../images/logo-psico-center.png" alt="Logo Psicocenter">
+      <span>Psicocenter</span>
     </div>
 
-    <h1 class="page-title">Agendar consulta</h1>
-    <p class="subtitle">Escolha o profissional, a data e o horário para solicitar seu atendimento.</p>
+    <div class="usuario">
+      <div class="avatar-ring">
+        <img id="sidebarPhoto" src="../images/psicologo.webp" alt="Foto">
+      </div>
+      <h3 id="sidebarName">Carregando...</h3>
+      <span class="cargo-badge">Paciente</span>
+    </div>
 
-    <section class="card">
-      <form id="scheduleForm">
-        <div class="form-grid">
-          <div class="field">
-            <label for="psychologistSelect">Psicólogo</label>
-            <select id="psychologistSelect" required>
-              <option value="">Carregando profissionais...</option>
-            </select>
+    <nav>
+      <a href="perfil_paciente.html">
+        <i class='bx bx-user'></i>
+        <span>Perfil</span>
+      </a>
+      <a href="meus_psicologos.html">
+        <i class='bx bx-group'></i>
+        <span>Psicólogos</span>
+      </a>
+      <a href="agendamentos_paciente.html" class="active">
+        <i class='bx bx-calendar'></i>
+        <span>Agendamentos</span>
+      </a>
+      <a href="mensagens_paciente.html" class="link-com-badge">
+        <i class='bx bx-message-circle'></i>
+        <span>Mensagens</span>
+        <span id="mensagensBadge" class="badge-notificacao"></span>
+      </a>
+    </nav>
+
+    <button id="sidebarLogoutBtn" type="button" class="sidebar-sair">
+      <i class='bx bx-log-out'></i>
+      <span>Sair</span>
+    </button>
+  </aside>
+
+  <main class="conteudo-lista">
+    <nav class="topo-fino">
+      <a href="paginaposlogin.html">Início</a>
+      <a href="buscar_profissionais.html">Buscar profissionais</a>
+    </nav>
+
+    <div class="container">
+      <h1 class="page-title">Agendar consulta</h1>
+      <p class="subtitle">Escolha o profissional, a data e o horário para solicitar seu atendimento.</p>
+
+      <section class="card">
+        <form id="scheduleForm">
+          <div class="form-grid">
+            <div class="field">
+              <label for="psychologistSelect">Psicólogo</label>
+              <select id="psychologistSelect" required>
+                <option value="">Carregando profissionais...</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="appointmentDate">Data</label>
+              <input id="appointmentDate" type="date" required />
+            </div>
+
+            <div class="field">
+              <label for="appointmentTime">Horário</label>
+              <input id="appointmentTime" type="time" required />
+            </div>
           </div>
 
-          <div class="field">
-            <label for="appointmentDate">Data</label>
-            <input id="appointmentDate" type="date" required />
+          <p id="disponibilidadeInfo" class="disponibilidade-info"></p>
+          <p id="disponibilidadeErro" class="disponibilidade-erro"></p>
+
+          <div class="form-actions">
+            <button type="submit" class="btn">Solicitar consulta</button>
+            <a class="btn-secondary" href="buscar_profissionais.html">Voltar</a>
           </div>
+        </form>
+      </section>
+    </div>
+  </main>
 
-          <div class="field">
-            <label for="appointmentTime">Horário</label>
-            <input id="appointmentTime" type="time" required />
-          </div>
-        </div>
-
-        <p id="disponibilidadeInfo" class="disponibilidade-info"></p>
-        <p id="disponibilidadeErro" class="disponibilidade-erro"></p>
-
-        <div class="form-actions">
-          <button type="submit" class="btn">Solicitar consulta</button>
-          <a class="btn-secondary" href="buscar_profissionais.html">Voltar</a>
-        </div>
-      </form>
-    </section>
-  </div>
-
+  <script src="../js/api-config.js"></script>
+    <script src="../js/avatar.js"></script>
+  <script src="../js/sidebar-paciente.js"></script>
+  <script src="../js/nav-indicator.js"></script>
   <script src="../js/agendar_consulta.js"></script>
 </body>
 </html>

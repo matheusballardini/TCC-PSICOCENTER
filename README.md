@@ -279,12 +279,12 @@ Projeto desenvolvido como Trabalho de Conclusão de Curso (TCC) aplicando concei
 
 Projeto desenvolvido pela equipe do TCC 2026.
 
-Davi Tavares
+Matheus Ballardini
 
-Guilherme Martins
+Bruno Richopo
 
-Guilherme Barroso
+Enzo Marques
 
-Vitor Costa
+Antônio Godoy
 
-Matheus Forim
+Vinicius Cárceres

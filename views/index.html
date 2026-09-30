@@ -2,11 +2,16 @@
 <html lang="pt-br">
 
 <head>
+    <link rel="icon" type="image/png" href="../images/favicon.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Psicocenter</title>
+    <meta name="description" content="Psicocenter conecta pacientes e psicólogos em uma plataforma simples e segura para buscar profissionais, agendar consultas online ou presenciais e cuidar da saúde mental.">
 
     <link rel="stylesheet" href="../style/styles.css">
+    <script defer src="../js/faq.js"></script>
+    <script defer src="../js/reveal.js"></script>
+    <script defer src="../js/nav-indicator.js"></script>
 </head>
 
 <body>
@@ -14,11 +19,12 @@
     <!-- Cabeçalho -->
     <header class="cabecalho">
 
-        <img src="../images/logo-psico-center.png" alt="Logo Psicocenter">
+        <img class="entra-inicial" style="animation-delay:.05s" src="../images/logo-psico-center.png" alt="Logo Psicocenter">
 
-        <h1 class="titulo-logo">Psicocenter</h1>
+        <h1 class="titulo-logo entra-inicial" style="animation-delay:.12s">Psicocenter</h1>
 
-        <nav class="menu">
+        <nav class="menu entra-inicial" style="animation-delay:.2s">
+            <a href="index.html" class="active">Início</a>
             <a href="sobrenos.html">Sobre nós</a>
             <a href="contato.html">Contato</a>
             <a href="entrar.html" class="botao-entrar">Entrar</a>
@@ -31,33 +37,72 @@
 
         <section class="apresentacao">
 
-            <h2>Bem-vindo ao Psicocenter!</h2>
+            <div class="apresentacao-texto">
 
-            <h3 class="subtitulo">
-                Cuidando da saúde mental com praticidade, segurança e acolhimento.
-            </h3>
+                <h2 class="entra-lado" style="animation-delay:.3s">Bem-vindo ao Psicocenter!</h2>
+
+                <h3 class="subtitulo entra-lado" style="animation-delay:.4s">
+                    Cuidando da saúde mental com praticidade, segurança e acolhimento.
+                </h3>
+
+                <div class="cta-hero entra-lado" style="animation-delay:.5s">
+                    <a href="entrar.html" class="botao-entrar botao-cta-principal">Comece agora →</a>
+                    <a href="#funcionamento" class="cta-secundario">Saiba como funciona</a>
+                </div>
+
+            </div>
+
+            <div class="apresentacao-selos entra-lado-direita" style="animation-delay:.45s">
+
+                <h4 class="selos-titulo">Por que confiar no Psicocenter?</h4>
+
+                <div class="selo">
+                    <span class="selo-icone"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="24" height="24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z"/></svg></span>
+                    <div>
+                        <strong>Ambiente seguro</strong>
+                        <span>Seus dados protegidos</span>
+                    </div>
+                </div>
+
+                <div class="selo">
+                    <span class="selo-icone"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="24" height="24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z"/></svg></span>
+                    <div>
+                        <strong>Privacidade garantida</strong>
+                        <span>Sigilo absoluto</span>
+                    </div>
+                </div>
+
+                <div class="selo">
+                    <span class="selo-icone"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="24" height="24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"/></svg></span>
+                    <div>
+                        <strong>Acolhimento</strong>
+                        <span>Você não está sozinho</span>
+                    </div>
+                </div>
+
+            </div>
 
         </section>
 
-        <section class="funcionamento">
+        <section class="funcionamento" id="funcionamento">
 
-            <h2>Como funciona o Psicocenter?</h2>
+            <h2 class="reveal">Como funciona o Psicocenter?</h2>
 
-            <p>
+            <p class="reveal">
                 O <strong>Psicocenter</strong> é uma plataforma criada para conectar
                 pacientes e psicólogos de maneira simples, organizada e segura.
             </p>
 
-            <p>
+            <p class="reveal">
                 Nosso objetivo é facilitar o acesso aos serviços de saúde mental,
                 proporcionando uma experiência intuitiva para profissionais e pacientes.
             </p>
 
             <div class="cartoes">
 
-                <div class="cartao">
+                <div class="cartao reveal">
 
-                    <img src="../images/psicoimage.png" alt="Psicólogo">
+                    <img src="../images/psicoimage.png" alt="Psicólogo" loading="lazy">
 
                     <h3>Para Psicólogos</h3>
 
@@ -69,9 +114,9 @@
 
                 </div>
 
-                <div class="cartao">
+                <div class="cartao reveal" style="transition-delay:.1s">
 
-                    <img src="../images/pacienteimage.png" alt="Paciente">
+                    <img src="../images/pacienteimage.png" alt="Paciente" loading="lazy">
 
                     <h3>Para Pacientes</h3>
 
@@ -80,6 +125,71 @@
                         prática e segura em um ambiente acolhedor.
                     </p>
 
+                </div>
+
+            </div>
+
+        </section>
+
+        <section class="faq" id="faq">
+
+            <h2 class="reveal">Perguntas frequentes</h2>
+
+            <div class="faq-lista">
+
+                <div class="faq-item reveal">
+                    <button type="button" class="faq-pergunta">
+                        <span class="faq-emoji"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="22" height="22" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0 1 15.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 0 1 3 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 0 0-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 0 1-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 0 0 3 15h-.75M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm3 0h.008v.008H18V10.5Zm-12 0h.008v.008H6V10.5Z"/></svg></span>
+                        <span class="faq-texto">O Psicocenter é gratuito para se cadastrar?</span>
+                        <span class="faq-icone">+</span>
+                    </button>
+                    <div class="faq-resposta">
+                        <p>Sim! O cadastro na plataforma é gratuito tanto para pacientes quanto para psicólogos. Os valores das sessões são definidos por cada profissional individualmente.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item reveal" style="transition-delay:.06s">
+                    <button type="button" class="faq-pergunta">
+                        <span class="faq-emoji"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="22" height="22" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5"/></svg></span>
+                        <span class="faq-texto">Como funciona o agendamento de consultas?</span>
+                        <span class="faq-icone">+</span>
+                    </button>
+                    <div class="faq-resposta">
+                        <p>Você busca um profissional por especialidade, modalidade (online ou presencial) e localização, e solicita um horário dentro da disponibilidade que ele mesmo cadastrou. O psicólogo então aceita ou recusa a solicitação.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item reveal" style="transition-delay:.12s">
+                    <button type="button" class="faq-pergunta">
+                        <span class="faq-emoji"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="22" height="22" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z"/></svg></span>
+                        <span class="faq-texto">Meus dados estão seguros?</span>
+                        <span class="faq-icone">+</span>
+                    </button>
+                    <div class="faq-resposta">
+                        <p>Sim! Utilizamos autenticação segura e seus dados nunca são compartilhados sem consentimento. Veja todos os detalhes na nossa <a href="privacidade.html">Política de Privacidade</a>.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item reveal" style="transition-delay:.18s">
+                    <button type="button" class="faq-pergunta">
+                        <span class="faq-emoji"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="22" height="22" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"/></svg></span>
+                        <span class="faq-texto">Posso cancelar uma consulta já agendada?</span>
+                        <span class="faq-icone">+</span>
+                    </button>
+                    <div class="faq-resposta">
+                        <p>Sim! Tanto o paciente quanto o psicólogo podem cancelar uma consulta diretamente pela plataforma antes do horário marcado.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item reveal" style="transition-delay:.24s">
+                    <button type="button" class="faq-pergunta">
+                        <span class="faq-emoji"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="22" height="22" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"/></svg></span>
+                        <span class="faq-texto">Como excluo minha conta e meus dados?</span>
+                        <span class="faq-icone">+</span>
+                    </button>
+                    <div class="faq-resposta">
+                        <p>Você pode excluir sua conta a qualquer momento na tela de editar perfil. A exclusão é permanente e remove seus dados, consultas e avaliações do sistema.</p>
+                    </div>
                 </div>
 
             </div>
@@ -96,6 +206,10 @@
         <p>
             Conectando pacientes e psicólogos através de uma plataforma
             moderna, segura e intuitiva.
+        </p>
+
+        <p class="links-rodape">
+            <a href="privacidade.html">Política de Privacidade</a>
         </p>
 
         <hr>

@@ -10,10 +10,10 @@ export const listNotifications = async (req, res, next) => {
   }
 };
 
-export const getNotificationById = async (req, res, next) => {
+export const getUnreadCount = async (req, res, next) => {
   try {
-    const data = await notificationService.getNotificationById(req.params.id);
-    res.json(successResponse('Notificação encontrada', data));
+    const count = await notificationService.getUnreadCount(req.user.id);
+    res.json(successResponse('Contagem de notificações não lidas', { count }));
   } catch (error) {
     next(error);
   }
@@ -21,7 +21,7 @@ export const getNotificationById = async (req, res, next) => {
 
 export const markAsRead = async (req, res, next) => {
   try {
-    const data = await notificationService.markNotificationAsRead(req.params.id);
+    const data = await notificationService.markNotificationAsRead(req.params.id, req.user.id);
     res.json(successResponse('Notificação marcada como lida', data));
   } catch (error) {
     next(error);
@@ -30,8 +30,8 @@ export const markAsRead = async (req, res, next) => {
 
 export const markAllAsRead = async (req, res, next) => {
   try {
-    const data = await notificationService.markAllNotificationsAsRead(req.user.id);
-    res.json(successResponse('Todas as notificações marcadas como lidas', data));
+    await notificationService.markAllNotificationsAsRead(req.user.id);
+    res.json(successResponse('Todas as notificações marcadas como lidas', {}));
   } catch (error) {
     next(error);
   }
@@ -39,7 +39,7 @@ export const markAllAsRead = async (req, res, next) => {
 
 export const deleteNotification = async (req, res, next) => {
   try {
-    await notificationService.deleteNotification(req.params.id);
+    await notificationService.deleteNotification(req.params.id, req.user.id);
     res.json(successResponse('Notificação removida', {}));
   } catch (error) {
     next(error);

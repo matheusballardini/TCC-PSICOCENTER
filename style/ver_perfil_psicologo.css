@@ -73,8 +73,30 @@ body{
 }
 
 .carregando-dados {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
     color: #004f83;
-    opacity: .75;
+    opacity: .8;
+    font-size: 15px;
+    margin: 40px 0;
+}
+
+.carregando-dados .spinner {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    border: 2px solid rgba(0, 79, 131, .25);
+    border-top-color: #004f83;
+    border-radius: 50%;
+    animation: girar .7s linear infinite;
+}
+
+@keyframes girar {
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 .card-perfil {
@@ -181,4 +203,19 @@ hr {
 
 .btn-agendar:hover {
     background-color: #003a61;
+}
+
+.rating-summary {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: #f5b301;
+    font-weight: 700;
+    font-size: 14px;
+    margin: 4px 0 0;
+}
+
+.rating-summary .rating-count {
+    color: #6b7280;
+    font-weight: 400;
 }

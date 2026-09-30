@@ -16,9 +16,43 @@ body {
   color: #004f83;
 }
 
+/* ANIMAÇÕES DE ENTRADA (mesmo efeito da página inicial) */
+
+@keyframes entra{
+    from{opacity:0; transform:translateY(14px);}
+    to{opacity:1; transform:translateY(0);}
+}
+
+.entra-inicial{
+    opacity:0;
+    animation:entra .7s ease-out forwards;
+}
+
+.reveal{
+    opacity:0;
+    transform:translateY(18px);
+    transition:opacity .6s ease-out, transform .6s ease-out;
+}
+
+.reveal.visivel{
+    opacity:1;
+    transform:translateY(0);
+}
+
+@media(prefers-reduced-motion:reduce){
+    .entra-inicial, .reveal{
+        animation:none !important;
+        transition:none !important;
+        opacity:1 !important;
+        transform:none !important;
+    }
+}
+
 /* CABEÇALHO (mesmo padrão do restante do site) */
 
 .cabecalho{
+  position:relative;
+  z-index:100;
   border-bottom: 3px solid #004F83;
   display:flex;
   align-items:center;
@@ -47,6 +81,7 @@ body {
 .menu a{
   text-decoration:none;
   color:#fff;
+  font-weight:600;
   display: flex;
   align-items: center;
   gap: 6px;
@@ -55,6 +90,14 @@ body {
 
 .menu a:hover{
   color:#d9deff;
+}
+
+.menu-desativado{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  color:rgba(255,255,255,0.5);
+  cursor:not-allowed;
 }
 
 .botao-perfil{
@@ -72,6 +115,129 @@ body {
   color:#fff !important;
 }
 
+/* MENU DE CONTA (foto de perfil com dropdown, canto superior direito) */
+
+.conta-menu{
+  position:relative;
+}
+
+.conta-avatar-btn{
+  width:46px;
+  height:46px;
+  border-radius:50%;
+  padding:0;
+  border:2px solid rgba(255,255,255,.6);
+  background:#fff;
+  cursor:pointer;
+  overflow:hidden;
+  box-shadow:0 0 8px rgba(0,0,0,.15);
+  transition:.25s;
+}
+
+.conta-avatar-btn:hover{
+  border-color:#fff;
+  transform:scale(1.05);
+}
+
+.conta-avatar-btn img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+
+.conta-dropdown{
+  display:none;
+  position:absolute;
+  top:calc(100% + 14px);
+  right:0;
+  width:280px;
+  max-width:calc(100vw - 24px);
+  background:#fff;
+  border-radius:16px;
+  box-shadow:0 12px 32px rgba(0,40,90,.25);
+  overflow:hidden;
+  z-index:50;
+}
+
+.conta-dropdown.aberto{
+  display:block;
+}
+
+.conta-dropdown-header{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:18px 20px;
+  border-bottom:1px solid #eef1fa;
+}
+
+.conta-dropdown-header img{
+  width:48px;
+  height:48px;
+  border-radius:50%;
+  object-fit:cover;
+  flex-shrink:0;
+}
+
+.conta-dropdown-info{
+  min-width:0;
+}
+
+.conta-nome{
+  color:#004f83;
+  font-weight:700;
+  font-size:15px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.conta-email{
+  color:#6b7280;
+  font-size:13px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.conta-dropdown .conta-dropdown-item{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  width:100%;
+  padding:14px 20px;
+  border:none;
+  background:none;
+  color:#004f83 !important;
+  font-size:14px;
+  font-weight:600;
+  text-decoration:none;
+  cursor:pointer;
+  transition:.2s;
+  text-align:left;
+  font-family:inherit;
+}
+
+.conta-dropdown .conta-dropdown-item i{
+  font-size:18px;
+}
+
+.conta-dropdown .conta-dropdown-item:hover{
+  background:#eef4ff;
+}
+
+.conta-dropdown .conta-dropdown-item.conta-sair{
+  color:#c0392b !important;
+  border-top:1px solid #eef1fa;
+  background: rgba(192, 57, 43, 0.06);
+  font-weight: 700;
+}
+
+.conta-dropdown .conta-dropdown-item.conta-sair:hover{
+  background: rgba(192, 57, 43, 0.14);
+}
+
 /* APRESENTAÇÃO */
 
 .apresentacao {
@@ -83,6 +249,10 @@ body {
   display: block;
   color: #2B4391;
   font-size: 3.5rem;
+}
+
+.apresentacao h2 .destaque {
+  color: #5568fc;
 }
 
 .apresentacao p span {
@@ -117,6 +287,109 @@ body {
   font-size: 18px;
 }
 
+/* PASSO A PASSO "COMO FUNCIONA" */
+
+.como-funciona-poslogin {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto 1fr;
+  align-items: center;
+  gap: 10px;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 5% 80px;
+}
+
+.passo {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  text-align: left;
+  background: rgba(255, 255, 255, .8);
+  border-left: 4px solid #2b4391;
+  border-radius: 14px;
+  padding: 18px 16px;
+  box-shadow: 0 10px 24px rgba(43, 67, 145, .12);
+}
+
+.passo-texto {
+  min-width: 0;
+}
+
+.passo-texto p {
+  overflow-wrap: break-word;
+}
+
+.passo-numero {
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #2b4391;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 800;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, .25);
+}
+
+.passo-icone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: rgba(43, 67, 145, .1);
+  color: #2b4391;
+}
+
+.passo-texto {
+  min-width: 0;
+}
+
+.passo h3 {
+  color: #2b4391;
+  font-size: 1.05rem;
+  margin-bottom: 4px;
+}
+
+.passo p {
+  color: #5f6d86;
+  font-size: .85rem;
+  line-height: 1.45;
+}
+
+.passo-seta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .7);
+  color: #2b4391;
+  box-shadow: 0 4px 10px rgba(43, 67, 145, .15);
+}
+
+@media (max-width: 760px) {
+  .como-funciona-poslogin {
+    grid-template-columns: 1fr;
+  }
+
+  .passo-seta {
+    transform: rotate(90deg);
+    justify-self: center;
+  }
+}
+
 @media (max-width: 900px) {
   .cabecalho {
     justify-content: center;
@@ -143,5 +416,23 @@ body {
 
   .apresentacao p span {
     font-size: 1rem;
+  }
+
+  /* em telas menores o avatar pode não ficar mais colado na borda direita da
+     janela, então o dropdown (que antes se posicionava relativo a ele) corria
+     o risco de abrir cortado/fora da tela — fixa ele relativo à janela inteira */
+  .conta-dropdown {
+    position: fixed;
+    top: 90px;
+    right: 16px;
+    left: 16px;
+    width: auto;
+    max-width: 320px;
+    margin-left: auto;
+  }
+
+  .conta-dropdown .conta-dropdown-item {
+    padding: 16px 20px;
+    font-size: 15px;
   }
 }

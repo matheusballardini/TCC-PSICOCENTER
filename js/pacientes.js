@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   try {
     // busca o id direto da sessão atual (em vez de confiar só no que ficou salvo
     // no navegador de logins anteriores, que pode estar desatualizado)
-    const meRes = await fetch('http://localhost:3001/api/auth/me', {
+    const meRes = await fetch(`${API_BASE}/api/auth/me`, {
       headers: { 'Authorization': 'Bearer ' + token }
     });
     const meData = await meRes.json();
@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const currentUserId = meData.data?.user?.id;
     if (currentUserId) localStorage.setItem('authUserId', String(currentUserId));
 
-    const response = await fetch('http://localhost:3001/api/appointments/me', {
+    const response = await fetch(`${API_BASE}/api/appointments/me`, {
       headers: {
         'Authorization': 'Bearer ' + token
       }
@@ -68,12 +68,30 @@ document.addEventListener('DOMContentLoaded', async () => {
       patientsById[patientId].appointments.push(appointment);
     });
 
+    // busca a média de avaliação de cada paciente em paralelo
+    const ratingSummaries = {};
+    await Promise.all(Object.keys(patientsById).map(async (patientId) => {
+      try {
+        const res = await fetch(`${API_BASE}/api/patients/${patientId}/rating-summary`, {
+          headers: { 'Authorization': 'Bearer ' + token }
+        });
+        const result = await res.json();
+        if (res.ok && result.success) ratingSummaries[patientId] = result.data;
+      } catch (e) {
+        console.warn('Erro ao buscar avaliação do paciente', patientId, e);
+      }
+    }));
+
     container.innerHTML = Object.entries(patientsById).map(([patientId, patient]) => {
       const name = patient.info.full_name || 'Paciente';
-      const photo = patient.info.foto || '../images/psicologo.webp';
+      const photo = avatarSrc(patient.info.foto, name);
       const email = patient.info.email || '—';
       const telefone = patient.info.telefone || '—';
       const profissao = patient.info.profissao || '';
+      const summary = ratingSummaries[patientId] || { average: 0, total: 0 };
+      const ratingHtml = summary.total > 0
+        ? `<span class="rating-summary clicavel" data-patient-id="${patientId}" data-nome="${escapeHtml(name)}">★ ${summary.average.toFixed(1)} <span class="rating-count">(${summary.total} — ver comentários)</span></span>`
+        : `<span class="rating-summary rating-count">Sem avaliações ainda</span>`;
 
       const appointmentsHtml = patient.appointments.map((appointment) => {
         const status = appointment.status || 'pendente';
@@ -88,8 +106,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         return `
           <div class="patient-appointment-row">
             <div class="meta">
-              <span>📅 ${localeDate}</span>
-              <span>🕒 ${rawTime || 'Horário não informado'}</span>
+              <span>${heroIcon('calendario')} ${localeDate}</span>
+              <span>${heroIcon('relogio')} ${rawTime || 'Horário não informado'}</span>
               <span class="status ${status}">${status}</span>
             </div>
             ${cancelBtn}
@@ -100,10 +118,11 @@ document.addEventListener('DOMContentLoaded', async () => {
       return `
         <article class="patient-card" data-patient-id="${patientId}">
           <div class="patient-header">
-            <img class="patient-photo" src="${photo}" alt="Foto de ${escapeHtml(name)}">
+            <img class="patient-photo" src="${photo}" alt="Foto de ${escapeHtml(name)}" loading="lazy">
             <div class="patient-info">
               <h3>${escapeHtml(name)}</h3>
-              <div class="meta">✉️ ${escapeHtml(email)} &nbsp;|&nbsp; 📞 ${escapeHtml(telefone)}${profissao ? ' &nbsp;|&nbsp; 💼 ' + escapeHtml(profissao) : ''}</div>
+              <div class="meta">${heroIcon('envelope')} ${escapeHtml(email)} &nbsp;|&nbsp; ${heroIcon('telefone')} ${escapeHtml(telefone)}${profissao ? ' &nbsp;|&nbsp; ' + heroIcon('maleta') + ' ' + escapeHtml(profissao) : ''}</div>
+              <div class="meta">${ratingHtml}</div>
             </div>
           </div>
           <div class="patient-appointments">
@@ -121,6 +140,23 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (!confirm('Cancelar esta consulta?')) return;
         await updateAppointmentStatus(event.target.dataset.id, 'cancelada');
         window.location.reload();
+      });
+    });
+
+    document.querySelectorAll('.rating-summary.clicavel').forEach((el) => {
+      el.addEventListener('click', async () => {
+        const patientId = el.dataset.patientId;
+        const nome = el.dataset.nome || 'Paciente';
+        try {
+          const res = await fetch(`${API_BASE}/api/patients/${patientId}/ratings`, {
+            headers: { 'Authorization': 'Bearer ' + token }
+          });
+          const result = await res.json();
+          if (!res.ok || !result.success) throw new Error('Não foi possível carregar os comentários.');
+          abrirModalComentarios({ titulo: `Avaliações de ${nome}`, avaliacoes: result.data });
+        } catch (err) {
+          alert(err.message || 'Erro ao carregar comentários.');
+        }
       });
     });
 
@@ -143,7 +179,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   async function updateAppointmentStatus(appointmentId, status) {
     try {
-      const response = await fetch(`http://localhost:3001/api/appointments/${appointmentId}/status`, {
+      const response = await fetch(`${API_BASE}/api/appointments/${appointmentId}/status`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

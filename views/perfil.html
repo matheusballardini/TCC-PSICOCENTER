@@ -2,10 +2,12 @@
 <html lang="pt-br">
 
 <head>
+    <link rel="icon" type="image/png" href="../images/favicon.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil - Psicocenter</title>
     <link rel="stylesheet" href="../style/perfil.css">
+    <link rel="stylesheet" href="../style/chat-badge.css">
     <link href="https://cdn.boxicons.com/3.0.8/fonts/basic/boxicons.min.css" rel="stylesheet">
 </head>
 
@@ -49,16 +51,26 @@
             </a>
 
 
-            <a href="agendamentos.html">
+            <a href="agendamentos.html" class="link-com-badge">
                 <i class='bx bx-calendar'></i>
                 <span>Agendamentos</span>
+                <span id="agendamentosBadge" class="badge-notificacao"></span>
+            </a>
+
+
+            <a href="mensagens.html" class="link-com-badge">
+                <i class='bx bx-message-circle'></i>
+                <span>Mensagens</span>
+                <span id="mensagensBadge" class="badge-notificacao"></span>
             </a>
 
 
         </nav>
 
-
-
+        <button id="sidebarLogoutBtn" type="button" class="sidebar-sair">
+            <i class='bx bx-log-out'></i>
+            <span>Sair</span>
+        </button>
 
     </aside>
 
@@ -75,7 +87,10 @@
 
 
             <h1>Meu Perfil</h1>
-            <p id="loadingIndicator" style="display:none; opacity:0.7; margin-top:-8px;">Carregando dados...</p>
+            <p id="loadingIndicator" class="carregando-dados" style="display:none;">
+                <span class="spinner"></span>
+                Carregando dados...
+            </p>
 
 
             <div class="card">
@@ -143,6 +158,12 @@
 
 </body>
 
+    <script src="../js/api-config.js"></script>
+    <script src="../js/avatar.js"></script>
+    <script src="../js/icons.js"></script>
+    <script src="../js/chat-badge.js"></script>
+    <script src="../js/appointments-badge.js"></script>
+    <script src="../js/notifications-bell.js"></script>
     <script src="../js/perfil.js"></script>
 
 </html>

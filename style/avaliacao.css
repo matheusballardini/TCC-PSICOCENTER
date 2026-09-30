@@ -1,0 +1,238 @@
+/* Estilos do sistema de avaliação (modal de estrelas + modal de comentários),
+   compartilhados por todas as páginas que usam js/avaliacao.js. Usa cores fixas
+   (não variáveis de :root) pra funcionar em qualquer página, independente do tema dela. */
+
+.avaliacao-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 28, 60, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 20px;
+}
+
+.avaliacao-modal {
+  background: #fff;
+  border-radius: 18px;
+  padding: 28px;
+  width: 100%;
+  max-width: 380px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+  font-family: "Open Sans", apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.avaliacao-modal h3 {
+  color: #2b4391;
+  margin-bottom: 16px;
+  font-size: 18px;
+}
+
+.avaliacao-estrelas {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.avaliacao-estrela {
+  font-size: 32px;
+  line-height: 1;
+  color: #f5b301;
+  cursor: pointer;
+  user-select: none;
+}
+
+.avaliacao-modal textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid rgba(43, 67, 145, 0.2);
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 14px;
+  resize: vertical;
+}
+
+.avaliacao-erro {
+  color: #dc2626;
+  font-size: 13px;
+  min-height: 18px;
+  margin-top: 8px;
+}
+
+.avaliacao-acoes {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.avaliacao-acoes .btn,
+.avaliacao-acoes .btn-secondary {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  border: none;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.avaliacao-acoes .btn {
+  background: linear-gradient(135deg, #2b4391, #845fb4);
+  color: #fff;
+}
+
+.avaliacao-acoes .btn-secondary {
+  background: rgba(43, 67, 145, 0.08);
+  color: #2b4391;
+  border: 1px solid rgba(43, 67, 145, 0.15);
+}
+
+.rating-summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: #f5b301;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.rating-summary .rating-count {
+  color: #5f6d86;
+  font-weight: 400;
+}
+
+.rating-summary.clicavel {
+  cursor: pointer;
+  text-decoration: underline dotted;
+  text-underline-offset: 3px;
+}
+
+/* MODAL DE COMENTÁRIOS (lista de avaliações recebidas) */
+
+.comentarios-modal {
+  max-width: 460px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.comentarios-lista {
+  overflow-y: auto;
+  max-height: 55vh;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-right: 4px;
+}
+
+.comentario-item {
+  display: flex;
+  gap: 12px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(43, 67, 145, 0.12);
+}
+
+.comentario-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.comentario-foto {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.comentario-corpo {
+  min-width: 0;
+  flex: 1;
+}
+
+.comentario-topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.comentario-topo strong {
+  color: #2b4391;
+  font-size: 14px;
+}
+
+.comentario-data {
+  color: #5f6d86;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.comentario-estrelas {
+  color: #f5b301;
+  font-size: 14px;
+  margin: 2px 0 4px;
+}
+
+.comentario-texto {
+  color: #1f2a44;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.avaliacao-vazio {
+  color: #5f6d86;
+  text-align: center;
+  padding: 20px 0;
+}
+
+/* MODAL DE CONFIRMAÇÃO DE EXCLUSÃO DE CONTA */
+
+.avaliacao-modal p {
+    color: #1f2a44;
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 12px;
+}
+
+.avaliacao-modal input[type="text"] {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid rgba(43, 67, 145, 0.2);
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 14px;
+    margin-bottom: 4px;
+}
+
+.btn-excluir-confirmado {
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    border: none;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+    font-family: inherit;
+    background: #e74c3c;
+    color: #fff;
+    transition: .2s;
+}
+
+.btn-excluir-confirmado:hover:not(:disabled) {
+    background: #c0392b;
+}
+
+.btn-excluir-confirmado:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}

@@ -2,11 +2,15 @@
 <html lang="pt-BR">
 
 <head>
+    <link rel="icon" type="image/png" href="../images/favicon.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Psicocenter - Sobre Nós</title>
+    <meta name="description" content="Conheça a equipe e a missão por trás do Psicocenter, uma plataforma criada para facilitar o acesso a cuidados de saúde mental.">
 
     <link rel="stylesheet" href="../style/sobrenos.css">
+    <script defer src="../js/reveal.js"></script>
+    <script defer src="../js/nav-indicator.js"></script>
 </head>
 
 <body>
@@ -14,14 +18,15 @@
     <!-- Cabeçalho -->
     <header class="cabecalho">
 
-        <img src="../images/logo-psico-center.png" alt="Logo Psicocenter">
+        <img class="entra-inicial" style="animation-delay:.05s" src="../images/logo-psico-center.png" alt="Logo Psicocenter">
 
-        <h1 class="titulo-logo">
+        <h1 class="titulo-logo entra-inicial" style="animation-delay:.12s">
             <a href="index.html">Psicocenter</a>
         </h1>
 
-        <nav class="menu">
+        <nav class="menu entra-inicial" style="animation-delay:.2s">
             <a href="index.html">Início</a>
+            <a href="sobrenos.html" class="active">Sobre nós</a>
             <a href="contato.html">Contato</a>
             <a href="entrar.html" class="botao-entrar">Entrar</a>
         </nav>
@@ -32,8 +37,8 @@
     <main>
 
         <section class="apresentacao">
-            <h2>Sobre nós</h2>
-            <h3 class="subtitulo">
+            <h2 class="entra-inicial" style="animation-delay:.3s">Sobre nós</h2>
+            <h3 class="subtitulo entra-inicial" style="animation-delay:.4s">
                 Somos uma equipe de jovens desenvolvedores apaixonados por
                 tecnologia e por criar soluções que realmente façam a diferença
                 na vida das pessoas.
@@ -42,8 +47,8 @@
 
         <section class="cartoes-sobre">
 
-            <div class="cartao-sobre">
-                <img src="../images/nossa-missao.png" alt="Nossa Missão">
+            <div class="cartao-sobre reveal">
+                <img src="../images/nossa-missao.png" alt="Nossa Missão" loading="lazy">
                 <h3>Nossa missão</h3>
                 <p>
                     Proporcionar um ambiente acolhedor e acessível para que as
@@ -54,8 +59,8 @@
                 </p>
             </div>
 
-            <div class="cartao-sobre">
-                <img src="../images/equipe.png" alt="Nossa Equipe">
+            <div class="cartao-sobre reveal" style="transition-delay:.1s">
+                <img src="../images/equipe.png" alt="Nossa Equipe" loading="lazy">
                 <h3>Nossa equipe</h3>
                 <p>
                     Composta por 5 estudantes dedicados, nossa equipe se
@@ -76,6 +81,10 @@
         <p>
             Conectando pacientes e psicólogos através de uma plataforma
             moderna, segura e intuitiva.
+        </p>
+
+        <p class="links-rodape">
+            <a href="privacidade.html">Política de Privacidade</a>
         </p>
 
         <hr>

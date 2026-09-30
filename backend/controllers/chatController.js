@@ -1,42 +1,43 @@
 import { successResponse, errorResponse } from '../utils/response.js';
 import * as chatService from '../services/chatService.js';
 
-export const createConversation = async (req, res, next) => {
+export const listThreads = async (req, res, next) => {
   try {
-    if (!req.body.participant_two) {
-      return res.status(400).json(errorResponse('participant_two é obrigatório', {}, 400));
-    }
-    const data = await chatService.createConversation(req.user.id, req.body.participant_two);
-    res.status(201).json(successResponse('Conversa criada', data));
-  } catch (error) {
-    next(error);
-  }
-};
-
-export const listConversations = async (req, res, next) => {
-  try {
-    const data = await chatService.getUserConversations(req.user.id);
+    const data = await chatService.getThreadsForUser(req.user.id);
     res.json(successResponse('Conversas listadas', data));
   } catch (error) {
     next(error);
   }
 };
 
-export const listMessages = async (req, res, next) => {
+export const getUnreadCount = async (req, res, next) => {
   try {
-    const data = await chatService.getConversationMessages(req.params.conversationId);
-    res.json(successResponse('Mensagens listadas', data));
+    const count = await chatService.getUnreadCount(req.user.id);
+    res.json(successResponse('Contagem de não lidas', { count }));
   } catch (error) {
     next(error);
   }
 };
 
-export const sendMessage = async (req, res, next) => {
+export const getThread = async (req, res, next) => {
   try {
-    if (!req.body.content) {
-      return res.status(400).json(errorResponse('content é obrigatório', {}, 400));
+    const data = await chatService.getThread(req.user.id, req.params.otherUserId);
+    res.json(successResponse('Conversa carregada', data));
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const postMessage = async (req, res, next) => {
+  try {
+    const body = (req.body.body || '').trim();
+    if (!body) {
+      return res.status(400).json(errorResponse('Escreva uma mensagem antes de enviar.', {}, 400));
     }
-    const data = await chatService.sendMessage(req.params.conversationId, req.user.id, req.body.content);
+    if (body.length > 2000) {
+      return res.status(400).json(errorResponse('Mensagem muito longa (máximo 2000 caracteres).', {}, 400));
+    }
+    const data = await chatService.sendMessage(req.user.id, req.params.otherUserId, body);
     res.status(201).json(successResponse('Mensagem enviada', data));
   } catch (error) {
     next(error);
@@ -45,28 +46,8 @@ export const sendMessage = async (req, res, next) => {
 
 export const deleteMessage = async (req, res, next) => {
   try {
-    await chatService.deleteMessage(req.params.messageId);
-    res.json(successResponse('Mensagem deletada', {}));
-  } catch (error) {
-    next(error);
-  }
-};
-
-export const addAttachment = async (req, res, next) => {
-  try {
-    const data = await chatService.addChatAttachment(req.params.messageId, {
-      ...req.body,
-    });
-    res.status(201).json(successResponse('Anexo adicionado', data));
-  } catch (error) {
-    next(error);
-  }
-};
-
-export const getAttachments = async (req, res, next) => {
-  try {
-    const data = await chatService.getChatAttachments(req.params.messageId);
-    res.json(successResponse('Anexos listados', data));
+    const data = await chatService.deleteMessage(req.user.id, req.params.otherUserId, req.params.messageId);
+    res.json(successResponse('Mensagem excluída', data));
   } catch (error) {
     next(error);
   }

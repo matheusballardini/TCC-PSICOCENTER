@@ -1,4 +1,5 @@
 import { supabaseAdmin } from '../config/supabase.js';
+import { createNotification } from './notificationService.js';
 
 // a tabela real usa patient_id/psychologist_id/scheduled_at, mas o resto do
 // backend e o frontend foram construídos em cima de paciente_id/psicologo_id/data/horario;
@@ -110,10 +111,68 @@ export const createAppointment = async ({ paciente_id, psicologo_id, data, horar
     .single();
 
   if (error) throw error;
-  return toConvenience(created);
+  const appointment = toConvenience(created);
+
+  // avisa o psicólogo que chegou um pedido novo — não deixa a criação da
+  // consulta falhar se, por algum motivo, a notificação der erro
+  try {
+    await createNotification({
+      recipientId: appointment.psicologo_id,
+      type: 'solicitacao_consulta',
+      actorId: appointment.paciente_id,
+      payload: { appointmentId: appointment.id, data: appointment.data, horario: appointment.horario },
+    });
+  } catch (e) {
+    console.warn('Falha ao criar notificação de nova consulta:', e.message);
+  }
+
+  return appointment;
 };
 
-export const updateAppointmentStatus = async (appointmentId, status) => {
+// muda só a data/horário de uma consulta (usado quando os dois combinam um
+// horário melhor pelo chat, enquanto a consulta ainda está pendente)
+export const rescheduleAppointment = async (appointmentId, data, horario) => {
+  const scheduledAt = new Date(`${data}T${horario}:00Z`).toISOString();
+
+  const { data: updated, error } = await supabaseAdmin
+    .from('appointments')
+    .update({ scheduled_at: scheduledAt })
+    .eq('id', appointmentId)
+    .select()
+    .single();
+
+  if (error) throw error;
+  return toConvenience(updated);
+};
+
+// quantos agendamentos o psicólogo ainda não "viu" (nunca abriu a página de
+// Agendamentos desde que a consulta foi criada) — usado pra bolinha de aviso
+export const getUnseenAppointmentsCount = async (psychologistId) => {
+  const { count, error } = await supabaseAdmin
+    .from('appointments')
+    .select('id', { count: 'exact', head: true })
+    .eq('psychologist_id', psychologistId)
+    .is('psychologist_seen_at', null);
+
+  if (error) throw error;
+  return count || 0;
+};
+
+// marca todos os agendamentos do psicólogo como vistos — chamado quando ele
+// abre a página de Agendamentos, pra bolinha de aviso sumir
+export const markAppointmentsSeen = async (psychologistId) => {
+  const { error } = await supabaseAdmin
+    .from('appointments')
+    .update({ psychologist_seen_at: new Date().toISOString() })
+    .eq('psychologist_id', psychologistId)
+    .is('psychologist_seen_at', null);
+
+  if (error) throw error;
+};
+
+// actorId (opcional) é quem fez a mudança — usado só pra decidir quem recebe
+// a notificação (a outra ponta da consulta, nunca quem executou a ação).
+export const updateAppointmentStatus = async (appointmentId, status, actorId) => {
   const updates = { status };
   if (status === 'cancelada' || status === 'recusada') updates.canceled_at = new Date().toISOString();
 
@@ -125,7 +184,34 @@ export const updateAppointmentStatus = async (appointmentId, status) => {
     .single();
 
   if (error) throw error;
-  return toConvenience(data);
+  const appointment = toConvenience(data);
+
+  try {
+    if (status === 'aceita') {
+      // só o psicólogo aceita, então quem recebe o aviso é sempre o paciente
+      await createNotification({
+        recipientId: appointment.paciente_id,
+        type: 'consulta_aceita',
+        actorId: actorId || appointment.psicologo_id,
+        payload: { appointmentId: appointment.id, data: appointment.data, horario: appointment.horario },
+      });
+    } else if (status === 'cancelada' || status === 'recusada') {
+      // avisa quem NÃO foi quem cancelou/recusou
+      const recipientId = actorId && String(actorId) === String(appointment.paciente_id)
+        ? appointment.psicologo_id
+        : appointment.paciente_id;
+      await createNotification({
+        recipientId,
+        type: 'consulta_cancelada',
+        actorId,
+        payload: { appointmentId: appointment.id, data: appointment.data, horario: appointment.horario },
+      });
+    }
+  } catch (e) {
+    console.warn('Falha ao criar notificação de status de consulta:', e.message);
+  }
+
+  return appointment;
 };
 
 export const deleteAppointment = async (appointmentId) => {

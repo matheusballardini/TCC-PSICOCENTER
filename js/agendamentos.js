@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   try {
     // busca o id direto da sessão atual (em vez de confiar só no que ficou salvo
     // no navegador de logins anteriores, que pode estar desatualizado)
-    const meRes = await fetch('http://localhost:3001/api/auth/me', {
+    const meRes = await fetch(`${API_BASE}/api/auth/me`, {
       headers: { 'Authorization': 'Bearer ' + token }
     });
     const meData = await meRes.json();
@@ -30,7 +30,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     const currentUserId = meData.data?.user?.id;
     if (currentUserId) localStorage.setItem('authUserId', String(currentUserId));
 
-    const response = await fetch('http://localhost:3001/api/appointments/me', {
+    // abrir essa página conta como "ver" os agendamentos novos: some a bolinha
+    // de aviso no menu (não precisa esperar terminar pra continuar carregando)
+    fetch(`${API_BASE}/api/appointments/mark-seen`, {
+      method: 'POST',
+      headers: { 'Authorization': 'Bearer ' + token }
+    }).catch(() => {});
+
+    const response = await fetch(`${API_BASE}/api/appointments/me`, {
       headers: {
         'Authorization': 'Bearer ' + token
       }
@@ -74,6 +81,8 @@ document.addEventListener('DOMContentLoaded', async () => {
           <button class="btn conclude-btn" data-id="${appointment.id}">Concluir</button>
           <button class="btn-secondary cancel-btn" data-id="${appointment.id}">Cancelar</button>
         `;
+      } else if (status === 'concluida') {
+        actions = `<button class="btn-secondary rate-btn" data-id="${appointment.id}" data-nome="${patientName}">Avaliar paciente</button>`;
       }
 
       return `
@@ -81,8 +90,8 @@ document.addEventListener('DOMContentLoaded', async () => {
           <div class="item-main">
             <h3>${patientName}</h3>
             <div class="meta">
-              <span>📅 ${localeDate}</span>
-              <span>🕒 ${rawTime || 'Horário não informado'}</span>
+              <span>${heroIcon('calendario')} ${localeDate}</span>
+              <span>${heroIcon('relogio')} ${rawTime || 'Horário não informado'}</span>
             </div>
           </div>
           <div>
@@ -97,7 +106,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const updateStatus = async (appointmentId, newStatus, successMessage) => {
       try {
-        const response = await fetch(`http://localhost:3001/api/appointments/${appointmentId}/status`, {
+        const response = await fetch(`${API_BASE}/api/appointments/${appointmentId}/status`, {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json',
@@ -132,7 +141,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const card = event.target.closest('.appointment-item');
 
         try {
-          const response = await fetch(`http://localhost:3001/api/appointments/${appointmentId}/status`, {
+          const response = await fetch(`${API_BASE}/api/appointments/${appointmentId}/status`, {
             method: 'PATCH',
             headers: {
               'Content-Type': 'application/json',
@@ -186,6 +195,29 @@ document.addEventListener('DOMContentLoaded', async () => {
       button.addEventListener('click', (event) => {
         if (!confirm('Cancelar esta consulta?')) return;
         updateStatus(event.target.dataset.id, 'cancelada', 'Consulta cancelada.');
+      });
+    });
+
+    document.querySelectorAll('.rate-btn').forEach((button) => {
+      button.addEventListener('click', () => {
+        const appointmentId = button.dataset.id;
+        abrirModalAvaliacao({
+          nomeAvaliado: button.dataset.nome || 'paciente',
+          onEnviar: async ({ rating, review }) => {
+            const response = await fetch(`${API_BASE}/api/appointments/${appointmentId}/rate`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+              },
+              body: JSON.stringify({ rating, review })
+            });
+            const result = await response.json();
+            if (!response.ok) throw new Error(result?.message || 'Erro ao enviar avaliação.');
+
+            button.outerHTML = '<span class="status concluida">Avaliado ★</span>';
+          }
+        });
       });
     });
   } catch (error) {

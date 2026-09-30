@@ -41,6 +41,42 @@ body{
 .wrapper{max-width:1100px !important}
 h1{margin:0 0 8px;font-size:24px;color:var(--primary);font-weight:700}
 
+/* Formulário em grade: distribui os campos em várias colunas em vez de empilhar
+   tudo numa coluna só, pra não precisar descer tanto a página */
+form#cadastroPsicologoForm,
+form#cadastroPacienteForm{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  column-gap:20px;
+  align-items:start;
+}
+form#cadastroPsicologoForm > h1,
+form#cadastroPacienteForm > h1,
+form#cadastroPsicologoForm > .section-title,
+form#cadastroPacienteForm > .section-title,
+form#cadastroPsicologoForm > .foto-upload,
+form#cadastroPacienteForm > .foto-upload,
+form#cadastroPsicologoForm > .checkbox-grid,
+form#cadastroPsicologoForm > .modalidade-row,
+form#cadastroPsicologoForm > .price-row,
+form#cadastroPsicologoForm > .full-width,
+form#cadastroPacienteForm > .full-width,
+form#cadastroPsicologoForm > .input-box:has(textarea),
+form#cadastroPsicologoForm > .btn,
+form#cadastroPacienteForm > .btn,
+form#cadastroPsicologoForm > #registerMessage,
+form#cadastroPacienteForm > #registerMessage,
+form#cadastroPsicologoForm > .register-link,
+form#cadastroPacienteForm > .register-link{
+  grid-column:1 / -1;
+}
+
+/* campos de endereço do consultório: também em grade, quando visíveis */
+#presencialFields{
+  grid-template-columns:repeat(2,1fr);
+  column-gap:20px;
+}
+
 /* Cabeçalho no padrão do site, pras páginas de cadastro que não usam styles.css */
 .cabecalho-cadastro{
   width:100%;
@@ -134,6 +170,34 @@ h1{margin:0 0 8px;font-size:24px;color:var(--primary);font-weight:700}
 }
 .input-box textarea{resize:vertical}
 .input-box input[type="file"]{font-size:14px}
+
+/* .input-box i (ícone à direita do campo) fica posicionado pelo loginpaciente.css,
+   mas sem cor definida ali herda um tom claro demais pro fundo claro do cadastro */
+.input-box i{
+  color:rgba(0,79,131,0.55);
+}
+
+/* quando o campo tem um rótulo (field-label) acima, o ícone não pode mais ficar
+   centralizado no meio da caixa toda (rótulo + campo) — tem que centralizar só no campo */
+.input-box:has(.field-label) i{
+  top:auto;
+  bottom:16px;
+  transform:none;
+}
+
+.textarea-wrap{position:relative}
+.textarea-wrap textarea{padding-bottom:28px}
+.char-counter{
+  position:absolute;
+  left:12px;
+  bottom:8px;
+  font-size:12px;
+  color:rgba(0,79,131,0.55);
+  background:rgba(247,251,255,0.9);
+  padding:0 4px;
+  pointer-events:none;
+}
+.char-counter.limite-excedido{color:#e74c3c;font-weight:700}
 label{color:var(--primary);font-weight:600}
 .input-box input::placeholder,
 .input-box textarea::placeholder{
@@ -152,7 +216,24 @@ label{color:var(--primary);font-weight:600}
 .modalidade-row label:has(input:checked){background:linear-gradient(135deg,var(--primary),var(--accent));color:#fff;border-color:transparent;box-shadow:0 8px 18px rgba(0,79,131,0.22)}
 .modalidade-row input[type="checkbox"]{width:18px;height:18px}
 
-.small-input{width:100%;}
+.small-input{
+  width:100%;
+  padding:14px 16px;
+  border-radius:18px;
+  border:1px solid rgba(0,79,131,0.26);
+  background:#f7fbff;
+  font-size:15px;
+  color:var(--primary);
+  outline:none;
+  transition:border-color .2s ease,box-shadow .2s ease;
+}
+.small-input:focus{
+  border-color:var(--accent);
+  box-shadow:0 0 0 4px rgba(85,104,252,0.12);
+}
+.no-spinner::-webkit-outer-spin-button,
+.no-spinner::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.no-spinner[type="number"]{-moz-appearance:textfield;appearance:textfield}
 .price-row{display:flex;gap:16px;flex-wrap:wrap}
 .price-field{flex:1;min-width:160px}
 .price-field label{display:block;font-size:12px;font-weight:700;color:var(--primary);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px}
@@ -213,6 +294,9 @@ label{color:var(--primary);font-weight:600}
   .input-box input,
   .input-box textarea,
   .day-row input[type="time"]{font-size:14px;}
+  form#cadastroPsicologoForm,
+  form#cadastroPacienteForm,
+  #presencialFields{grid-template-columns:1fr}
 }
 
 @media(max-width:520px){

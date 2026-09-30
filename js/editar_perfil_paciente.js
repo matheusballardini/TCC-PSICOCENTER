@@ -1,10 +1,38 @@
-const API_BASE = 'http://localhost:3001';
 
 document.addEventListener('DOMContentLoaded', () => {
     initEditPatientPage();
 });
 
 let newPhotoBase64 = null;
+let fotoRemovida = false;
+
+function maskName(value) {
+    return value.replace(/[^a-zA-ZÀ-ÖØ-öø-ÿ '-]/g, '');
+}
+
+function attachMask(input, maskFn) {
+    if (!input) return;
+    input.addEventListener('input', () => {
+        const cursorFromEnd = input.value.length - input.selectionStart;
+        input.value = maskFn(input.value);
+        const pos = Math.max(0, input.value.length - cursorFromEnd);
+        input.setSelectionRange(pos, pos);
+    });
+}
+
+function isValidName(nameValue) {
+    if (/\d/.test(nameValue || '')) return false;
+    if (/([a-zA-ZÀ-ÖØ-öø-ÿ])\1{3,}/.test(nameValue || '')) return false;
+    return true;
+}
+
+function isValidBirthDate(birthDateStr) {
+    if (!birthDateStr) return false;
+    const birth = new Date(birthDateStr + 'T00:00:00');
+    if (Number.isNaN(birth.getTime())) return false;
+    if (birth.getFullYear() < 1900) return false;
+    return birth.getTime() <= Date.now();
+}
 
 async function initEditPatientPage() {
     const token = localStorage.getItem('authToken');
@@ -13,15 +41,34 @@ async function initEditPatientPage() {
         return;
     }
 
+    const birthDateInput = document.getElementById('edit_birth');
+    if (birthDateInput) {
+        const hoje = new Date();
+        birthDateInput.max = hoje.getFullYear() + '-' + String(hoje.getMonth() + 1).padStart(2, '0') + '-' + String(hoje.getDate()).padStart(2, '0');
+    }
+
     const photoInput = document.getElementById('edit_photo');
     photoInput.addEventListener('change', async (e) => {
         const file = e.target.files[0];
         if (!file) return;
-        newPhotoBase64 = await toBase64(file);
+        newPhotoBase64 = await comprimirImagem(file);
+        fotoRemovida = false;
         document.getElementById('photoPreview').src = newPhotoBase64;
     });
 
+    document.getElementById('removePhotoBtn').addEventListener('click', () => {
+        newPhotoBase64 = null;
+        fotoRemovida = true;
+        photoInput.value = '';
+        const nomeAtual = document.getElementById('edit_name').value;
+        document.getElementById('photoPreview').src = initialsAvatarSrc(nomeAtual);
+    });
+
     document.getElementById('editForm').addEventListener('submit', saveProfile);
+
+    attachMask(document.getElementById('edit_name'), maskName);
+
+    ligarEstadoCidade(document.getElementById('edit_state'), document.getElementById('edit_city'));
 
     const logoutBtn = document.getElementById('logoutBtn');
     if (logoutBtn) logoutBtn.addEventListener('click', logout);
@@ -40,17 +87,14 @@ function logout() {
     window.location.href = 'index.html';
 }
 
-async function deleteAccount() {
-    const confirmed = confirm('Tem certeza que deseja excluir sua conta? Essa ação não pode ser desfeita.');
-    if (!confirmed) return;
-
+function deleteAccount() {
     const token = localStorage.getItem('authToken');
     if (!token) {
         alert('Você precisa estar logado para excluir a conta.');
         return;
     }
 
-    try {
+    abrirModalExcluirConta(async () => {
         const res = await fetch(API_BASE + '/api/auth/me', {
             method: 'DELETE',
             headers: { 'Authorization': 'Bearer ' + token }
@@ -63,14 +107,12 @@ async function deleteAccount() {
         localStorage.clear();
         alert('Conta excluída com sucesso.');
         window.location.href = 'index.html';
-    } catch (err) {
-        alert('Erro ao excluir conta: ' + (err?.message || err));
-    }
+    });
 }
 
 async function loadCurrentData(token) {
     const loadingIndicator = document.getElementById('loadingIndicator');
-    if (loadingIndicator) loadingIndicator.style.display = 'block';
+    if (loadingIndicator) loadingIndicator.style.display = 'flex';
     try {
         const meRes = await fetch(API_BASE + '/api/auth/me', {
             headers: { 'Authorization': 'Bearer ' + token }
@@ -108,9 +150,9 @@ async function loadCurrentData(token) {
         document.getElementById('edit_birth').value = profile.data_nascimento || '';
         document.getElementById('edit_gender').value = paciente.genero || '';
         document.getElementById('edit_occupation').value = paciente.profissao || '';
-        document.getElementById('edit_city').value = profile.cidade || '';
         document.getElementById('edit_state').value = profile.estado || '';
-        if (profile.foto) document.getElementById('photoPreview').src = profile.foto;
+        await atualizarCidadesDoEstado(document.getElementById('edit_state'), document.getElementById('edit_city'), profile.cidade || '');
+        document.getElementById('photoPreview').src = avatarSrc(profile.foto, profile.full_name || profile.nome);
     } catch (err) {
         console.warn('Erro ao carregar dados do paciente', err);
         document.getElementById('editMessage').textContent = 'Não foi possível carregar seus dados.';
@@ -134,8 +176,23 @@ async function saveProfile(event) {
         return;
     }
 
+    function falhaValidacao(texto) {
+        message.style.color = '#ff4444';
+        message.textContent = texto;
+        saveBtn.disabled = false;
+        saveBtn.textContent = 'Salvar alterações';
+        return false;
+    }
+
+    const nameVal = document.getElementById('edit_name').value.trim();
+    if (nameVal.length < 5 || nameVal.length > 100) return falhaValidacao('Nome deve ter entre 5 e 100 caracteres.');
+    if (!isValidName(nameVal)) return falhaValidacao('Nome inválido: não pode ter números nem 4 ou mais letras repetidas seguidas.');
+
+    const birthVal = document.getElementById('edit_birth').value;
+    if (birthVal && !isValidBirthDate(birthVal)) return falhaValidacao('Data de nascimento inválida: deve ser a partir de 1900 e não pode ser no futuro.');
+
     const payload = {
-        full_name: document.getElementById('edit_name').value.trim(),
+        full_name: nameVal,
         email: document.getElementById('edit_email').value.trim(),
         phone: document.getElementById('edit_phone').value.trim(),
         birth_date: document.getElementById('edit_birth').value || null,
@@ -145,6 +202,7 @@ async function saveProfile(event) {
         state: document.getElementById('edit_state').value.trim(),
     };
     if (newPhotoBase64) payload.photo = newPhotoBase64;
+    else if (fotoRemovida) payload.photo = null;
 
     try {
         const meRes = await fetch(API_BASE + '/api/auth/me', { headers: { 'Authorization': 'Bearer ' + token } });
@@ -173,6 +231,7 @@ async function saveProfile(event) {
             currentUser.email = payload.email;
             currentUser.phone = payload.phone;
             if (newPhotoBase64) currentUser.photo = newPhotoBase64;
+            else if (fotoRemovida) currentUser.photo = null;
             localStorage.setItem('currentUser', JSON.stringify(currentUser));
         } catch (e) { /* ignore */ }
 
@@ -185,13 +244,4 @@ async function saveProfile(event) {
         saveBtn.disabled = false;
         saveBtn.textContent = 'Salvar alterações';
     }
-}
-
-function toBase64(file) {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
-    });
 }

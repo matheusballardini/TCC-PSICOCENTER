@@ -1,12 +1,17 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
+    <link rel="icon" type="image/png" href="../images/favicon.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro Paciente - Psicocenter</title>
+    <meta name="description" content="Cadastre-se gratuitamente como paciente no Psicocenter e comece a buscar psicólogos qualificados.">
     <link rel="stylesheet" href="../style/loginpaciente.css">
     <link rel="stylesheet" href="../style/register.css">
     <link href="https://cdn.boxicons.com/3.0.8/fonts/basic/boxicons.min.css" rel="stylesheet">
+    <script src="../js/api-config.js"></script>
+    <script defer src="../js/image-compress.js"></script>
+    <script defer src="../js/cidades.js"></script>
     <script defer src="../js/register.js"></script>
 </head>
 <body>
@@ -29,14 +34,20 @@
                 <input id="photo" type="file" accept="image/*">
             </div>
             <div class="input-box">
-                <input id="full_name" type="text" placeholder="Nome completo" required>
+                <label for="full_name" class="field-label">Nome completo</label>
+                <input id="full_name" type="text" placeholder="Nome completo" minlength="5" maxlength="100" required>
                 <i class="bx bx-user"></i>
             </div>
             <div class="input-box">
-                <label for="birth_date" class="field-label">Data de nascimento</label>
-                <input id="birth_date" type="date">
+                <label for="cpf" class="field-label">CPF</label>
+                <input id="cpf" type="text" inputmode="numeric" placeholder="CPF" maxlength="14" required>
             </div>
             <div class="input-box">
+                <label for="birth_date" class="field-label">Data de nascimento</label>
+                <input id="birth_date" type="date" min="1900-01-01" required>
+            </div>
+            <div class="input-box">
+                <label for="gender" class="field-label">Gênero</label>
                 <select id="gender">
                     <option value="">Gênero (opcional)</option>
                     <option value="Feminino">Feminino</option>
@@ -45,28 +56,65 @@
                     <option value="Prefiro não dizer">Prefiro não dizer</option>
                 </select>
             </div>
-            <div class="input-box">
+            <div class="input-box full-width">
+                <label for="occupation" class="field-label">Profissão</label>
                 <input id="occupation" type="text" placeholder="Profissão (opcional)">
             </div>
 
             <p class="section-title" data-step="2">Contato e acesso</p>
             <div class="input-box">
-                <input id="phone" type="tel" placeholder="Telefone">
+                <label for="phone" class="field-label">Telefone</label>
+                <input id="phone" type="tel" inputmode="numeric" placeholder="Telefone" maxlength="16" required>
                 <i class="bx bx-phone"></i>
             </div>
             <div class="input-box">
-                <input id="city" type="text" placeholder="Cidade (opcional)">
+                <label for="state" class="field-label">Estado</label>
+                <select id="state">
+                    <option value="">Estado (opcional)</option>
+                    <option value="AC">Acre (AC)</option>
+                    <option value="AL">Alagoas (AL)</option>
+                    <option value="AP">Amapá (AP)</option>
+                    <option value="AM">Amazonas (AM)</option>
+                    <option value="BA">Bahia (BA)</option>
+                    <option value="CE">Ceará (CE)</option>
+                    <option value="DF">Distrito Federal (DF)</option>
+                    <option value="ES">Espírito Santo (ES)</option>
+                    <option value="GO">Goiás (GO)</option>
+                    <option value="MA">Maranhão (MA)</option>
+                    <option value="MT">Mato Grosso (MT)</option>
+                    <option value="MS">Mato Grosso do Sul (MS)</option>
+                    <option value="MG">Minas Gerais (MG)</option>
+                    <option value="PA">Pará (PA)</option>
+                    <option value="PB">Paraíba (PB)</option>
+                    <option value="PR">Paraná (PR)</option>
+                    <option value="PE">Pernambuco (PE)</option>
+                    <option value="PI">Piauí (PI)</option>
+                    <option value="RJ">Rio de Janeiro (RJ)</option>
+                    <option value="RN">Rio Grande do Norte (RN)</option>
+                    <option value="RS">Rio Grande do Sul (RS)</option>
+                    <option value="RO">Rondônia (RO)</option>
+                    <option value="RR">Roraima (RR)</option>
+                    <option value="SC">Santa Catarina (SC)</option>
+                    <option value="SP">São Paulo (SP)</option>
+                    <option value="SE">Sergipe (SE)</option>
+                    <option value="TO">Tocantins (TO)</option>
+                </select>
             </div>
             <div class="input-box">
-                <input id="state" type="text" placeholder="Estado (opcional)">
+                <label for="city" class="field-label">Cidade</label>
+                <select id="city" disabled>
+                    <option value="">Selecione um estado primeiro</option>
+                </select>
             </div>
             <div class="input-box">
+                <label for="email" class="field-label">E-mail</label>
                 <input id="email" type="email" placeholder="Email" required>
                 <i class="bx bx-envelope"></i>
             </div>
-            <div class="input-box">
+            <div class="input-box full-width">
+                <label for="password" class="field-label">Senha</label>
                 <input id="password" type="password" placeholder="Senha" required>
-                <i class="bx bx-lock"></i>
+                <i class="bx bx-lock" id="togglePassword"></i>
             </div>
             <button type="submit" class="btn">Cadastrar</button>
             <p id="registerMessage" class="register-link"></p>

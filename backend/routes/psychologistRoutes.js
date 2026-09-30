@@ -9,6 +9,7 @@ import {
   getAvailability,
   setAvailability,
   getRatings,
+  getRatingSummary,
   createRating,
 } from '../controllers/psychologistController.js';
 import { requireAuth } from '../middleware/auth.js';
@@ -29,6 +30,7 @@ router.get('/:id/availability', getAvailability);
 router.put('/:id/availability', requireAuth, requirePsychologist, setAvailability);
 
 router.get('/:id/ratings', getRatings);
+router.get('/:id/rating-summary', getRatingSummary);
 router.post('/:id/ratings', requireAuth, createRating);
 
 export default router;

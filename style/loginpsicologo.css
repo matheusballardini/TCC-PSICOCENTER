@@ -26,6 +26,25 @@ body{
     left:35px;
 }
 
+.voltar-login{
+    position:absolute;
+    top:20px;
+    right:20px;
+    color:#fff;
+    text-decoration:none;
+    font-weight:700;
+    background:rgba(255,255,255,.18);
+    padding:10px 20px;
+    border-radius:30px;
+    border:1px solid rgba(255,255,255,.4);
+    transition:.3s;
+    white-space:nowrap;
+}
+
+.voltar-login:hover{
+    background:rgba(255,255,255,.3);
+}
+
 .psico{
     color:#fff;
     font-size:45px;

@@ -54,9 +54,15 @@ function getSlots(psychologistId) {
 // pega o dia da semana direto da data escolhida no calendário e confere
 // se bate com algum dos horários que o psicólogo disponibilizou
 function checkAvailability(psychologistId, dateStr, timeStr) {
+  if (!dateStr || !timeStr) return { valid: true };
+
+  const dataHoraEscolhida = new Date(dateStr + 'T' + timeStr + ':00');
+  if (dataHoraEscolhida.getTime() < Date.now()) {
+    return { valid: false, reason: 'Não é possível agendar uma consulta em uma data ou horário que já passou.' };
+  }
+
   const slots = getSlots(psychologistId);
   if (!slots.length) return { valid: true };
-  if (!dateStr || !timeStr) return { valid: true };
 
   const diaCodigo = DIA_SEMANA_CODIGO[new Date(dateStr + 'T00:00:00').getDay()];
   const slotsDoDia = slots.filter((slot) => slot.day === diaCodigo);
@@ -111,7 +117,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   // essa é a área do paciente; se quem estiver logado for psicólogo,
   // manda pro painel certo em vez de deixar solicitar consulta pra si mesmo
   try {
-    const meRes = await fetch('http://localhost:3001/api/auth/me', {
+    const meRes = await fetch(`${API_BASE}/api/auth/me`, {
       headers: { 'Authorization': 'Bearer ' + token }
     });
     const meData = await meRes.json();
@@ -128,44 +134,70 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (select) select.innerHTML = '<option value="">Carregando profissionais...</option>';
 
   try {
-    const res = await fetch('http://localhost:3001/api/psychologists');
-    const data = await res.json();
-    const list = res.ok && data.success ? data.data : [];
-    psychologistsById = Object.fromEntries(
-      list.map((psychologist) => [String(psychologist.profile_id || psychologist.id), psychologist])
-    );
+    // veio de um "Agendar" específico (busca, perfil do psicólogo etc.): trava o
+    // select nesse psicólogo só, em vez de listar todo mundo pra escolher outro
+    if (selectedPsychologistId) {
+      let psychologist = null;
+      try {
+        const res = await fetch(`${API_BASE}/api/psychologists/` + encodeURIComponent(selectedPsychologistId));
+        const data = await res.json();
+        if (res.ok && data.success) psychologist = data.data;
+      } catch (e) {
+        console.warn('Erro ao buscar psicólogo selecionado', e);
+      }
+
+      const nome = psychologist?.full_name || selectedPsychologistName || 'Psicólogo selecionado';
+      psychologistsById = { [String(selectedPsychologistId)]: psychologist || {} };
+
+      if (select) {
+        select.innerHTML = '';
+        const option = document.createElement('option');
+        option.value = selectedPsychologistId;
+        option.textContent = nome;
+        option.selected = true;
+        select.appendChild(option);
+        select.disabled = true;
+
+        renderDisponibilidade(select.value);
+        validarFormulario();
+      }
+    } else {
+      // fallback: chegou na página sem psicólogo pré-selecionado (não deveria
+      // acontecer no fluxo normal), então deixa escolher entre todos
+      const res = await fetch(`${API_BASE}/api/psychologists`);
+      const data = await res.json();
+      const list = res.ok && data.success ? data.data : [];
+      psychologistsById = Object.fromEntries(
+        list.map((psychologist) => [String(psychologist.profile_id || psychologist.id), psychologist])
+      );
+
+      if (select) {
+        select.innerHTML = '<option value="">Selecione um psicólogo</option>';
+        list.forEach((psychologist) => {
+          const psychologistId = psychologist.profile_id || psychologist.id;
+          const option = document.createElement('option');
+          option.value = psychologistId;
+          option.textContent = psychologist.full_name || psychologist.name || 'Psicólogo';
+          select.appendChild(option);
+        });
+
+        if (list.length) select.value = list[0].profile_id || list[0].id;
+
+        renderDisponibilidade(select.value);
+        validarFormulario();
+        select.addEventListener('change', () => { renderDisponibilidade(select.value); validarFormulario(); });
+      }
+    }
 
     if (select) {
-      select.innerHTML = '<option value="">Selecione um psicólogo</option>';
-      list.forEach((psychologist) => {
-        const psychologistId = psychologist.profile_id || psychologist.id;
-        const option = document.createElement('option');
-        option.value = psychologistId;
-        option.textContent = psychologist.full_name || psychologist.name || 'Psicólogo';
-        if (selectedPsychologistId && String(psychologistId) === String(selectedPsychologistId)) {
-          option.selected = true;
-        }
-        select.appendChild(option);
-      });
-
-      if (selectedPsychologistId && !Array.from(select.options).some((option) => option.value === selectedPsychologistId)) {
-        const fallback = document.createElement('option');
-        fallback.value = selectedPsychologistId;
-        fallback.textContent = selectedPsychologistName || 'Psicólogo selecionado';
-        fallback.selected = true;
-        select.appendChild(fallback);
-      }
-
-      if (!selectedPsychologistId && list.length) {
-        select.value = list[0].profile_id || list[0].id;
-      }
-
-      renderDisponibilidade(select.value);
-      validarFormulario();
-      select.addEventListener('change', () => { renderDisponibilidade(select.value); validarFormulario(); });
 
       const dateInput = document.getElementById('appointmentDate');
       const timeInput = document.getElementById('appointmentTime');
+      if (dateInput) {
+        const hoje = new Date();
+        const hojeStr = hoje.getFullYear() + '-' + String(hoje.getMonth() + 1).padStart(2, '0') + '-' + String(hoje.getDate()).padStart(2, '0');
+        dateInput.min = hojeStr;
+      }
       dateInput?.addEventListener('change', validarFormulario);
       timeInput?.addEventListener('change', validarFormulario);
     }
@@ -195,7 +227,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     try {
-      const response = await fetch('http://localhost:3001/api/appointments', {
+      const response = await fetch(`${API_BASE}/api/appointments`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

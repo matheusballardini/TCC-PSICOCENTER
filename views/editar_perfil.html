@@ -2,11 +2,13 @@
 <html lang="pt-br">
 
 <head>
+    <link rel="icon" type="image/png" href="../images/favicon.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Perfil - Psicocenter</title>
     <link rel="stylesheet" href="../style/perfil.css">
     <link rel="stylesheet" href="../style/editar_perfil.css">
+    <link rel="stylesheet" href="../style/avaliacao.css">
 </head>
 
 <body>
@@ -20,17 +22,23 @@
     <main class="editar-conteudo">
         <section class="perfil">
             <h1>Editar Perfil</h1>
-            <p id="loadingIndicator" style="display:none; opacity:0.7; margin-top:-8px;">Carregando dados...</p>
+            <p id="loadingIndicator" class="carregando-dados" style="display:none;">
+                <span class="spinner"></span>
+                Carregando dados...
+            </p>
 
             <form id="editForm" class="card edit-card">
 
                 <div class="photo-preview-wrap">
                     <img id="photoPreview" src="../images/psicologo.webp" alt="Preview">
                 </div>
-                <label class="file-label">
-                    Escolher foto
-                    <input id="edit_photo" type="file" accept="image/*" hidden>
-                </label>
+                <div class="photo-actions">
+                    <label class="file-label">
+                        Escolher foto
+                        <input id="edit_photo" type="file" accept="image/*" hidden>
+                    </label>
+                    <button type="button" id="removePhotoBtn" class="remove-photo-btn">Excluir foto</button>
+                </div>
 
                 <div class="input-box">
                     <label>Nome</label>
@@ -44,17 +52,273 @@
 
                 <div class="input-box">
                     <label>Telefone</label>
-                    <input id="edit_phone" type="text">
+                    <input id="edit_phone" type="text" inputmode="numeric" maxlength="16" required>
                 </div>
 
                 <div class="input-box">
                     <label>CRP</label>
-                    <input id="edit_crp" type="text">
+                    <input id="edit_crp" type="text" inputmode="numeric" placeholder="CRP (ex: 06/123456)" minlength="7" maxlength="9" required>
                 </div>
 
                 <div class="input-box">
                     <label>Biografia</label>
-                    <textarea id="edit_bio" rows="4"></textarea>
+                    <div class="textarea-wrap">
+                        <textarea id="edit_bio" rows="4" maxlength="500" required></textarea>
+                        <span id="edit_bioCounter" class="char-counter">0/500</span>
+                    </div>
+                </div>
+
+                <p class="section-title" data-step="2">Dados profissionais</p>
+                <div class="input-box">
+                    <label>UF do CRP</label>
+                    <select id="edit_crp_state" required>
+                        <option value="">Estado do CRP</option>
+                        <option value="AC">Acre (AC)</option>
+                        <option value="AL">Alagoas (AL)</option>
+                        <option value="AP">Amapá (AP)</option>
+                        <option value="AM">Amazonas (AM)</option>
+                        <option value="BA">Bahia (BA)</option>
+                        <option value="CE">Ceará (CE)</option>
+                        <option value="DF">Distrito Federal (DF)</option>
+                        <option value="ES">Espírito Santo (ES)</option>
+                        <option value="GO">Goiás (GO)</option>
+                        <option value="MA">Maranhão (MA)</option>
+                        <option value="MT">Mato Grosso (MT)</option>
+                        <option value="MS">Mato Grosso do Sul (MS)</option>
+                        <option value="MG">Minas Gerais (MG)</option>
+                        <option value="PA">Pará (PA)</option>
+                        <option value="PB">Paraíba (PB)</option>
+                        <option value="PR">Paraná (PR)</option>
+                        <option value="PE">Pernambuco (PE)</option>
+                        <option value="PI">Piauí (PI)</option>
+                        <option value="RJ">Rio de Janeiro (RJ)</option>
+                        <option value="RN">Rio Grande do Norte (RN)</option>
+                        <option value="RS">Rio Grande do Sul (RS)</option>
+                        <option value="RO">Rondônia (RO)</option>
+                        <option value="RR">Roraima (RR)</option>
+                        <option value="SC">Santa Catarina (SC)</option>
+                        <option value="SP">São Paulo (SP)</option>
+                        <option value="SE">Sergipe (SE)</option>
+                        <option value="TO">Tocantins (TO)</option>
+                    </select>
+                </div>
+                <div class="input-box">
+                    <label>Formação</label>
+                    <select id="edit_education" required>
+                        <option value="">Formação</option>
+                        <option value="Psicologia Clínica">Psicologia Clínica</option>
+                        <option value="Psicologia Organizacional e do Trabalho">Psicologia Organizacional e do Trabalho</option>
+                        <option value="Psicologia Escolar e Educacional">Psicologia Escolar e Educacional</option>
+                        <option value="Psicologia Jurídica">Psicologia Jurídica</option>
+                        <option value="Neuropsicologia">Neuropsicologia</option>
+                        <option value="Psicologia Social">Psicologia Social</option>
+                        <option value="Psicologia Hospitalar">Psicologia Hospitalar</option>
+                        <option value="Psicologia do Esporte">Psicologia do Esporte</option>
+                        <option value="Psicologia do Trânsito">Psicologia do Trânsito</option>
+                        <option value="Psicopedagogia">Psicopedagogia</option>
+                        <option value="Psicologia em Saúde">Psicologia em Saúde</option>
+                        <option value="Psicologia de Cuidado Paliativo">Psicologia de Cuidado Paliativo</option>
+                    </select>
+                </div>
+                <div class="input-box">
+                    <label>Instituição</label>
+                    <select id="edit_institution" required>
+                        <option value="">Instituição onde se formou</option>
+                        <option value="Universidade de São Paulo (USP)">Universidade de São Paulo (USP)</option>
+                        <option value="Universidade Estadual de Campinas (UNICAMP)">Universidade Estadual de Campinas (UNICAMP)</option>
+                        <option value="Universidade Estadual Paulista (UNESP)">Universidade Estadual Paulista (UNESP)</option>
+                        <option value="Universidade Federal do Rio de Janeiro (UFRJ)">Universidade Federal do Rio de Janeiro (UFRJ)</option>
+                        <option value="Universidade Federal de Minas Gerais (UFMG)">Universidade Federal de Minas Gerais (UFMG)</option>
+                        <option value="Universidade Federal da Bahia (UFBA)">Universidade Federal da Bahia (UFBA)</option>
+                        <option value="Universidade Federal de Pernambuco (UFPE)">Universidade Federal de Pernambuco (UFPE)</option>
+                        <option value="Universidade Federal do Rio Grande do Sul (UFRGS)">Universidade Federal do Rio Grande do Sul (UFRGS)</option>
+                        <option value="Universidade Federal de Santa Catarina (UFSC)">Universidade Federal de Santa Catarina (UFSC)</option>
+                        <option value="Universidade de Brasília (UnB)">Universidade de Brasília (UnB)</option>
+                        <option value="Universidade Federal do Ceará (UFC)">Universidade Federal do Ceará (UFC)</option>
+                        <option value="Universidade Federal do Pará (UFPA)">Universidade Federal do Pará (UFPA)</option>
+                        <option value="Universidade Federal do Amazonas (UFAM)">Universidade Federal do Amazonas (UFAM)</option>
+                        <option value="Universidade Federal do Espírito Santo (UFES)">Universidade Federal do Espírito Santo (UFES)</option>
+                        <option value="Universidade Federal do Paraná (UFPR)">Universidade Federal do Paraná (UFPR)</option>
+                        <option value="Universidade Federal Fluminense (UFF)">Universidade Federal Fluminense (UFF)</option>
+                        <option value="Universidade do Estado do Rio de Janeiro (UERJ)">Universidade do Estado do Rio de Janeiro (UERJ)</option>
+                        <option value="Universidade Estadual de Londrina (UEL)">Universidade Estadual de Londrina (UEL)</option>
+                        <option value="Universidade Estadual de Maringá (UEM)">Universidade Estadual de Maringá (UEM)</option>
+                        <option value="Pontifícia Universidade Católica de São Paulo (PUC-SP)">Pontifícia Universidade Católica de São Paulo (PUC-SP)</option>
+                        <option value="Pontifícia Universidade Católica do Rio de Janeiro (PUC-Rio)">Pontifícia Universidade Católica do Rio de Janeiro (PUC-Rio)</option>
+                        <option value="Pontifícia Universidade Católica do Rio Grande do Sul (PUCRS)">Pontifícia Universidade Católica do Rio Grande do Sul (PUCRS)</option>
+                        <option value="Pontifícia Universidade Católica de Minas Gerais (PUC Minas)">Pontifícia Universidade Católica de Minas Gerais (PUC Minas)</option>
+                        <option value="Pontifícia Universidade Católica de Campinas (PUC-Campinas)">Pontifícia Universidade Católica de Campinas (PUC-Campinas)</option>
+                        <option value="Pontifícia Universidade Católica do Paraná (PUCPR)">Pontifícia Universidade Católica do Paraná (PUCPR)</option>
+                        <option value="Universidade Presbiteriana Mackenzie">Universidade Presbiteriana Mackenzie</option>
+                        <option value="Universidade Nove de Julho (UNINOVE)">Universidade Nove de Julho (UNINOVE)</option>
+                        <option value="Universidade Paulista (UNIP)">Universidade Paulista (UNIP)</option>
+                        <option value="Universidade Anhembi Morumbi">Universidade Anhembi Morumbi</option>
+                        <option value="Universidade Estácio de Sá">Universidade Estácio de Sá</option>
+                        <option value="Universidade Norte do Paraná (UNOPAR)">Universidade Norte do Paraná (UNOPAR)</option>
+                        <option value="Centro Universitário Internacional (UNINTER)">Centro Universitário Internacional (UNINTER)</option>
+                        <option value="Universidade Cidade de São Paulo (UNICID)">Universidade Cidade de São Paulo (UNICID)</option>
+                        <option value="Universidade Metodista de São Paulo (UMESP)">Universidade Metodista de São Paulo (UMESP)</option>
+                        <option value="Universidade de Mogi das Cruzes (UMC)">Universidade de Mogi das Cruzes (UMC)</option>
+                        <option value="Universidade São Judas Tadeu">Universidade São Judas Tadeu</option>
+                        <option value="Universidade Cruzeiro do Sul">Universidade Cruzeiro do Sul</option>
+                        <option value="Universidade Federal de Mato Grosso do Sul (UFMS)">Universidade Federal de Mato Grosso do Sul (UFMS)</option>
+                        <option value="Universidade Federal de Mato Grosso (UFMT)">Universidade Federal de Mato Grosso (UFMT)</option>
+                        <option value="Universidade Federal de Goiás (UFG)">Universidade Federal de Goiás (UFG)</option>
+                        <option value="Universidade Federal da Paraíba (UFPB)">Universidade Federal da Paraíba (UFPB)</option>
+                        <option value="Universidade Federal do Rio Grande do Norte (UFRN)">Universidade Federal do Rio Grande do Norte (UFRN)</option>
+                        <option value="Universidade Federal do Piauí (UFPI)">Universidade Federal do Piauí (UFPI)</option>
+                        <option value="Universidade Federal do Maranhão (UFMA)">Universidade Federal do Maranhão (UFMA)</option>
+                        <option value="Universidade Federal de Alagoas (UFAL)">Universidade Federal de Alagoas (UFAL)</option>
+                        <option value="Universidade Federal de Sergipe (UFS)">Universidade Federal de Sergipe (UFS)</option>
+                        <option value="Universidade Federal de Roraima (UFRR)">Universidade Federal de Roraima (UFRR)</option>
+                        <option value="Universidade Federal do Amapá (UNIFAP)">Universidade Federal do Amapá (UNIFAP)</option>
+                        <option value="Universidade Federal de Rondônia (UNIR)">Universidade Federal de Rondônia (UNIR)</option>
+                        <option value="Universidade Federal do Acre (UFAC)">Universidade Federal do Acre (UFAC)</option>
+                        <option value="Universidade Federal do Tocantins (UFT)">Universidade Federal do Tocantins (UFT)</option>
+                        <option value="Universidade Federal de Ouro Preto (UFOP)">Universidade Federal de Ouro Preto (UFOP)</option>
+                        <option value="Universidade Federal de Lavras (UFLA)">Universidade Federal de Lavras (UFLA)</option>
+                        <option value="Universidade Federal de Juiz de Fora (UFJF)">Universidade Federal de Juiz de Fora (UFJF)</option>
+                        <option value="Universidade Federal de São João del-Rei (UFSJ)">Universidade Federal de São João del-Rei (UFSJ)</option>
+                        <option value="Universidade Federal de Viçosa (UFV)">Universidade Federal de Viçosa (UFV)</option>
+                        <option value="Universidade Federal de Uberlândia (UFU)">Universidade Federal de Uberlândia (UFU)</option>
+                        <option value="Universidade Federal de São Carlos (UFSCar)">Universidade Federal de São Carlos (UFSCar)</option>
+                        <option value="Universidade Federal do ABC (UFABC)">Universidade Federal do ABC (UFABC)</option>
+                        <option value="Universidade Federal de São Paulo (UNIFESP)">Universidade Federal de São Paulo (UNIFESP)</option>
+                        <option value="Universidade Federal do Estado do Rio de Janeiro (UNIRIO)">Universidade Federal do Estado do Rio de Janeiro (UNIRIO)</option>
+                        <option value="Universidade Estadual do Norte Fluminense (UENF)">Universidade Estadual do Norte Fluminense (UENF)</option>
+                        <option value="Universidade Estadual de Goiás (UEG)">Universidade Estadual de Goiás (UEG)</option>
+                        <option value="Universidade Estadual do Ceará (UECE)">Universidade Estadual do Ceará (UECE)</option>
+                        <option value="Universidade do Vale do Acaraú (UVA)">Universidade do Vale do Acaraú (UVA)</option>
+                        <option value="Universidade do Estado da Bahia (UNEB)">Universidade do Estado da Bahia (UNEB)</option>
+                        <option value="Universidade Estadual do Sudoeste da Bahia (UESB)">Universidade Estadual do Sudoeste da Bahia (UESB)</option>
+                        <option value="Universidade Estadual de Santa Cruz (UESC)">Universidade Estadual de Santa Cruz (UESC)</option>
+                        <option value="Universidade Estadual de Montes Claros (UNIMONTES)">Universidade Estadual de Montes Claros (UNIMONTES)</option>
+                        <option value="Centro Universitário de Jaguariúna (UNIFAJ)">Centro Universitário de Jaguariúna (UNIFAJ)</option>
+                        <option value="Outra">Outra instituição (não listada)</option>
+                    </select>
+                </div>
+                <div class="input-box">
+                    <label>Anos de experiência</label>
+                    <input id="edit_years" type="number" min="0" max="80">
+                </div>
+
+                <p class="section-title" data-step="3">Especialidades (marque uma ou mais)</p>
+                <div class="checkbox-grid">
+                    <label><input type="checkbox" name="edit_specialty" value="Ansiedade"> Ansiedade</label>
+                    <label><input type="checkbox" name="edit_specialty" value="Depressão"> Depressão</label>
+                    <label><input type="checkbox" name="edit_specialty" value="Relacionamentos"> Relacionamentos</label>
+                    <label><input type="checkbox" name="edit_specialty" value="Autoestima"> Autoestima</label>
+                    <label><input type="checkbox" name="edit_specialty" value="Luto"> Luto</label>
+                    <label><input type="checkbox" name="edit_specialty" value="Terapia de Casal"> Terapia de Casal</label>
+                    <label><input type="checkbox" name="edit_specialty" value="Terapia Infantil"> Terapia Infantil</label>
+                    <label><input type="checkbox" name="edit_specialty" value="Burnout"> Burnout</label>
+                    <label><input type="checkbox" name="edit_specialty" value="Trauma"> Trauma</label>
+                    <label><input type="checkbox" name="edit_specialty" value="Família"> Família</label>
+                    <label><input type="checkbox" name="edit_specialty" value="Desenvolvimento"> Desenvolvimento</label>
+                    <label><input type="checkbox" name="edit_specialty" value="Outros"> Outros</label>
+                </div>
+
+                <p class="section-title" data-step="4">Modalidade de atendimento</p>
+                <div class="modalidade-row">
+                    <label><input type="checkbox" id="edit_mod_online"> Online</label>
+                    <label><input type="checkbox" id="edit_mod_presencial"> Presencial</label>
+                </div>
+                <div id="editPresencialFields" class="full-width" style="display:none;margin-top:8px">
+                    <div class="input-box">
+                        <label>CEP do consultório</label>
+                        <input id="edit_cep" type="text" inputmode="numeric" placeholder="CEP (opcional)" maxlength="9">
+                    </div>
+                    <div class="input-box">
+                        <label>Número</label>
+                        <input id="edit_address_number" type="text" placeholder="Número (opcional)" maxlength="20">
+                    </div>
+                    <div class="input-box">
+                        <label>Estado</label>
+                        <select id="edit_state">
+                            <option value="">Estado</option>
+                            <option value="AC">Acre (AC)</option>
+                            <option value="AL">Alagoas (AL)</option>
+                            <option value="AP">Amapá (AP)</option>
+                            <option value="AM">Amazonas (AM)</option>
+                            <option value="BA">Bahia (BA)</option>
+                            <option value="CE">Ceará (CE)</option>
+                            <option value="DF">Distrito Federal (DF)</option>
+                            <option value="ES">Espírito Santo (ES)</option>
+                            <option value="GO">Goiás (GO)</option>
+                            <option value="MA">Maranhão (MA)</option>
+                            <option value="MT">Mato Grosso (MT)</option>
+                            <option value="MS">Mato Grosso do Sul (MS)</option>
+                            <option value="MG">Minas Gerais (MG)</option>
+                            <option value="PA">Pará (PA)</option>
+                            <option value="PB">Paraíba (PB)</option>
+                            <option value="PR">Paraná (PR)</option>
+                            <option value="PE">Pernambuco (PE)</option>
+                            <option value="PI">Piauí (PI)</option>
+                            <option value="RJ">Rio de Janeiro (RJ)</option>
+                            <option value="RN">Rio Grande do Norte (RN)</option>
+                            <option value="RS">Rio Grande do Sul (RS)</option>
+                            <option value="RO">Rondônia (RO)</option>
+                            <option value="RR">Roraima (RR)</option>
+                            <option value="SC">Santa Catarina (SC)</option>
+                            <option value="SP">São Paulo (SP)</option>
+                            <option value="SE">Sergipe (SE)</option>
+                            <option value="TO">Tocantins (TO)</option>
+                        </select>
+                    </div>
+                    <div class="input-box">
+                        <label>Cidade</label>
+                        <select id="edit_city" disabled>
+                            <option value="">Selecione um estado primeiro</option>
+                        </select>
+                    </div>
+                    <div class="input-box full-width">
+                        <label>Endereço do consultório</label>
+                        <input id="edit_address" type="text" placeholder="Endereço do consultório" maxlength="150">
+                    </div>
+                </div>
+
+                <p class="section-title" data-step="5">Valores por sessão (R$)</p>
+                <div class="price-row">
+                    <div class="price-field">
+                        <label for="edit_price_min">Valor mínimo</label>
+                        <input id="edit_price_min" type="number" min="1" class="small-input no-spinner" required>
+                    </div>
+                    <div class="price-field">
+                        <label for="edit_price_max">Valor máximo</label>
+                        <input id="edit_price_max" type="number" min="1" class="small-input no-spinner" required>
+                    </div>
+                </div>
+
+                <p class="section-title" data-step="6">Disponibilidade</p>
+                <div class="full-width">
+                    <div class="day-row">
+                        <label><input type="checkbox" id="edit_day_mon"> Segunda</label>
+                        <input id="edit_mon_start" type="time" min="06:00" max="22:00"> - <input id="edit_mon_end" type="time" min="06:00" max="22:00">
+                    </div>
+                    <div class="day-row">
+                        <label><input type="checkbox" id="edit_day_tue"> Terça</label>
+                        <input id="edit_tue_start" type="time" min="06:00" max="22:00"> - <input id="edit_tue_end" type="time" min="06:00" max="22:00">
+                    </div>
+                    <div class="day-row">
+                        <label><input type="checkbox" id="edit_day_wed"> Quarta</label>
+                        <input id="edit_wed_start" type="time" min="06:00" max="22:00"> - <input id="edit_wed_end" type="time" min="06:00" max="22:00">
+                    </div>
+                    <div class="day-row">
+                        <label><input type="checkbox" id="edit_day_thu"> Quinta</label>
+                        <input id="edit_thu_start" type="time" min="06:00" max="22:00"> - <input id="edit_thu_end" type="time" min="06:00" max="22:00">
+                    </div>
+                    <div class="day-row">
+                        <label><input type="checkbox" id="edit_day_fri"> Sexta</label>
+                        <input id="edit_fri_start" type="time" min="06:00" max="22:00"> - <input id="edit_fri_end" type="time" min="06:00" max="22:00">
+                    </div>
+                    <div class="day-row">
+                        <label><input type="checkbox" id="edit_day_sat"> Sábado</label>
+                        <input id="edit_sat_start" type="time" min="06:00" max="22:00"> - <input id="edit_sat_end" type="time" min="06:00" max="22:00">
+                    </div>
+                    <div class="day-row">
+                        <label><input type="checkbox" id="edit_day_sun"> Domingo</label>
+                        <input id="edit_sun_start" type="time" min="06:00" max="22:00"> - <input id="edit_sun_end" type="time" min="06:00" max="22:00">
+                    </div>
                 </div>
 
                 <p id="editMessage" class="register-link"></p>
@@ -72,6 +336,11 @@
         </section>
     </main>
 
+    <script src="../js/api-config.js"></script>
+    <script src="../js/image-compress.js"></script>
+    <script src="../js/avatar.js"></script>
+    <script src="../js/cidades.js"></script>
+    <script src="../js/confirmar-exclusao.js"></script>
     <script src="../js/editar_perfil.js"></script>
 </body>
 

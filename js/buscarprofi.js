@@ -1,14 +1,56 @@
 document.addEventListener("DOMContentLoaded", function () {
 
+    // se a pessoa já estiver logada, "Voltar" leva pra área dela em vez da home pública
+    const botaoVoltar = document.getElementById('botaoVoltar');
+    if (botaoVoltar && localStorage.getItem('authToken')) {
+        botaoVoltar.setAttribute('href', 'paginaposlogin.html');
+    }
+
+    // "Mensagens" só faz sentido pra quem já está logado (essa página também é pública)
+    const linkMensagens = document.getElementById('linkMensagens');
+    if (linkMensagens && localStorage.getItem('authToken')) {
+        linkMensagens.style.display = '';
+    }
+
+    // estado do paciente logado, usado pra recomendar psicólogos mais perto
+    // (mesmo estado) primeiro na lista — null se não estiver logado ou não tiver estado salvo
+    let patientEstado = null;
+
+    async function carregarEstadoPaciente() {
+        const token = localStorage.getItem('authToken');
+        if (!token) return;
+        try {
+            const res = await fetch(`${API_BASE}/api/auth/me`, {
+                headers: { 'Authorization': 'Bearer ' + token }
+            });
+            const data = await res.json();
+            if (res.ok && data.success) {
+                patientEstado = data.data?.profile?.estado || null;
+            }
+        } catch (e) {
+            console.warn('Erro ao carregar estado do paciente', e);
+        }
+    }
+
+    // psicólogos do mesmo estado do paciente vêm primeiro na lista
+    function ordenarPorProximidade(list) {
+        if (!patientEstado) return list;
+        return [...list].sort((a, b) => {
+            const aPerto = a.estado === patientEstado ? 0 : 1;
+            const bPerto = b.estado === patientEstado ? 0 : 1;
+            return aPerto - bPerto;
+        });
+    }
+
     // fetch professionals from backend and render them
     async function fetchAndRender() {
-        const API_BASE = 'http://localhost:3001';
         const loadingEl = document.getElementById('loadingProfissionais');
         if (loadingEl) loadingEl.style.display = 'block';
         try {
+            await carregarEstadoPaciente();
             const res = await fetch(API_BASE + '/api/psychologists');
             const data = await res.json();
-            const list = (res.ok && data.success) ? data.data : [];
+            const list = (res.ok && data.success) ? ordenarPorProximidade(data.data) : [];
             if (Array.isArray(list) && list.length > 0) {
                 renderProfessionals(list);
             } else {
@@ -69,15 +111,14 @@ document.addEventListener("DOMContentLoaded", function () {
             const crp = p.crp ? `CRP ${p.crp}` : '';
             const specialties = Array.isArray(p.especialidades) ? p.especialidades : (Array.isArray(p.specialties) ? p.specialties : []);
             const city = p.cidade ? `${p.cidade}${p.estado ? ', ' + p.estado : ''}` : (p.city || '');
+            const pertoDeVoce = patientEstado && p.estado === patientEstado;
             const modalidades = [];
-            if (p.modalidade === 'presencial' || p.modalidade === 'ambos') modalidades.push('🏠 Presencial');
-            if (p.modalidade === 'online' || p.modalidade === 'ambos') modalidades.push('🎥 Online');
+            if (p.modalidade === 'presencial' || p.modalidade === 'ambos') modalidades.push(heroIcon('casa') + ' Presencial');
+            if (p.modalidade === 'online' || p.modalidade === 'ambos') modalidades.push(heroIcon('camera') + ' Online');
             const price = (p.valor_consulta || p.valor_consulta_max) ? `R$ ${p.valor_consulta || '-'} - R$ ${p.valor_consulta_max || '-'}` : '';
 
             const psychologistId = p.profile_id || p.id || null;
-            const avatar = p.foto
-                ? `<img class="avatar" src="${p.foto}" alt="${escapeHtml(name)}">`
-                : `<div class="avatar">${getInitials(name)}</div>`;
+            const avatar = `<img class="avatar" src="${avatarSrc(p.foto, name)}" alt="${escapeHtml(name)}" loading="lazy">`;
 
             const card = document.createElement('article');
             card.className = 'card';
@@ -87,9 +128,12 @@ document.addEventListener("DOMContentLoaded", function () {
                     <div>
                         <h2 class="nome">${escapeHtml(name)}</h2>
                         <p class="crp">${escapeHtml(crp)}</p>
-                        <div class="avaliacao"><span class="estrela">★</span> ${(p.rating || 4.5).toFixed(1)} <small>(${p.ratings_count || 0})</small></div>
+                        <div class="avaliacao${(p.ratings_count || 0) > 0 ? ' clicavel' : ''}" ${(p.ratings_count || 0) > 0 ? `data-psicologo-id="${psychologistId}" data-nome="${escapeHtml(name)}"` : ''}>${(p.ratings_count || 0) > 0
+                            ? `<span class="estrela">★</span> ${Number(p.rating || 0).toFixed(1)} <small>(${p.ratings_count} — ver comentários)</small>`
+                            : `<small>Sem avaliações ainda</small>`}</div>
                     </div>
                 </div>
+                ${pertoDeVoce ? '<div class="perto-badge">📍 Perto de você</div>' : ''}
                 <div class="especialidades">${specialties.map(s => `<span class="tag">${escapeHtml(s)}</span>`).join('')}</div>
                 <div class="localizacao"><i class="bx bx-map"></i> ${escapeHtml(city)}</div>
                 <div class="modalidades">${modalidades.map(m => `<span class="modalidade">${m}</span>`).join('')}</div>
@@ -122,7 +166,22 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    function getInitials(name) { if (!name) return ''; return name.split(' ').map(s => s[0]).slice(0,2).join('').toUpperCase(); }
+    // delegação de evento: funciona mesmo depois de renderProfessionals recriar os cards
+    document.addEventListener('click', async (event) => {
+        const avaliacaoEl = event.target.closest('.avaliacao.clicavel');
+        if (!avaliacaoEl) return;
+        const psicologoId = avaliacaoEl.dataset.psicologoId;
+        const nome = avaliacaoEl.dataset.nome || 'Psicólogo';
+        try {
+            const res = await fetch(`${API_BASE}/api/psychologists/${encodeURIComponent(psicologoId)}/ratings`);
+            const result = await res.json();
+            if (!res.ok || !result.success) throw new Error('Não foi possível carregar os comentários.');
+            abrirModalComentarios({ titulo: `Avaliações de ${nome}`, avaliacoes: result.data });
+        } catch (err) {
+            alert(err.message || 'Erro ao carregar comentários.');
+        }
+    });
+
     function escapeHtml(str){ if(!str) return ''; return String(str).replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])); }
 
     // ================================

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <link rel="icon" type="image/png" href="../images/favicon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Conversa - Psicocenter</title>
+  <link rel="stylesheet" href="../style/agendamentos.css" />
+  <link rel="stylesheet" href="../style/mensagens.css" />
+  <link rel="stylesheet" href="../style/chat-badge.css" />
+  <link rel="stylesheet" href="../style/perfil.css" />
+  <link rel="stylesheet" href="../style/sidebar-paciente.css" />
+  <link href="https://cdn.boxicons.com/3.0.8/fonts/basic/boxicons.min.css" rel="stylesheet">
+</head>
+<body>
+
+  <aside class="sidebar">
+    <div class="logo">
+      <img src="../images/logo-psico-center.png" alt="Logo Psicocenter">
+      <span>Psicocenter</span>
+    </div>
+
+    <div class="usuario">
+      <div class="avatar-ring">
+        <img id="sidebarPhoto" src="../images/psicologo.webp" alt="Foto">
+      </div>
+      <h3 id="sidebarName">Carregando...</h3>
+      <span id="sidebarCargo" class="cargo-badge">Usuário</span>
+    </div>
+
+    <nav>
+      <a id="navPerfil" href="#">
+        <i class='bx bx-user'></i>
+        <span>Perfil</span>
+      </a>
+      <a id="navLista2" href="#">
+        <i class='bx bx-group'></i>
+        <span id="navLista2Texto">Psicólogos</span>
+      </a>
+      <a id="navAgendamentos" href="#" class="link-com-badge">
+        <i class='bx bx-calendar'></i>
+        <span>Agendamentos</span>
+        <span id="agendamentosBadge" class="badge-notificacao"></span>
+      </a>
+      <a id="navMensagens" href="#" class="link-com-badge active">
+        <i class='bx bx-message-circle'></i>
+        <span>Mensagens</span>
+        <span id="mensagensBadge" class="badge-notificacao"></span>
+      </a>
+    </nav>
+
+    <button id="sidebarLogoutBtn" type="button" class="sidebar-sair">
+      <i class='bx bx-log-out'></i>
+      <span>Sair</span>
+    </button>
+  </aside>
+
+  <main class="conteudo-lista" id="conteudoPrincipal">
+    <nav class="topo-fino" id="topoFino" style="display:none;">
+      <a href="paginaposlogin.html">Início</a>
+      <a href="buscar_profissionais.html">Buscar profissionais</a>
+    </nav>
+
+    <div class="container chat-container">
+      <div class="chat-layout">
+        <aside class="painel-conversas">
+          <h3 id="painelConversasTitulo">Conversas</h3>
+          <div id="listaConversas" class="lista-conversas-scroll">
+            <p class="empty-state">Carregando...</p>
+          </div>
+        </aside>
+
+        <div class="chat-box">
+          <header class="chat-header">
+            <img id="chatFoto" class="chat-avatar" src="../images/psicologo.webp" alt="Foto">
+            <div>
+              <h2 id="chatNome">Carregando...</h2>
+              <span class="chat-subtitulo">Conversa privada pré e pós consulta</span>
+            </div>
+          </header>
+
+          <div id="agendamentoBanner" class="agendamento-banner" style="display:none;"></div>
+
+          <div id="chatMensagens" class="chat-mensagens">
+            <p class="empty-state">Carregando mensagens...</p>
+          </div>
+
+          <form id="chatForm" class="chat-input-bar">
+            <div class="chat-input-wrap">
+              <textarea id="chatInput" placeholder="Escreva uma mensagem..." maxlength="2000" rows="1" required></textarea>
+              <span id="chatCounter" class="chat-char-counter">0/2000</span>
+            </div>
+            <button type="submit" class="btn">Enviar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="../js/api-config.js"></script>
+    <script src="../js/avatar.js"></script>
+  <script src="../js/icons.js"></script>
+  <script src="../js/chat-badge.js"></script>
+  <script src="../js/appointments-badge.js"></script>
+  <script src="../js/notifications-bell.js"></script>
+  <script src="../js/conversa.js"></script>
+</body>
+</html>

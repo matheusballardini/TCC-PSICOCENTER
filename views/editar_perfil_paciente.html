@@ -2,11 +2,13 @@
 <html lang="pt-br">
 
 <head>
+    <link rel="icon" type="image/png" href="../images/favicon.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Perfil - Psicocenter</title>
     <link rel="stylesheet" href="../style/perfil_paciente.css">
     <link rel="stylesheet" href="../style/editar_perfil_paciente.css">
+    <link rel="stylesheet" href="../style/avaliacao.css">
 </head>
 
 <body>
@@ -23,7 +25,10 @@
 
         <div class="editar-box">
 
-            <p id="loadingIndicator" class="carregando-dados" style="display:none;">Carregando dados...</p>
+            <p id="loadingIndicator" class="carregando-dados" style="display:none;">
+                <span class="spinner"></span>
+                Carregando dados...
+            </p>
 
             <form id="editForm" class="editar-form">
 
@@ -32,10 +37,13 @@
                 <div class="photo-preview-wrap">
                     <img id="photoPreview" src="../images/psicologo.webp" alt="Preview">
                 </div>
-                <label class="file-label">
-                    Escolher foto
-                    <input id="edit_photo" type="file" accept="image/*" hidden>
-                </label>
+                <div class="photo-actions">
+                    <label class="file-label">
+                        Escolher foto
+                        <input id="edit_photo" type="file" accept="image/*" hidden>
+                    </label>
+                    <button type="button" id="removePhotoBtn" class="remove-photo-btn">Excluir foto</button>
+                </div>
 
                 <div class="input-box">
                     <label>Nome</label>
@@ -54,7 +62,7 @@
 
                 <div class="input-box">
                     <label>Data de nascimento</label>
-                    <input id="edit_birth" type="date">
+                    <input id="edit_birth" type="date" min="1900-01-01">
                 </div>
 
                 <div class="input-box">
@@ -73,13 +81,44 @@
                 </div>
 
                 <div class="input-box">
-                    <label>Cidade</label>
-                    <input id="edit_city" type="text">
+                    <label>Estado</label>
+                    <select id="edit_state">
+                        <option value="">Estado</option>
+                        <option value="AC">Acre (AC)</option>
+                        <option value="AL">Alagoas (AL)</option>
+                        <option value="AP">Amapá (AP)</option>
+                        <option value="AM">Amazonas (AM)</option>
+                        <option value="BA">Bahia (BA)</option>
+                        <option value="CE">Ceará (CE)</option>
+                        <option value="DF">Distrito Federal (DF)</option>
+                        <option value="ES">Espírito Santo (ES)</option>
+                        <option value="GO">Goiás (GO)</option>
+                        <option value="MA">Maranhão (MA)</option>
+                        <option value="MT">Mato Grosso (MT)</option>
+                        <option value="MS">Mato Grosso do Sul (MS)</option>
+                        <option value="MG">Minas Gerais (MG)</option>
+                        <option value="PA">Pará (PA)</option>
+                        <option value="PB">Paraíba (PB)</option>
+                        <option value="PR">Paraná (PR)</option>
+                        <option value="PE">Pernambuco (PE)</option>
+                        <option value="PI">Piauí (PI)</option>
+                        <option value="RJ">Rio de Janeiro (RJ)</option>
+                        <option value="RN">Rio Grande do Norte (RN)</option>
+                        <option value="RS">Rio Grande do Sul (RS)</option>
+                        <option value="RO">Rondônia (RO)</option>
+                        <option value="RR">Roraima (RR)</option>
+                        <option value="SC">Santa Catarina (SC)</option>
+                        <option value="SP">São Paulo (SP)</option>
+                        <option value="SE">Sergipe (SE)</option>
+                        <option value="TO">Tocantins (TO)</option>
+                    </select>
                 </div>
 
                 <div class="input-box">
-                    <label>Estado</label>
-                    <input id="edit_state" type="text">
+                    <label>Cidade</label>
+                    <select id="edit_city" disabled>
+                        <option value="">Selecione um estado primeiro</option>
+                    </select>
                 </div>
 
                 <p id="editMessage" class="mensagem-edicao"></p>
@@ -99,6 +138,11 @@
 
     </main>
 
+    <script src="../js/api-config.js"></script>
+    <script src="../js/image-compress.js"></script>
+    <script src="../js/avatar.js"></script>
+    <script src="../js/cidades.js"></script>
+    <script src="../js/confirmar-exclusao.js"></script>
     <script src="../js/editar_perfil_paciente.js"></script>
 </body>
 

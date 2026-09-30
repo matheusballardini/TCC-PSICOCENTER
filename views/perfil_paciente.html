@@ -2,77 +2,114 @@
 <html lang="pt-br">
 
 <head>
+    <link rel="icon" type="image/png" href="../images/favicon.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meu Perfil - Psicocenter</title>
-    <link rel="stylesheet" href="../style/perfil_paciente.css">
+    <link rel="stylesheet" href="../style/perfil.css">
+    <link rel="stylesheet" href="../style/sidebar-paciente.css">
+    <link rel="stylesheet" href="../style/chat-badge.css">
+    <link href="https://cdn.boxicons.com/3.0.8/fonts/basic/boxicons.min.css" rel="stylesheet">
 </head>
 
 <body>
 
-    <header class="topo-paciente">
-        <img src="../images/logo-psico-center.png" alt="Logo Psicocenter">
-        <h1 class="titulo-topo">Psicocenter</h1>
-        <nav class="menu-topo">
-            <a href="paginaposlogin.html">← Voltar</a>
-        </nav>
-    </header>
+    <!-- MENU LATERAL -->
 
-    <main class="conteudo-paciente">
+    <aside class="sidebar">
 
-        <p id="loadingIndicator" class="loading-indicator" style="display:none;">Carregando dados...</p>
-
-        <div class="perfil-box">
-
-            <aside class="perfil-lado">
-                <img id="profilePhoto" class="foto-perfil" src="../images/psicologo.webp" alt="Foto do paciente">
-                <h2 id="fullName">—</h2>
-                <p class="etiqueta-role">Paciente</p>
-                <p id="statusLogin" class="status-login">Verificando login...</p>
-            </aside>
-
-            <section class="perfil-principal">
-
-                <h2 class="titulo-secao">Meus dados</h2>
-
-                <div class="grid-info">
-                    <div class="info-item">
-                        <span class="info-label">Email</span>
-                        <span id="emailVal" class="info-valor">—</span>
-                    </div>
-                    <div class="info-item">
-                        <span class="info-label">Telefone</span>
-                        <span id="phoneVal" class="info-valor">—</span>
-                    </div>
-                    <div class="info-item">
-                        <span class="info-label">Data de nascimento</span>
-                        <span id="birthVal" class="info-valor">—</span>
-                    </div>
-                    <div class="info-item">
-                        <span class="info-label">Gênero</span>
-                        <span id="genderVal" class="info-valor">—</span>
-                    </div>
-                    <div class="info-item">
-                        <span class="info-label">Profissão</span>
-                        <span id="occupationVal" class="info-valor">—</span>
-                    </div>
-                    <div class="info-item">
-                        <span class="info-label">Cidade/Estado</span>
-                        <span id="cityStateVal" class="info-valor">—</span>
-                    </div>
-                </div>
-
-                <div class="conta-actions">
-                    <a href="buscar_profissionais.html" class="btn-primario">Buscar profissionais</a>
-                    <a href="editar_perfil_paciente.html" class="btn-secundario" style="text-decoration:none; display:flex; align-items:center; justify-content:center;">Editar Perfil</a>
-                </div>
-
-            </section>
-
+        <div class="logo">
+            <img src="../images/logo-psico-center.png" alt="Logo Psicocenter">
+            <span>Psicocenter</span>
         </div>
+
+        <div class="usuario">
+            <div class="avatar-ring">
+                <img id="sidebarPhoto" src="../images/psicologo.webp" alt="Foto">
+            </div>
+            <h3 id="sidebarName">Carregando...</h3>
+            <span class="cargo-badge">Paciente</span>
+        </div>
+
+        <nav>
+            <a href="perfil_paciente.html" class="active">
+                <i class='bx bx-user'></i>
+                <span>Perfil</span>
+            </a>
+
+            <a href="meus_psicologos.html">
+                <i class='bx bx-group'></i>
+                <span>Psicólogos</span>
+            </a>
+
+            <a href="agendamentos_paciente.html">
+                <i class='bx bx-calendar'></i>
+                <span>Agendamentos</span>
+            </a>
+
+            <a href="mensagens_paciente.html" class="link-com-badge">
+                <i class='bx bx-message-circle'></i>
+                <span>Mensagens</span>
+                <span id="mensagensBadge" class="badge-notificacao"></span>
+            </a>
+        </nav>
+
+        <button id="sidebarLogoutBtn" type="button" class="sidebar-sair">
+            <i class='bx bx-log-out'></i>
+            <span>Sair</span>
+        </button>
+
+    </aside>
+
+    <nav class="topo-fino">
+        <a href="paginaposlogin.html">Início</a>
+        <a href="buscar_profissionais.html">Buscar profissionais</a>
+    </nav>
+
+    <!-- CONTEÚDO -->
+
+    <main class="conteudo">
+
+        <a href="editar_perfil_paciente.html" class="btn-edit-top">Editar Perfil</a>
+
+        <section class="perfil">
+
+            <h1>Meu Perfil</h1>
+            <p id="loadingIndicator" class="carregando-dados" style="display:none;">
+                <span class="spinner"></span>
+                Carregando dados...
+            </p>
+
+            <div class="card">
+
+                <img id="profilePhoto" class="foto-perfil" src="../images/psicologo.webp" alt="Foto do paciente">
+
+                <h2 id="fullName">—</h2>
+                <p>Paciente</p>
+
+                <hr>
+
+                <div class="informacoes">
+                    <p><strong>Email:</strong> <span id="emailVal">—</span></p>
+                    <p><strong>Telefone:</strong> <span id="phoneVal">—</span></p>
+                    <p><strong>Data de nascimento:</strong> <span id="birthVal">—</span></p>
+                    <p><strong>Gênero:</strong> <span id="genderVal">—</span></p>
+                    <p><strong>Profissão:</strong> <span id="occupationVal">—</span></p>
+                    <p><strong>Cidade/Estado:</strong> <span id="cityStateVal">—</span></p>
+                </div>
+
+            </div>
+
+        </section>
 
     </main>
 
+    <script src="../js/api-config.js"></script>
+    <script src="../js/avatar.js"></script>
+    <script src="../js/icons.js"></script>
+    <script src="../js/chat-badge.js"></script>
+    <script src="../js/notifications-bell.js"></script>
+    <script src="../js/nav-indicator.js"></script>
     <script src="../js/perfil_paciente.js"></script>
 </body>
 
