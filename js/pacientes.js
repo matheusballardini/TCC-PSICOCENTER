@@ -121,7 +121,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             <img class="patient-photo" src="${photo}" alt="Foto de ${escapeHtml(name)}" loading="lazy">
             <div class="patient-info">
               <h3>${escapeHtml(name)}</h3>
-              <div class="meta">${heroIcon('envelope')} ${escapeHtml(email)} &nbsp;|&nbsp; ${heroIcon('telefone')} ${escapeHtml(telefone)}${profissao ? ' &nbsp;|&nbsp; ' + heroIcon('maleta') + ' ' + escapeHtml(profissao) : ''}</div>
+              <div class="meta"><span class="meta-item">${heroIcon('envelope')} ${escapeHtml(email)}</span><span class="meta-item">${heroIcon('telefone')} ${escapeHtml(telefone)}</span>${profissao ? `<span class="meta-item">${heroIcon('maleta')} ${escapeHtml(profissao)}</span>` : ''}</div>
               <div class="meta">${ratingHtml}</div>
             </div>
           </div>

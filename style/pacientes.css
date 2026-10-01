@@ -16,6 +16,10 @@
   gap: 14px;
 }
 
+.patient-info {
+  min-width: 0;
+}
+
 .patient-photo {
   width: 56px;
   height: 56px;
@@ -31,8 +35,29 @@
 }
 
 .patient-info .meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  row-gap: 4px;
   color: var(--muted);
   font-size: 0.9rem;
+}
+
+/* cada grupo (ícone + email, ícone + telefone...) nunca quebra no meio —
+   se não couber tudo na linha, o grupo inteiro pula pra próxima, em vez de
+   deixar o separador "|" sozinho numa linha (era o que acontecia com texto
+   solto + espaços quebráveis) */
+.patient-info .meta .meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+}
+
+.patient-info .meta .meta-item:not(:first-child) {
+  padding-left: 14px;
+  margin-left: 10px;
+  border-left: 1px solid var(--border);
 }
 
 .patient-appointments {
