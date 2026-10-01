@@ -150,6 +150,7 @@ export const register = async (req, res, next) => {
           anos_experiencia: profilePayload.years_experience || null,
           aprovado: false,
           disponibilidade: JSON.stringify(profilePayload.availability || []),
+          titulo_profissional: profilePayload.titulo_profissional === 'Psicóloga' ? 'Psicóloga' : 'Psicólogo',
         };
 
         const { error: psicError } = await supabaseAdmin.from('psicologos').insert(psicologoRecord);

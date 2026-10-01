@@ -32,6 +32,9 @@ export const updatePsychologist = async (req, res, next) => {
     if (req.body.availability !== undefined && !isValidAvailability(req.body.availability)) {
       return res.status(400).json(errorResponse('Horário de disponibilidade inválido: use um intervalo entre 06:00 e 22:00, com o fim depois do início.', {}, 400));
     }
+    if (req.body.titulo_profissional !== undefined && !['Psicólogo', 'Psicóloga'].includes(req.body.titulo_profissional)) {
+      return res.status(400).json(errorResponse('Título profissional inválido: use "Psicólogo" ou "Psicóloga".', {}, 400));
+    }
     const data = await psychologistService.updatePsychologist(req.params.id, req.body);
     res.json(successResponse('Psicólogo atualizado', data));
   } catch (error) {

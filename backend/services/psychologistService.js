@@ -86,6 +86,7 @@ export const updatePsychologist = async (psychologistId, updates) => {
     full_name, email, phone, bio, photo, crp, city, state,
     crp_state, education, institution, years_experience,
     specialties, modalities, address, price_min, price_max, availability,
+    titulo_profissional,
   } = updates;
 
   if (email !== undefined) {
@@ -134,6 +135,7 @@ export const updatePsychologist = async (psychologistId, updates) => {
   if (price_min !== undefined) psicologoUpdates.valor_consulta = price_min;
   if (price_max !== undefined) psicologoUpdates.valor_consulta_max = price_max;
   if (availability !== undefined) psicologoUpdates.disponibilidade = JSON.stringify(availability);
+  if (titulo_profissional !== undefined) psicologoUpdates.titulo_profissional = titulo_profissional;
 
   if (Object.keys(psicologoUpdates).length === 0) {
     return getPsychologistById(psychologistId);

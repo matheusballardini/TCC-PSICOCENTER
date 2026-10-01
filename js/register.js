@@ -231,6 +231,7 @@ async function register(event, role) {
     // If registering a psychologist, collect extended fields
     if (role === 'psicologo') {
         const cpf = form.querySelector('#cpf').value.trim();
+        const titulo_profissional = form.querySelector('#titulo_profissional').value;
         const birth_date = form.querySelector('#birth_date').value || null;
         const phone = form.querySelector('#phone').value.trim();
         const crp = form.querySelector('#crp').value.trim();
@@ -314,7 +315,7 @@ async function register(event, role) {
         }
 
         payload.profile = {
-            cpf, birth_date, phone, crp, crp_state, education, institution, years_experience: anosExperiencia, bio,
+            cpf, titulo_profissional, birth_date, phone, crp, crp_state, education, institution, years_experience: anosExperiencia, bio,
             specialties, modalities: { online, presencial }, address, price_min, price_max, availability, photo: photoBase64
         };
     }

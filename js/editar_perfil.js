@@ -222,6 +222,7 @@ async function loadCurrentData(token) {
         const photo = profile.foto || null;
 
         document.getElementById('edit_name').value = name;
+        document.getElementById('edit_titulo_profissional').value = psicologo.titulo_profissional || 'Psicólogo';
         document.getElementById('edit_email').value = email;
         document.getElementById('edit_phone').value = phone ? maskPhone(phone) : '';
         document.getElementById('edit_crp').value = crp;
@@ -372,6 +373,7 @@ async function saveProfile(event) {
 
     const payload = {
         full_name: document.getElementById('edit_name').value.trim(),
+        titulo_profissional: document.getElementById('edit_titulo_profissional').value,
         email: document.getElementById('edit_email').value.trim(),
         phone: document.getElementById('edit_phone').value.trim(),
         crp: document.getElementById('edit_crp').value.trim(),
@@ -416,6 +418,7 @@ async function saveProfile(event) {
         try {
             const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
             currentUser.full_name = payload.full_name;
+            currentUser.role = payload.titulo_profissional;
             currentUser.email = payload.email;
             currentUser.phone = payload.phone;
             currentUser.crp = payload.crp;

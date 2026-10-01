@@ -169,7 +169,8 @@ function renderProfile(profile = {}, userId = null) {
     const photo = profile.photo || profile.foto || null;
     const bio = profile.bio || profile.descricao_profissional || profile.biografia || '';
     const displayName = profile.full_name || profile.nome || profile.name || '—';
-    const displayRole = profile.role === 'psicologo' || profile.tipo === 'psicologo' ? 'Psicólogo' : (profile.role || profile.tipo || 'Psicólogo');
+    const displayRole = profile.titulo_profissional
+        || (profile.role === 'psicologo' || profile.tipo === 'psicologo' ? 'Psicólogo' : (profile.role || profile.tipo || 'Psicólogo'));
 
     nameEl.textContent = displayName;
     roleEl.textContent = displayRole;
