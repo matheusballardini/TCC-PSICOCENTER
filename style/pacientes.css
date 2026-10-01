@@ -43,15 +43,19 @@
   font-size: 0.9rem;
 }
 
-/* cada grupo (ícone + email, ícone + telefone...) nunca quebra no meio —
-   se não couber tudo na linha, o grupo inteiro pula pra próxima, em vez de
-   deixar o separador "|" sozinho numa linha (era o que acontecia com texto
-   solto + espaços quebráveis) */
+/* cada grupo (ícone + email, ícone + telefone...) prefere não quebrar no
+   meio — se não couber tudo na linha, o grupo inteiro pula pra próxima.
+   Mas em telas bem estreitas nem um grupo sozinho cabe (um email longo,
+   por exemplo) — "nowrap" ali forçaria ele a estourar pra fora do card,
+   então overflow-wrap deixa quebrar como último recurso, sem soltar o
+   separador sozinho numa linha (que agora é um border-left, não mais um
+   caractere "|" solto) */
 .patient-info .meta .meta-item {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  white-space: nowrap;
+  max-width: 100%;
+  overflow-wrap: anywhere;
 }
 
 .patient-info .meta .meta-item:not(:first-child) {
