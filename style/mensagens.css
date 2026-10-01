@@ -4,6 +4,7 @@
   display: flex;
   align-items: center;
   gap: 16px;
+  min-width: 0;
   background: rgba(255, 255, 255, 0.88);
   border: 1px solid var(--border);
   border-left: 6px solid var(--primary);
@@ -382,6 +383,13 @@
 @media (max-width: 600px) {
   .bolha {
     max-width: 85%;
+  }
+
+  /* .chat-layout (o pai) precisa crescer junto com .chat-box aqui embaixo,
+     senão ele fica menor que o filho e, com overflow:hidden, corta a barra
+     de digitar/enviar pra fora da área visível */
+  .chat-layout {
+    height: 75vh;
   }
 
   .chat-box {

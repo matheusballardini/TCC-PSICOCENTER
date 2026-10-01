@@ -221,6 +221,10 @@ body {
 
 .list {
   display: grid;
+  /* sem isso, o Grid deixa a coluna crescer pra caber o conteúdo que não
+     quebra linha (texto do preview da mensagem), estourando pra fora do
+     container em vez de respeitar a largura disponível e truncar com "..." */
+  grid-template-columns: minmax(0, 1fr);
   gap: 16px;
   margin-top: 24px;
 }
