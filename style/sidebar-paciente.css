@@ -213,13 +213,15 @@
 @media (max-width: 800px) {
     .sidebar {
         width: 80px;
+        /* menos padding lateral que o padrão (22px) pra sobrar mais espaço
+           interno pra logo/ícones numa barra já bem estreita */
+        padding: 24px 12px;
     }
 
     .sidebar .logo span,
     .usuario h3,
-    .cargo-badge,
-    .sidebar nav a span,
-    .sidebar-sair span {
+    .sidebar .cargo-badge,
+    .sidebar nav a span {
         display: none;
     }
 
@@ -229,12 +231,39 @@
     }
 
     .sidebar .logo img {
-        width: 36px;
+        width: 52px;
+    }
+
+    /* precisa repetir "o .sidebar" aqui pelo mesmo motivo do cargo-badge:
+       .sidebar .avatar-ring (mais específico) senão vence e a foto de
+       100px continua estourando pra fora da barra de 80px */
+    .sidebar .avatar-ring {
+        width: 48px;
+        height: 48px;
+        margin-bottom: 10px;
     }
 
     .sidebar nav a {
         justify-content: center;
         padding: 14px 8px;
+    }
+
+    /* o "Sair" precisa continuar legível (não só um ícone) — em vez de
+       espremer ícone+texto dentro do espaço interno (56px) da barra, o
+       botão "vaza" de propósito pras bordas da barra toda (80px), ganhando
+       espaço suficiente pros dois com fonte reduzida */
+    .sidebar-sair {
+        width: calc(100% + 24px);
+        margin-left: -12px;
+        margin-right: -12px;
+        padding: 10px 4px;
+        gap: 4px;
+        font-size: 10px;
+        border-radius: 10px;
+    }
+
+    .sidebar-sair i {
+        font-size: 14px;
     }
 
     .link-com-badge .badge-notificacao {

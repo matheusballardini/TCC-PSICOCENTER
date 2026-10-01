@@ -261,6 +261,18 @@ body {
   font-size: 1.3rem;
 }
 
+/* container dos dois botões (Buscar Profissionais / Meus agendamentos) —
+   usa gap em vez de margin-left no segundo botão, senão quando eles quebram
+   linha (telas estreitas) essa margem sobra e desalinha o botão de baixo
+   em relação ao de cima */
+.botoes-poslogin {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 24px;
+}
+
 .btn {
   background-color: #2B4391;
   color: white;
@@ -275,7 +287,6 @@ body {
   gap: 10px;
   transition: 0.3s;
   justify-content: center;
-  margin: 24px auto 0;
   text-decoration: none;
 }
 
