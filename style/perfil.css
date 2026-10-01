@@ -814,6 +814,16 @@ body > .topo-fino {
 
         width: calc(100% - 80px);
 
+        /* .conteudo centraliza o conteúdo verticalmente (align-items:center),
+           o que é ótimo em telas altas — mas quando o card (foto + várias
+           linhas de info) é mais alto que a tela do celular, a centralização
+           empurra o topo do conteúdo (o "Meu Perfil") pra cima da área
+           reservada pro botão "Editar Perfil", fixo no canto. Em vez de
+           centralizar, começa do topo com um respiro equivalente à altura
+           do botão, então nunca mais sobrepõe */
+        align-items: flex-start;
+        padding-top: 70px;
+
     }
 
     /* em telas estreitas, os dois botões de canto (Voltar/Editar) ficariam
