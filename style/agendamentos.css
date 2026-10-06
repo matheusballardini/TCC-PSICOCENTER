@@ -336,5 +336,33 @@ body {
   }
 }
 
+@media (max-width: 480px) {
+  .card {
+    padding: 18px;
+    border-radius: 16px;
+  }
+
+  .page-title {
+    font-size: 1.6rem;
+  }
+
+  .subtitle {
+    font-size: 0.95rem;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .form-actions .btn,
+  .form-actions .btn-secondary {
+    width: 100%;
+  }
+}
+
 /* Estilos do modal de avaliação/comentários agora ficam em style/avaliacao.css,
    compartilhado por todas as páginas que usam js/avaliacao.js (ver <link> no HTML). */
