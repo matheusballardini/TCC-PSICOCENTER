@@ -4,6 +4,8 @@
 <img src="https://img.shields.io/badge/Frontend-HTML%2FCSS%2FJS-E34F26?style=for-the-badge&logo=html5&logoColor=white" alt="HTML/CSS/JS">
 <img src="https://img.shields.io/badge/Backend-Node.js%20%2B%20Express-339933?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js + Express">
 <img src="https://img.shields.io/badge/Database-Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white" alt="Supabase">
+<img src="https://img.shields.io/badge/Deploy-Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Vercel">
+<img src="https://img.shields.io/badge/Licen%C3%A7a-MIT-blue?style=for-the-badge" alt="Licença MIT">
 <img src="https://img.shields.io/badge/Status-Em%20Desenvolvimento-orange?style=for-the-badge" alt="Status">
 </p>
 
@@ -11,6 +13,10 @@
 
 <p align="center">
 Plataforma web que conecta psicólogos e pacientes, simplificando a busca por profissionais e o agendamento de consultas.
+</p>
+
+<p align="center">
+🔗 <strong>Acesse a versão em produção:</strong> <a href="https://psicocenter-project.vercel.app">psicocenter-project.vercel.app</a>
 </p>
 
 ---
@@ -47,7 +53,35 @@ O sistema organiza o fluxo de atendimento em etapas simples:
 3. O paciente busca profissionais por especialidade e modalidade.
 4. O paciente solicita uma consulta dentro da disponibilidade do psicólogo.
 5. O psicólogo aceita ou recusa a solicitação.
-6. Consultas aceitas ficam visíveis para os dois lados até serem concluídas ou canceladas.
+6. Consultas aceitas ficam visíveis para os dois lados até serem concluídas, canceladas ou reagendadas.
+
+---
+
+# ✨ Funcionalidades
+
+### Autenticação e conta
+- Cadastro separado para paciente e psicólogo (com CRP, especialidades, modalidade e valor da consulta no caso do psicólogo);
+- Login com JWT, recuperação de senha e exclusão de conta;
+- Edição completa de perfil, incluindo troca de foto com compressão automática no navegador.
+
+### Busca e agendamento
+- Busca de profissionais por especialidade, modalidade e faixa de valor;
+- Consulta de disponibilidade do psicólogo antes de agendar;
+- Solicitação, aceite, recusa, cancelamento e reagendamento de consultas;
+- Histórico de "Meus agendamentos" tanto para paciente quanto para psicólogo.
+
+### Comunicação
+- Chat privado entre paciente e psicólogo vinculado a uma consulta;
+- Notificações em tempo real (sino flutuante) para solicitações, aceites, cancelamentos e novas mensagens.
+
+### Avaliações
+- Paciente e psicólogo podem se avaliar mutuamente após a consulta;
+- Resumo de avaliações (média e comentários) visível no perfil de cada um.
+
+### Outros
+- Interface responsiva (desktop e mobile);
+- Ícones em SVG (Heroicons/Boxicons), sem dependência de imagens externas para a UI;
+- Deploy único na Vercel (frontend estático + backend como função serverless).
 
 ---
 
@@ -234,10 +268,18 @@ backend/
 
 # 🚀 Executando o projeto
 
+### Opção 1 — Usar a versão publicada
+
+A forma mais simples de conhecer o Psicocenter é acessando a versão já publicada na Vercel, sem precisar instalar nada:
+
+🔗 **https://psicocenter-project.vercel.app**
+
+### Opção 2 — Rodar localmente
+
 Clone o repositório:
 
 ```bash
-git clone https://github.com/matheusballardini/TCC-2026.git
+git clone https://github.com/matheusballardini/PSICOCENTER.git
 ```
 
 Entre na pasta do backend e instale as dependências:
@@ -261,6 +303,37 @@ Abra a pasta `views/` com um servidor local (ex: extensão Live Server do VS Cod
 http://127.0.0.1:5500/views/index.html
 ```
 
+O frontend detecta automaticamente se está rodando local ou em produção (`js/api-config.js`), então não é preciso trocar nenhuma URL manualmente.
+
+---
+
+# 📖 Como usar
+
+1. Acesse a plataforma (local ou pela URL publicada) e clique em **Entrar**;
+2. Escolha se quer se cadastrar como **paciente** ou **psicólogo** e preencha o formulário;
+3. Faça login com o e-mail e senha cadastrados;
+4. **Se for paciente:** use "Buscar profissionais" para filtrar psicólogos por especialidade/modalidade/valor, veja o perfil de quem te interessar e solicite uma consulta num horário disponível;
+5. **Se for psicólogo:** configure sua disponibilidade no perfil e acompanhe as solicitações de consulta em "Agendamentos", podendo aceitar, recusar, cancelar ou reagendar;
+6. Use o chat para conversar com a outra parte antes/depois da consulta, e acompanhe avisos pelo sino de notificações;
+7. Após a consulta, avalie o atendimento — a avaliação fica visível no perfil de quem foi avaliado.
+
+---
+
+# 📄 Termos de uso e compartilhamento
+
+Este projeto foi desenvolvido **exclusivamente para fins acadêmicos**, como Trabalho de Conclusão de Curso. Ao utilizar a versão publicada ou rodar o projeto localmente, tenha em mente que:
+
+- Os dados cadastrados (perfis, consultas, mensagens, avaliações) são armazenados em um banco de dados de teste e **não devem ser usados para atendimento psicológico real**;
+- O projeto não substitui, em nenhuma hipótese, uma consulta ou acompanhamento com um profissional de saúde mental devidamente registrado;
+- O código é aberto e pode ser estudado, copiado, modificado e redistribuído livremente, desde que respeitados os termos da licença MIT (abaixo) e mantidos os devidos créditos aos autores originais;
+- Não há garantia de disponibilidade, suporte contínuo ou segurança de nível de produção — use por sua conta e risco.
+
+---
+
+# 📜 Licença
+
+Este projeto está licenciado sob a [Licença MIT](LICENSE). Em resumo: você pode usar, copiar, modificar e distribuir este código livremente, inclusive para fins comerciais, desde que mantenha o aviso de copyright e a licença original em qualquer cópia significativa do software.
+
 ---
 
 # 🎓 Projeto Acadêmico
@@ -278,6 +351,12 @@ Projeto desenvolvido como Trabalho de Conclusão de Curso (TCC) aplicando concei
 # 👨‍💻 Equipe
 
 Projeto desenvolvido pela equipe do TCC 2026.
+
+### Orientador
+
+Mateus Redivo
+
+### Alunos
 
 Matheus Ballardini
 
