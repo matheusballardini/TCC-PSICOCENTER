@@ -5,7 +5,7 @@
 <img src="https://img.shields.io/badge/Backend-Node.js%20%2B%20Express-339933?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js + Express">
 <img src="https://img.shields.io/badge/Database-Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white" alt="Supabase">
 <img src="https://img.shields.io/badge/Deploy-Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Vercel">
-<img src="https://img.shields.io/badge/Licen%C3%A7a-MIT-blue?style=for-the-badge" alt="Licença MIT">
+<img src="https://img.shields.io/badge/Licen%C3%A7a-Todos%20os%20direitos%20reservados-lightgrey?style=for-the-badge" alt="Todos os direitos reservados">
 <img src="https://img.shields.io/badge/Status-Em%20Desenvolvimento-orange?style=for-the-badge" alt="Status">
 </p>
 
@@ -319,20 +319,41 @@ O frontend detecta automaticamente se está rodando local ou em produção (`js/
 
 ---
 
-# 📄 Termos de uso e compartilhamento
+## Termos de Uso e Compartilhamento
 
-Este projeto foi desenvolvido **exclusivamente para fins acadêmicos**, como Trabalho de Conclusão de Curso. Ao utilizar a versão publicada ou rodar o projeto localmente, tenha em mente que:
+*Autores:* Matheus Ballardini, Bruno Richopo, Enzo Marques, Antônio Godoy, Vinicius Cárceres
+*Orientador(a):* Mateus Redivo
+*Projeto:* Psicocenter, TCC Informática, Bento Quirino, 2026
 
-- Os dados cadastrados (perfis, consultas, mensagens, avaliações) são armazenados em um banco de dados de teste e **não devem ser usados para atendimento psicológico real**;
-- O projeto não substitui, em nenhuma hipótese, uma consulta ou acompanhamento com um profissional de saúde mental devidamente registrado;
-- O código é aberto e pode ser estudado, copiado, modificado e redistribuído livremente, desde que respeitados os termos da licença MIT (abaixo) e mantidos os devidos créditos aos autores originais;
-- Não há garantia de disponibilidade, suporte contínuo ou segurança de nível de produção — use por sua conta e risco.
+©️ 2026 Matheus Ballardini, Bruno Richopo, Enzo Marques, Antônio Godoy, Vinicius Cárceres. Todos os direitos reservados,
+exceto o que está expressamente permitido abaixo.
 
----
+### Permitido
+- Consultar e estudar o código para fins educacionais.
+- Uso para avaliação do TCC e apresentação acadêmica.
+- Uso não comercial por terceiros, desde que respeitadas
+  as condições de crédito abaixo.
 
-# 📜 Licença
+### Condições
+1. *Crédito obrigatório:* qualquer uso, cópia, adaptação ou
+   divulgação deve citar os autores pelo nome e incluir
+   link para este repositório.
+2. *Sem fins lucrativos:* é proibido usar, vender, licenciar
+   ou oferecer este código (ou derivados) como produto ou
+   serviço comercial sem contratar os autores previamente.
+3. *Uso institucional:* o uso pela instituição de ensino
+   além da avaliação do TCC (outros projetos, sistemas
+   internos, divulgação) depende de autorização prévia e
+   por escrito dos autores.
+4. *Derivados:* trabalhos derivados devem manter este aviso
+   e indicar o que foi alterado.
 
-Este projeto está licenciado sob a [Licença MIT](LICENSE). Em resumo: você pode usar, copiar, modificar e distribuir este código livremente, inclusive para fins comerciais, desde que mantenha o aviso de copyright e a licença original em qualquer cópia significativa do software.
+### Contato
+Para solicitar autorização ou contratar os autores:
+matheusinho.bal@gmail.com
+
+### Isenção de garantia
+O software é fornecido "como está", sem garantias de qualquer tipo.
 
 ---
 
