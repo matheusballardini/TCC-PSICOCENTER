@@ -19,7 +19,6 @@ Plataforma web que conecta psicólogos e pacientes, simplificando a busca por pr
 🔗 <strong>Acesse a versão em produção:</strong> <a href="https://psicocenter-project.vercel.app">psicocenter-project.vercel.app</a>
 </p>
 
----
 
 # 📌 Sobre o projeto
 
@@ -29,20 +28,18 @@ O projeto centraliza o cadastro de profissionais, a busca por especialidades, o 
 
 A plataforma foi projetada para dar autonomia ao paciente na escolha do profissional ideal e facilitar a gestão da agenda do psicólogo.
 
----
 
 # 🎯 Objetivo
 
 Criar um ambiente centralizado que permita:
 
-- 🧑‍⚕️ Cadastrar e gerenciar perfis de psicólogos e pacientes;
-- 🔍 Buscar profissionais por especialidade, modalidade e valor da sessão;
-- 📅 Solicitar, aceitar, recusar e cancelar consultas;
-- 👥 Acompanhar os pacientes atendidos por cada psicólogo;
-- 🔒 Controlar o acesso e os dados de cada tipo de usuário;
-- 📱 Disponibilizar uma interface responsiva e acessível.
+• 🧑‍⚕️ Cadastrar e gerenciar perfis de psicólogos e pacientes;
+• 🔍 Buscar profissionais por especialidade, modalidade e valor da sessão;
+• 📅 Solicitar, aceitar, recusar e cancelar consultas;
+• 👥 Acompanhar os pacientes atendidos por cada psicólogo;
+• 🔒 Controlar o acesso e os dados de cada tipo de usuário;
+• 📱 Disponibilizar uma interface responsiva e acessível.
 
----
 
 # ⚙️ Como funciona?
 
@@ -55,37 +52,35 @@ O sistema organiza o fluxo de atendimento em etapas simples:
 5. O psicólogo aceita ou recusa a solicitação.
 6. Consultas aceitas ficam visíveis para os dois lados até serem concluídas, canceladas ou reagendadas.
 
----
 
 # ✨ Funcionalidades
 
 ### Autenticação e conta
-- Cadastro separado para paciente e psicólogo (com CRP, especialidades, modalidade e valor da consulta no caso do psicólogo);
-- Login com JWT, recuperação de senha e exclusão de conta;
-- Edição completa de perfil, incluindo troca de foto com compressão automática no navegador.
+• Cadastro separado para paciente e psicólogo (com CRP, especialidades, modalidade e valor da consulta no caso do psicólogo);
+• Login com JWT, recuperação de senha e exclusão de conta;
+• Edição completa de perfil, incluindo troca de foto com compressão automática no navegador.
 
 ### Busca e agendamento
-- Busca de profissionais por especialidade, modalidade e faixa de valor;
-- Consulta de disponibilidade do psicólogo antes de agendar;
-- Solicitação, aceite, recusa, cancelamento e reagendamento de consultas;
-- Histórico de "Meus agendamentos" tanto para paciente quanto para psicólogo.
+• Busca de profissionais por especialidade, modalidade e faixa de valor;
+• Consulta de disponibilidade do psicólogo antes de agendar;
+• Solicitação, aceite, recusa, cancelamento e reagendamento de consultas;
+• Histórico de "Meus agendamentos" tanto para paciente quanto para psicólogo.
 
 ### Comunicação
-- Chat privado entre paciente e psicólogo vinculado a uma consulta;
-- Notificações em tempo real (sino flutuante) para solicitações, aceites, cancelamentos e novas mensagens.
+• Chat privado entre paciente e psicólogo vinculado a uma consulta;
+• Notificações em tempo real (sino flutuante) para solicitações, aceites, cancelamentos e novas mensagens.
 
 ### Avaliações
-- Paciente e psicólogo podem se avaliar mutuamente após a consulta;
-- Resumo de avaliações (média e comentários) visível no perfil de cada um.
+• Paciente e psicólogo podem se avaliar mutuamente após a consulta;
+• Resumo de avaliações (média e comentários) visível no perfil de cada um.
 
 ### Outros
-- Interface responsiva (desktop e mobile);
-- Ícones em SVG (Heroicons/Boxicons), sem dependência de imagens externas para a UI;
-- Deploy único na Vercel (frontend estático + backend como função serverless).
+• Interface responsiva (desktop e mobile);
+• Ícones em SVG (Heroicons/Boxicons), sem dependência de imagens externas para a UI;
+• Deploy único na Vercel (frontend estático + backend como função serverless).
 
----
 
-# 📐 Diagrama 1 - Arquitetura Geral
+# 📐 Diagrama 1: Arquitetura Geral
 
 ```mermaid
 graph TD
@@ -113,9 +108,8 @@ E --> C
 C --> B
 ```
 
----
 
-# 📊 Diagrama 2 - Fluxo de Utilização
+# 📊 Diagrama 2: Fluxo de Utilização
 
 ```mermaid
 graph LR
@@ -143,9 +137,8 @@ D --> E
 E --> F
 ```
 
----
 
-# 🗄️ Diagrama 3 - Entidade Relacionamento
+# 🗄️ Diagrama 3: Entidade Relacionamento
 
 ```mermaid
 erDiagram
@@ -184,9 +177,8 @@ string status
 }
 ```
 
----
 
-# 🔄 Diagrama 4 - Fluxo de Agendamento de Consulta
+# 🔄 Diagrama 4: Fluxo de Agendamento de Consulta
 
 ```mermaid
 graph TD
@@ -222,32 +214,30 @@ F -->|Sim| G
 F -->|Não| H
 ```
 
----
 
 # 🛠️ Tecnologias Utilizadas
 
 ### Frontend
 
-- HTML5 / CSS3
-- JavaScript
-- Boxicons
+• HTML5 / CSS3
+• JavaScript
+• Boxicons
 
 ### Backend
 
-- Node.js
-- Express
-- JWT (autenticação)
+• Node.js
+• Express
+• JWT (autenticação)
 
 ### Banco de Dados
 
-- Supabase (PostgreSQL + Auth)
+• Supabase (PostgreSQL + Auth)
 
 ### Ferramentas
 
-- Git
-- GitHub
+• Git
+• GitHub
 
----
 
 # 📂 Estrutura do Projeto
 
@@ -264,7 +254,6 @@ backend/
   config/
 ```
 
----
 
 # 🚀 Executando o projeto
 
@@ -305,19 +294,17 @@ http://127.0.0.1:5500/views/index.html
 
 O frontend detecta automaticamente se está rodando local ou em produção (`js/api-config.js`), então não é preciso trocar nenhuma URL manualmente.
 
----
 
 # 📖 Como usar
 
 1. Acesse a plataforma (local ou pela URL publicada) e clique em **Entrar**;
 2. Escolha se quer se cadastrar como **paciente** ou **psicólogo** e preencha o formulário;
-3. Faça login com o e-mail e senha cadastrados;
+3. Faça login com o email e senha cadastrados;
 4. **Se for paciente:** use "Buscar profissionais" para filtrar psicólogos por especialidade/modalidade/valor, veja o perfil de quem te interessar e solicite uma consulta num horário disponível;
 5. **Se for psicólogo:** configure sua disponibilidade no perfil e acompanhe as solicitações de consulta em "Agendamentos", podendo aceitar, recusar, cancelar ou reagendar;
 6. Use o chat para conversar com a outra parte antes/depois da consulta, e acompanhe avisos pelo sino de notificações;
 7. Após a consulta, avalie o atendimento — a avaliação fica visível no perfil de quem foi avaliado.
 
----
 
 ## Termos de Uso e Compartilhamento
 
@@ -329,9 +316,9 @@ O frontend detecta automaticamente se está rodando local ou em produção (`js/
 exceto o que está expressamente permitido abaixo.
 
 ### Permitido
-- Consultar e estudar o código para fins educacionais.
-- Uso para avaliação do TCC e apresentação acadêmica.
-- Uso não comercial por terceiros, desde que respeitadas
+• Consultar e estudar o código para fins educacionais.
+• Uso para avaliação do TCC e apresentação acadêmica.
+• Uso não comercial por terceiros, desde que respeitadas
   as condições de crédito abaixo.
 
 ### Condições
@@ -355,19 +342,17 @@ matheusinho.bal@gmail.com
 ### Isenção de garantia
 O software é fornecido "como está", sem garantias de qualquer tipo.
 
----
 
 # 🎓 Projeto Acadêmico
 
 Projeto desenvolvido como Trabalho de Conclusão de Curso (TCC) aplicando conceitos de:
 
-- Engenharia de Software
-- Banco de Dados
-- Arquitetura de Sistemas
-- Desenvolvimento Web
-- UX/UI
+• Engenharia de Software
+• Banco de Dados
+• Arquitetura de Sistemas
+• Desenvolvimento Web
+• UX/UI
 
----
 
 # 👨‍💻 Equipe
 
